@@ -1,0 +1,1618 @@
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix schema: <https://schema.org/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+<http://127.0.0.1/id/cge> a org:Organization ;
+    skos:prefLabel "Centre for Global Equality" ;
+    org:memberOf <http://127.0.0.1/ccg> .
+
+<http://127.0.0.1/id/cp> a org:Organization ;
+    skos:prefLabel "Climate Parliament" ;
+    org:memberOf <http://127.0.0.1/ccg> .
+
+<http://127.0.0.1/id/ou> a org:Organization ;
+    owl:sameAs <http://dbpedia.org/resource/Open_University> ;
+    skos:prefLabel "Open University" ;
+    org:memberOf <http://127.0.0.1/ccg> .
+
+<http://doi.org/10.1007/978-3-031-20179-0_3> a schema:ScholarlyArticle ;
+    schema:abstract "This paper proposes an agent-based simulation model of activities within an urban environment to evaluate alternative transport-oriented development (TOD) designs and infrastructure investment proposals prepared by urban planners. The students test the model as model users, and the generated model output on the use of the city infrastructure, occupancy of public space, and key data around the pedestrian and vehicle movements can be translated to design modifications by comparing results with desired targets. This provides valuable scenarios to key stakeholders in the design. A particular challenge with using simulation models as part of the decision-making process is the need to include realistic data for the behaviour of the transport system users. To this end, an experiment was conducted in which data on the individual behaviour and activities was collected, which can be integrated into the simulation model to capture realistic responses to TOD proposals. Illustrative results are shown, demonstrating the model can produce meaningful results for planners but also highlights the role of agent-based simulation models in steering the data collection process and engaging with decision-makers." ;
+    schema:author <https://orcid.org/0000-0002-3363-8620>,
+        <https://orcid.org/0000-0002-4879-9259> ;
+    schema:license "https://www.springer.com/tdm" ;
+    schema:title "Data-Driven Agent-Based Model Development to Support Human-Centric Transit-Oriented Design" .
+
+<http://doi.org/10.1007/s13280-022-01757-5> a schema:ScholarlyArticle ;
+    schema:abstract "The COVID-19 pandemic and related social and economic emergencies induced massive public spending and increased global debt. Economic recovery is now an opportunity to rebuild natural capital alongside financial, physical, social and human capital, for long-term societal benefit. Yet, current decision-making is dominated by economic imperatives and information systems that do not consider society’s dependence on natural capital and the ecosystem services it provides. New international standards for natural capital accounting (NCA) are now available to integrate environmental information into government decision-making. By revealing the effects of policies that influence natural capital, NCA supports identification, implementation and monitoring of Green Recovery pathways, including where environment and economy are most positively interlinked." ;
+    schema:author <http://127.0.0.1/09ae4e2e-9750-4199-a867-e5b56dde5f1b>,
+        <http://127.0.0.1/203880d8-5b83-4c6c-a34e-01ca2856741a>,
+        <http://127.0.0.1/8bff6c53-261d-429c-bea7-4f07a18dbb6a>,
+        <http://127.0.0.1/b380f241-20cc-4fc6-893f-4f8c507309e5>,
+        <http://127.0.0.1/c23e57c1-3af1-4694-9cff-edb5be4eea29>,
+        <http://127.0.0.1/d8f6438a-ea16-4601-b505-d773f7caa9fe>,
+        <https://orcid.org/0000-0001-7243-1641>,
+        <https://orcid.org/0000-0001-8170-8024>,
+        <https://orcid.org/0000-0002-0042-2559>,
+        <https://orcid.org/0000-0002-5708-6824>,
+        <https://orcid.org/0000-0002-9870-297X>,
+        <https://orcid.org/0000-0002-9980-4126>,
+        <https://orcid.org/0000-0003-0292-7830>,
+        <https://orcid.org/0000-0003-2940-6445>,
+        <https://orcid.org/0000-0003-3526-7242> ;
+    schema:license "https://creativecommons.org/licenses/by/4.0" ;
+    schema:title "From COVID-19 to Green Recovery with natural capital accounting" .
+
+<http://doi.org/10.1016/j.dib.2021.107734> a schema:ScholarlyArticle ;
+    schema:abstract "This article describes a dataset of perceived values and socioeconomic indicators collected in rural Ugandan communities. The data were collected in interviews which employed: (1) the User-Perceived Value game, which solicits verbal data using graphical prompts and ‘why’-probing; and (2) socio-economic surveys, which collected demographic data. The dataset constitutes 119 interviews conducted between 2014 and 2015 in seven rural Ugandan villages. Interviews were conducted in various settings (e.g. individual/group, women/men/mixed) and in seven different local languages (which were subsequently translated into English). These interviews were part of a research project aiming to better understand what is important to rural communities in Uganda, and to investigate decision-making as a function of different demographics. This dataset can be used by researchers and practitioners in various fields such as sustainable development (e.g. to analyze how development initiatives may be designed to match community values) and natural language processing (e.g. to automatically perform perceived value classification from the expert-annotated interviews)." ;
+    schema:author <http://127.0.0.1/50f2392e-b0f6-47b8-abce-29f33e88efce>,
+        <https://orcid.org/0000-0001-7628-9259>,
+        <https://orcid.org/0000-0002-7072-9150>,
+        <https://orcid.org/0000-0002-9484-9632> ;
+    schema:license "http://creativecommons.org/licenses/by/4.0/" ;
+    schema:title "Perceived value interviews and socio-economic survey data for communities in rural Uganda" .
+
+<http://doi.org/10.1016/j.dib.2022.108262> a schema:ScholarlyArticle ;
+    schema:abstract "This article presents a geolocated dataset of rural home annotations on very high resolution satellite imagery from Uganda, Kenya, and Sierra Leone. This dataset was produced through a citizen science project called “Power to the People”, which mapped rural homes for electrical infrastructure planning and computer-vision-based mapping. Additional details on this work are presented in “Power to the People: Applying citizen science to home-level mapping for rural energy access” [1]. 578,010 home annotations were made on approximately 1,267 km2 of imagery over 179 days by over 6,000 volunteers. The bounding-box annotations produced in this work have been anonymized and georeferenced. These raw annotations were found to have a precision of 49% and recall of 93% compared to a researcher-generated set of gold standard annotations. Data on roof colour and shape were also collected and are provided. Metadata about the sensors used to capture the original images and the annotation process are also attached to data records. While this dataset was collected for electrical infrastructure planning research, it can be useful in diverse sectors, including humanitarian assistance and public health." ;
+    schema:author <http://127.0.0.1/4330e382-4f96-4fcc-a7fa-aa467c641865>,
+        <https://orcid.org/0000-0001-5378-1128>,
+        <https://orcid.org/0000-0002-7072-9150> ;
+    schema:license "http://creativecommons.org/licenses/by/4.0/" ;
+    schema:title "Rural Home Annotation Dataset Mapped by Citizen Scientists in Satellite Imagery" .
+
+<http://doi.org/10.1016/j.dib.2022.108691> a schema:ScholarlyArticle ;
+    schema:abstract "The 2019 Energy Act requires each of Kenya’s 47 counties to independently develop energy plans. As county energy planning accelerates, it is important to understand the availability and readiness of data required to facilitate it. This article identifies, evaluates, and pre-processes openly available data to facilitate county-level energy planning using the Open Source Spatial Electrification Tool (OnSSET) in Kitui County, Kenya. In this way, it provides a ready-to-use starter kit of data inputs for county-level OnSSET analysis, and guidance to replicate this work in other counties. We classify the readiness level of each data type for county energy planning on a traffic light scale (i.e. green, amber, red) based on availability, accessibility, recency, accuracy, spatial resolution, and format (i.e. whether processing is required before use). Of the 25 core data inputs for OnSSET at the county-level, we find that 14 have a green, six have an amber, and five have a red readiness-level. Data processing requirements are documented, and the processed data for Kitui county are made available as a ready-to-use set of input parameters for OnSSET. While this data was collected for Kitui, the data sources and processing steps are largely applicable in other counties." ;
+    schema:author <http://127.0.0.1/14eb02f7-cc20-4eed-8cb6-3f0226fc3ce0>,
+        <http://127.0.0.1/34b6ea53-e6e2-46d7-84e9-b82d6691a93d>,
+        <http://127.0.0.1/a4d05877-6514-4270-a0e1-3c1584ca81cd>,
+        <http://127.0.0.1/abd3c013-38ba-4c85-a0fa-0d7be0ff6dcf>,
+        <http://127.0.0.1/b2351ce4-05d4-4672-9dac-d5f5ab0163c9>,
+        <http://127.0.0.1/ccc1e7ee-fc5c-45af-8036-e6650e512cac>,
+        <http://127.0.0.1/ebd68764-82ca-40a0-b00f-07583b8ed918>,
+        <https://orcid.org/0000-0001-5378-1128>,
+        <https://orcid.org/0000-0001-7628-9259>,
+        <https://orcid.org/0000-0002-7072-9150> ;
+    schema:license "http://creativecommons.org/licenses/by/4.0/" ;
+    schema:title "Spatial Data Starter Kit for OnSSET Energy Planning in Kitui County, Kenya" .
+
+<http://doi.org/10.1016/j.dib.2022.108836> a schema:ScholarlyArticle ;
+    schema:abstract "Viet Nam is at a critical juncture in planning for its future energy mix due to its fast-growing economy and recent climate commitments. Robust modelling analyses examining the potential and practical energy mix alternatives are therefore key in providing key stakeholders with critical information on energy policy decision-making. The challenge is that a large volume of data is required to accurately model various energy pathways at the national scale. This data note, therefore, aims to bridge the current data gap by providing key information on input data and assumptions for long-term energy planning in Viet Nam. Historical and/or projected data regarding electricity generation and consumption, electricity imports and exports, fuel prices, emissions, refineries, power transmission and distribution, electricity generation technologies, and renewable energy potential and reserves for the years 2015 to 2050 are described in this article." ;
+    schema:author <https://orcid.org/0000-0001-6419-4957>,
+        <https://orcid.org/0000-0001-7957-8451>,
+        <https://orcid.org/0000-0001-9325-8147>,
+        <https://orcid.org/0000-0002-6434-5142> ;
+    schema:license "http://creativecommons.org/licenses/by/4.0/" ;
+    schema:title "Techno-economic data and assumptions for long-term energy systems modelling in Viet Nam" .
+
+<http://doi.org/10.1016/j.envsoft.2021.105091> a schema:ScholarlyArticle ;
+    schema:abstract "Integrated Assessment Models (IAMs) are important tools to analyse cross-sectoral interdependencies and the use of global resources. Most current tools are highly detailed and require expert knowledge and proprietary software to generate scenarios and analyse their insights. In this paper, the complementary Global Least-cost User-friendly CLEWs Open-Source Exploratory (GLUCOSE) model is presented as a highly-aggregated global IAM, open and accessible from source to solver and using the OSeMOSYS tool and the CLEWs framework. The model enables the exploration of policy measures on the future development of the integrated resource system. Thanks to its relatively simple structure, it requires low computational resources allowing for the generation of a large number of scenarios or to quickly conduct preliminary investigations. GLUCOSE is targeted towards education and training purposes by a range of interested parties, from students to stakeholders and decision-makers, to explore possible future pathways towards the sustainable management of global resources." ;
+    schema:author <https://orcid.org/0000-0001-6419-4957>,
+        <https://orcid.org/0000-0001-6591-3028>,
+        <https://orcid.org/0000-0001-9061-8485>,
+        <https://orcid.org/0000-0001-9367-1791>,
+        <https://orcid.org/0000-0003-4022-5506> ;
+    schema:license "http://creativecommons.org/licenses/by/4.0/" ;
+    schema:title "The Global Least-cost user-friendly CLEWs Open-Source Exploratory model" .
+
+<http://doi.org/10.1016/j.erss.2021.102379> a schema:ScholarlyArticle ;
+    schema:abstract "Understanding consumer needs and values is crucial to the sustainable delivery and uptake of energy access projects in Low-and Middle-Income Countries (LMICs). Nevertheless, many energy projects aim to empower women without first assessing gendered roles, needs, values, and relations for both men and women in project communities. Neglecting these can be detrimental to the end-users of energy projects, exacerbating conflict within households rather than empowering vulnerable groups. We propose a value-based approach to elicit the varying priorities and values of men and women and assess how these may shape energy access project design and communication in LMICs. Data from 84 qualitative individual interviews, equally split between men and women, and 28 gender-disaggregated focus-group discussions in seven rural Ugandan communities were used. We find that men and women in rural Uganda held largely the same high-priority underlying values focused on basic human needs such as income, healthcare, information services, food security, and water security. However, the language used to communicate these values differed in small but significant ways. Based on this, we offer two potential solutions for a more balanced gender-inclusive approach to energy service project design and communication: (1) Design projects and messaging based on underlying values of both genders while avoiding inadvertently reproducing patriarchal norms; and (2) use gender-specific messaging and vocabulary11In this research, vocabulary refers to the words, which vary from person to person, used to form associated meanings around the UPVs. linking energy projects to underlying values to increase buy-in. This work constitutes a first step in better understanding the importance of gender-disaggregated data in decision-making for energy access initiatives in LMICs." ;
+    schema:author <https://orcid.org/0000-0001-7628-9259>,
+        <https://orcid.org/0000-0002-7072-9150>,
+        <https://orcid.org/0000-0002-9484-9632>,
+        <https://orcid.org/0000-0003-2352-1362> ;
+    schema:license "http://creativecommons.org/licenses/by/4.0/" ;
+    schema:title "The power of language: Exploring values, empowerment dynamics and communication strategies for gender-inclusive energy service design in rural Uganda" .
+
+<http://doi.org/10.1016/j.esd.2022.07.006> a schema:ScholarlyArticle ;
+    schema:abstract "The 2030 Agenda for Sustainable Development calls for the achievement of universal access to affordable, reliable, sustainable and modern energy for all. To fulfil this ambition, least developed countries need to mobilise enormous investments in a short amount of time. Deciding the extent, priority and timing of these investments is a hard task, for which many governments currently lack internal resources. Development Partners are supporting these efforts by contributing to the national energy planning ecosystems. In this comment, we focus on the role of Development Partners. We reflect on the approach to support strategic energy planning they took so far and on how they may improve it to further – and more effectively - support countries where demand arises. We take the example of one recent capacity development effort in Sierra Leone. We highlight that academia is one pillar of the national energy planning ecosystem, and conclude that academic partnerships play a critical role in changing the paradigm from short-term capacity transfer to a more sustainable capacity development. Formalised academic partnerships may increase the retention of capacity and support national planning ecosystems in becoming more self-sustained. Increased knowledge sharing on best open practices for energy data and model infrastructure may further support the ecosystem by improving the communication between academia, government and utilities." ;
+    schema:author <http://127.0.0.1/73bbc494-5181-4eb9-81d6-4a0df2d71d23>,
+        <http://127.0.0.1/94bf306d-7c69-4638-bbfd-af7371662296>,
+        <http://127.0.0.1/bdda0e8f-1e42-4cac-9d8c-16b463312a02>,
+        <https://orcid.org/0000-0001-6419-4957>,
+        <https://orcid.org/0000-0001-7537-5470>,
+        <https://orcid.org/0000-0001-8371-9325> ;
+    schema:license "http://creativecommons.org/licenses/by/4.0/" ;
+    schema:title "Supporting a self-sustained energy planning ecosystem: Lessons from Sierra Leone" .
+
+<http://doi.org/10.1016/j.esr.2021.100650> a schema:ScholarlyArticle ;
+    schema:abstract "Energy modelling is critical for addressing challenges such as integrating variable renewable energy and addressing climate impacts. This paper describes the updated code management structure and code updates, the revised community forum and the outreach activities that have built a vibrant community of practice around OSeMOSYS. The code management structure has allowed code improvements to be incorporated into the model, the community forum provides users with a place to ask and answer questions, and the outreach activities connect members of the community. Overall, these three pillars show how a community of practice can be built around an open source tool and provides an example for other developers and users of open source software wanting to build a community of practice." ;
+    schema:author <https://orcid.org/0000-0001-6419-4957>,
+        <https://orcid.org/0000-0001-8371-9325>,
+        <https://orcid.org/0000-0001-9367-1791>,
+        <https://orcid.org/0000-0002-2535-4134>,
+        <https://orcid.org/0000-0002-6352-2928>,
+        <https://orcid.org/0000-0003-0266-2705> ;
+    schema:license "http://creativecommons.org/licenses/by/4.0/" ;
+    schema:title "Developing a community of practice around an open source energy modelling tool" .
+
+<http://doi.org/10.1016/j.esr.2021.100714> a schema:ScholarlyArticle ;
+    schema:abstract "This paper presents the first application of the scenario discovery approach in geospatial electrification modelling. 1944 electrification simulations were constructed for Burkina Faso from a combination seven input levers, including four grid-extension strategies. The scenario discovery analysis identifies a scenario described by a high grid electricity generation cost in combination with an intensification strategy for grid-extension, as most likely to lead to a high cost of electricity in Burkina Faso. Thus, to avoid such a high cost, decisions in the country could be targeted either at lowering grid electricity generation costs or to choose one of the other two grid-extension strategies, or both. For each of the grid-extension strategies, a number of drivers causing a high LCOE were identified. Common drivers for all strategies were the grid electricity generation cost and discount rate. The scenario discovery approach was used to identify the key drivers of high electrification costs and their interactions, providing useful information that might not be gained from a traditional scenario-axes approach. This approach provided a structured way to analyze more parameters than found in previous electrification studies for Burkina Faso. The paper discusses on the pros compared to a traditional scenario-axes approach, such as reduced risk of perceived bias and improved ability to deal with multiple uncertain parameters, but also notes the additional computational requirements." ;
+    schema:author <https://orcid.org/0000-0001-5487-1002>,
+        <https://orcid.org/0000-0001-6419-4957>,
+        <https://orcid.org/0000-0002-0538-7887>,
+        <https://orcid.org/0000-0002-1565-2752>,
+        <https://orcid.org/0000-0002-4770-4051> ;
+    schema:license "http://creativecommons.org/licenses/by/4.0/" ;
+    schema:title "A scenario discovery approach to least-cost electrification modelling in Burkina Faso" .
+
+<http://doi.org/10.1016/j.esr.2021.100722> a schema:ScholarlyArticle ;
+    schema:abstract "Transport is an integral component of the energy system, and in Sub-Saharan Africa the demand for transport has been increasing due in part to population growth and economic development. To demonstrate the extent of this increased demand, emissions from transport in Africa grew by 84% over 6 years last decade [1] until, in 2018 in Sub-Saharan Africa, 15% of final energy consumption was demanded by the transport sector [2]. However, a global system change is underway for road passenger transport: a transition from polluting internal combustion engine vehicles to low-emission electric vehicles. Sub-Saharan Africa will not be immune to this transition, especially as a region which currently depends heavily on the import of second-hand vehicles [3]; not to mention the emission and air quality benefits electric vehicles can offer. Yet, by 2019 only 500 electric vehicles were on the roads in South Africa [4]. In this Viewpoint, we aim to dispel concerns that electric vehicles are always unaffordable and will cripple the already overloaded power systems in Sub-Saharan Africa. Instead, we propose that with innovative thinking and context-specific approaches and technologies, different from those in High-Income Countries, electric vehicles could in fact offer benefits to governments, the power systems, and vehicle owner-operators in Sub-Saharan Africa. We lay out how the historically siloed transport and electricity sectors could evolve to support each other in the future." ;
+    schema:author <http://127.0.0.1/ea61459a-8e48-4e11-88d4-8cd084b3885f>,
+        <https://orcid.org/0000-0001-5378-1128>,
+        <https://orcid.org/0000-0001-7628-9259>,
+        <https://orcid.org/0000-0001-9774-2729>,
+        <https://orcid.org/0000-0002-3946-4406>,
+        <https://orcid.org/0000-0003-3191-8896> ;
+    schema:license "http://creativecommons.org/licenses/by/4.0/" ;
+    schema:title "Can electric vehicles be good for Sub-Saharan Africa?" .
+
+<http://doi.org/10.1016/j.esr.2021.100759> a schema:ScholarlyArticle ;
+    schema:abstract "The COVID-19 pandemic has affected the economy of Tunisia, like that of many other countries. With electricity consumption dropping, consumption patterns changing, international fuel prices oscillating and uncertainty raging, the pandemic has affected not least the planning of investments in electricity supply. Although the government seems unlikely to revise the decarbonisation targets downwards, questions arise on whether the investments planned before the pandemic are still relevant in the changed global landscape and what effects they may have on the country's economy. In this study, we analyse post-pandemic scenarios for the electricity supply system of Tunisia with an energy-economy modelling framework, soft-linking the energy modelling tool OSeMOSYS and an open source Input-Output model. We extract insights on the cost-competitiveness of different – previously planned and new – electricity supply solutions and their impacts on job creation and loss in the entire economy. We find that renewable solutions based on solar photovoltaic remain highly competitive with gas-fired generation under different projections of gas prices and that several low-carbon and energy efficiency solutions have high potential for job creation. We also find that more ambitious investments in renewables and energy efficiency are needed to take Tunisia towards the path of deep decarbonisation." ;
+    schema:author <https://orcid.org/0000-0001-6419-4957>,
+        <https://orcid.org/0000-0001-7168-7936>,
+        <https://orcid.org/0000-0001-8371-9325>,
+        <https://orcid.org/0000-0002-1596-6831>,
+        <https://orcid.org/0000-0002-7360-6332>,
+        <https://orcid.org/0000-0003-0741-0021> ;
+    schema:license "http://creativecommons.org/licenses/by/4.0/" ;
+    schema:title "A scenario analysis of potential long-term impacts of COVID-19 on the Tunisian electricity sector" .
+
+<http://doi.org/10.1016/j.esr.2021.100799> a schema:ScholarlyArticle ;
+    schema:abstract "Financial institutions around the world have announced halts to financing of coal-fired power plants (CFPPs). Non-profit and non-governmental organisations have financing, developed databases and reports that provide information on financial data and CFPP projects, as well as the quality of the coal policies of financial institutions. In this study, we integrated information from these databases and analysed the financing implications for CFPP development. We selected the world's 56 largest commercial banks and reviewed and mapped their coal policies according to four common financing conditions. We also analysed bank contributions via project and corporate finance, selecting Indonesia as a country-specific case study to examine how and to what extent banks have been supporting the coal industry. Our analysis revealed that banks have been financing the CFPP industry more substantially through corporate finance than project finance. Consequently, we suggest that the most effective financing policies consist of a combination of exclusion criteria that transparently address project and corporate financing and enhance bank positions by setting a coal phase-out target. Besides, more banks are offering sustainable finance, in which the budget committed to sustainability is larger than the amount historically financed for fossil fuels. Our findings conclude that commercial banks can potentially influence development of the coal power sector, even in a country like Indonesia where it is highly supported by public finance." ;
+    schema:author <http://127.0.0.1/39653007-b311-4472-a0be-4f3e3ed247b5>,
+        <https://orcid.org/0000-0002-1668-4086>,
+        <https://orcid.org/0000-0003-1263-1654> ;
+    schema:license "http://creativecommons.org/licenses/by/4.0/" ;
+    schema:title "Bank climate actions and their implications for the coal power sector" .
+
+<http://doi.org/10.1016/j.esr.2022.100841> a schema:ScholarlyArticle ;
+    schema:abstract "Renewable energy development can enable climate-compatible growth in low- and middle-income countries, particularly given the substantial opportunities for energy export to high-income countries seeking to decarbonise their energy systems. However, this also comes with significant risks, including the potential to trigger a resource curse of adverse social, environmental, and economic effects resulting in paradoxically slowed growth. Here, we propose a novel framework to assess potential risks associated with renewable energy development in low- and middle-income countries rooted in the resource curse literature. Eighteen symptoms of the resource curse are evaluated in terms of relevance to renewable energy, and their potential risks and benefits during renewable energy development are established. We find that context-specific factors are key in determining whether resource developments will provoke adverse impacts or positive opportunities; so, preemptive context-specific risk assessment is needed to implement prevention and mitigation strategies. For example, while fossil fuel development has been seen in some circumstances to increase dependence on external capital and technology, where adequate education and financing strategies are implemented, it can instead enhance autonomy and development. Similar risks can apply to renewable energy development, and must be evaluated. The proposed resource curse risk assessment framework can be applied to individual contexts to help countries, companies, sectors, or projects maximise the positive outcomes of renewable energy development and avoid a renewable energy resource curse." ;
+    schema:author <https://orcid.org/0000-0001-7628-9259>,
+        <https://orcid.org/0000-0002-6027-4818>,
+        <https://orcid.org/0000-0002-7072-9150>,
+        <https://orcid.org/0000-0003-3174-0362> ;
+    schema:license "http://creativecommons.org/licenses/by/4.0/" ;
+    schema:title "The resource curse in renewable energy: A framework for risk assessment" .
+
+<http://doi.org/10.1016/j.esr.2022.100890> a schema:ScholarlyArticle ;
+    schema:abstract "Deploying low-carbon electricity systems in developing countries is critical for meeting climate targets while increasing wellbeing. Direct emissions from operating electricity generation are well-understood, however, materials required to construct technologies and their emissions - embodied emissions-are frequently overlooked. This paper quantifies the material implications of proposed electricity systems in 47 African countries from 2015 to 2065, involving a reference scenario, and two Paris-Agreement scenarios (1.5 °C and 2.0 °C of warming). A purpose-built model, called Mat-dp (Material Demand Projections) is used for scenario assessment. Mat-dp integrates electricity generation projections with material requirements by technology, estimating material budgets, embodied emissions, and jobs. The resulting construction material mass grows 20-fold from 2015 to 2065, with the highest growth in the reference scenario. As low-carbon electricity capacity grows, embodied emissions from materials increase, reaching 47 MtCO2 in the 2.0 °C scenario by 2065. Three bulk materials, concrete, steel, and aluminium, make up 64–66% of the total materials required by 2065, and 59–61% of the total embodied emissions. The Paris Agreement scenarios show lower material demand, particularly bulk materials, but higher specialised material demand. Increasing low-carbon electricity generation while decarbonising industry offers a higher emission reduction potential compared to solely switching to low-carbon electricity. Estimated new jobs are 1.6 million per year, mostly from solar." ;
+    schema:author <http://127.0.0.1/cb6cc50b-33d3-4ced-a290-90a3bcccff06>,
+        <https://orcid.org/0000-0001-9185-3022>,
+        <https://orcid.org/0000-0003-4347-5025> ;
+    schema:license "http://creativecommons.org/licenses/by/4.0/" ;
+    schema:title "Material requirements for future low-carbon electricity projections in Africa" .
+
+<http://doi.org/10.1016/j.esr.2022.100964> a schema:ScholarlyArticle ;
+    schema:abstract "Integrated assessment models (IAMs) are a cornerstone of an effective approach to climate change mitigation. Despite the variety of methodologies for characterising the energy system, land use change, economics, and climate response, the modelling community has an open and urgent request for tools capable of more realistic interpretation of the energy transition, capturing human behaviour, and embodying the principles of transparency, reproducibility, and flexibility of use. This paper presents an open-source modelling framework designed to fill that gap. Named MUSE (ModUlar energy systems Simulation Environment), this new agent-based model supports flexible characterisation of agent decision-making, including individual goals, bounded-rationality, imperfect foresight, and limited knowledge during the decision process. MUSE integrates this agent-based approach in a partial-equilibrium framework and enables a technology-rich description of the energy systems with an unprecedented degree of flexibility for including technological, temporal, and geographical granularity. The structure of MUSE creates the ability to produce climate change mitigation assessments that are more grounded, and more tangible model outputs for conceiving effective approaches to mitigation. MUSE is available open source under a GNU General Public License v3.0 on GitHub at this link https://github.com/SGIModel/MUSE_OS." ;
+    schema:author <http://127.0.0.1/4e0703e1-b6b7-4e92-b140-88194896650a>,
+        <http://127.0.0.1/b18b54f3-fe41-4e12-b7fd-aceccfb93f89>,
+        <https://orcid.org/0000-0001-9720-332X>,
+        <https://orcid.org/0000-0002-0233-6646>,
+        <https://orcid.org/0000-0003-3100-4306> ;
+    schema:license "http://creativecommons.org/licenses/by/4.0/" ;
+    schema:title "MUSE: An open-source agent-based integrated assessment modelling framework" .
+
+<http://doi.org/10.1016/j.jag.2022.102748> a schema:ScholarlyArticle ;
+    schema:abstract "To implement effective rural electricity access systems, it is fundamental to identify where potential consumers live. Here, we test the suitability of citizen science paired with satellite imagery and computer vision to map remote off-grid homes for electrical system design. A citizen science project called “Power to the People” was completed on the Zooniverse platform to collect home annotations in Uganda, Kenya, and Sierra Leone. Thousands of citizen scientists created a novel dataset of 578,010 home annotations with an average mapping speed of 7 km2/day. These data were post-processed with clustering to determine high-consensus home annotations. The raw annotations achieved a recall of 93% and precision of 49%; clustering the annotations increased precision to 69%. These were used to train a Faster R-CNN object detection model, producing detections useful as a first pass for home-level mapping with a feasible mapping rate of 42,938 km2/day. Detections achieved a precision of 67% and recall of 36%. This research shows citizen science and computer vision to be a promising pipeline for accelerated rural home-level mapping to enable energy system design." ;
+    schema:author <http://127.0.0.1/4330e382-4f96-4fcc-a7fa-aa467c641865>,
+        <https://orcid.org/0000-0001-5378-1128>,
+        <https://orcid.org/0000-0002-7072-9150> ;
+    schema:license "http://creativecommons.org/licenses/by/4.0/" ;
+    schema:title "Power to the people: Applying citizen science and computer vision to home mapping for rural energy access" .
+
+<http://doi.org/10.1016/j.jclepro.2022.131014> a schema:ScholarlyArticle ;
+    schema:abstract "Formally adopting climate change mitigation policies does not necessarily translate to tangible change on the ground. Here, we analyse 31 semi-structured interviews with climate policy government officials and consultants from 11 low-income and lower-middle income countries (LMICs) as well as the respective climate policy context, and find high average degrees of perceived discrepancies between formally adopted climate change mitigation policies and their actual implementation. Our results suggest that for our LMIC sample, both the global political process to limit climate change and domestic environmental threats have been key to drive the formal adoption of climate change mitigation policies, but have had limited effect on implementation. By contrast, momentum for implementation of climate change mitigation initiatives and projects on the ground emerges where climate policies are firmly embedded within economic and social development policies, the economy and society are comparably well-positioned to embrace the associated change, and where they have been governed by cross-ministerial institutions capable of implementing wider climate-compatible development pathways. Thus, to help translate climate policy into action, national LMIC governments and the international community need to find context-specific ways to successfully integrate climate with economic and social development policies, identify and build on feasible opportunities and competitive advantages through which the local economy can benefit from green growth, build adequate social capital, and actively create institutional spaces and processes for well-equipped and meaningful cross-ministerial co-benefit governance. The importance of unlocking co-benefits for implementing climate policies underlines both the urgency with which the international community needs to increase finance for LMICs for climate change mitigation, as well as the associated development opportunities." ;
+    schema:author <https://orcid.org/0000-0001-5507-8399>,
+        <https://orcid.org/0000-0001-8568-2001>,
+        <https://orcid.org/0000-0001-9053-5540>,
+        <https://orcid.org/0000-0002-9565-305X>,
+        <https://orcid.org/0000-0003-0590-4546>,
+        <https://orcid.org/0000-0003-2407-2490>,
+        <https://orcid.org/0000-0003-3191-8896> ;
+    schema:license "http://creativecommons.org/licenses/by/4.0/" ;
+    schema:title "How climate policies can translate to tangible change: Evidence from eleven low- and lower-middle income countries" .
+
+<http://doi.org/10.1016/j.progress.2022.100657> a schema:ScholarlyArticle ;
+    schema:abstract "The COVID-19 pandemic highlighted the need for decision-support tools to help cities become more resilient to infectious diseases. Through urban design and planning, non-pharmaceutical interventions can be enabled, impelling behaviour change and facilitating the construction of lower risk buildings and public spaces. Computational tools, including computer simulation, statistical models, and artificial intelligence, have been used to support responses to the current pandemic as well as to the spread of previous infectious diseases. Our multidisciplinary research group systematically reviewed state-of-the-art literature to propose a toolkit that employs computational modelling for various interventions and urban design processes. We selected 109 out of 8,737 studies retrieved from databases and analysed them based on the pathogen type, transmission mode and phase, design intervention and process, as well as modelling methodology (method, goal, motivation, focus, and indication to urban design). We also explored the relationship between infectious disease and urban design, as well as computational modelling support, including specific models and parameters. The proposed toolkit will help designers, planners, and computer modellers to select relevant approaches for evaluating design decisions depending on the target disease, geographic context, design stages, and spatial and temporal scales. The findings herein can be regarded as stand-alone tools, particularly for fighting against COVID-19, or be incorporated into broader frameworks to help cities become more resilient to future disasters." ;
+    schema:author <https://orcid.org/0000-0002-1236-7091>,
+        <https://orcid.org/0000-0002-3363-8620>,
+        <https://orcid.org/0000-0002-4879-9259>,
+        <https://orcid.org/0000-0003-3086-5921>,
+        <https://orcid.org/0000-0003-3630-9192> ;
+    schema:license "[]" ;
+    schema:title "Computational decision-support tools for urban design to improve resilience against COVID-19 and other infectious diseases: A systematic review" .
+
+<http://doi.org/10.1016/j.respol.2022.104528> a schema:ScholarlyArticle ;
+    schema:abstract "Business model innovation (BMI) is often complementary to technological innovation and offers novel and sustainable value creation opportunities. Enabling BMI through policy is difficult, however, and not yet well understood in practice or theory. We build on the quickly evolving literature on policy mixes to develop a theoretical model which explains how policy strategies and instruments shape the conditions for BMI. We derive the model inductively by studying the emergence of an off-grid renewable energy BMI in sub-Saharan Africa which proposes to actively create sustainable development in rural areas as opposed to merely increase energy access, drawing from 61 interviews with companies and industry experts as well as policy documents across six African countries. Our model has three core theoretical implications. First, focusing on policy strategies, policy instruments and their respective interactions, we uncover a set of mechanisms that explain how policy mix elements combine to create conducive conditions for BMI. Second, we shed light on the role of multiple objectives and goals within a policy mix for fostering BMI, which, if balanced appropriately, can create a productive tension between support and constraints. Third, we suggest the distinction between sector-specific and society-wide policy mixes as an analytical tool to study these tensions in policy mix research." ;
+    schema:author <https://orcid.org/0000-0002-3709-7323>,
+        <https://orcid.org/0000-0002-7730-8041>,
+        <https://orcid.org/0000-0003-0590-4546>,
+        <https://orcid.org/0000-0003-2407-2490>,
+        <https://orcid.org/0000-0003-3235-6469> ;
+    schema:license "http://creativecommons.org/licenses/by/4.0/" ;
+    schema:title "Policy mixes for business model innovation: The case of off-grid energy for sustainable development in sub-Saharan Africa" .
+
+<http://doi.org/10.1016/j.rser.2021.111935> a schema:ScholarlyArticle ;
+    schema:abstract "In order to provide “affordable, reliable, sustainable and modern energy for all” by 2030 under Sustainable Development Goal 7 (SDG7), rural electrification needs significant progress as the majority of people without access to electricity reside in rural areas. Optimization methods can play a critical role in this progress, providing an analytical framework to achieve a variety of economic, social, and environmental objectives subject to budget, resources, local demographics and other constraints. This review paper presents the first overview of optimization-based solution methodologies developed or applied for rural electrification. Based on our review, we first propose four archetype problems for rural electrification, namely (i) optimal system configuration and unit sizing, (ii) optimal power dispatch strategy, (iii) optimal technology choice, and (iv) optimal network design. We discuss each problem type, and provide a systematic classification based on the problem objective, proposed solution methodology, components, scale, region as well as their relationship to the different SDG7 components. We reveal research gaps and open questions for future studies for energy researchers and aim to draw the attention of the optimization community to the challenging and unique problems that need urgent attention in this critical area." ;
+    schema:author <https://orcid.org/0000-0001-8345-5999>,
+        <https://orcid.org/0000-0002-1140-1403>,
+        <https://orcid.org/0000-0003-0590-4546>,
+        <https://orcid.org/0000-0003-1739-7027> ;
+    schema:license "[]" ;
+    schema:title "Rural electrification: An overview of optimization methods" .
+
+<http://doi.org/10.1016/j.tranpol.2022.12.007> a schema:ScholarlyArticle ;
+    schema:abstract "Road transport accounts for around 12% of global greenhouse gas (GHG) emissions. As many high-income countries are moving to decarbonise their road vehicle fleets, Kyrgyzstan – with rapid growth in passenger car ownership – is seeing a significant increase in transport-related GHG emissions and air pollution in urban areas. Whilst a transition to electric vehicles (EVs) is a key part of Kyrgyzstan’s Nationally Determined Contribution to the Paris Agreement, the potential for successful EV deployment in the region is under-researched. To fill this research gap, this paper presents an assessment of the potential for EV deployment in Kyrgyzstan. Firstly, we present an investigation of the policy and institutional landscape relating to transport and the promotion of EVs in Kyrgyzstan. Secondly, based on research of 50,000 car sales and interviews with 23 key stakeholders in the country, we present analysis of the existing Kyrgyz vehicle fleet. Thirdly, using information ascertained from the interviews and desk-based research, we conduct a Total Cost of Ownership assessment of EVs versus internal combustion engine vehicles (ICEVs) in the Kyrgyz context. We find that under the current conditions, EVs can have a lower total cost of ownership against similar ICEVs in Kyrgyzstan. However, it is evident that this is not typically the case: the analysis in this paper suggests that cost-competitiveness between EVs and ICEVs is more likely for larger and higher-powered vehicles, for which the ICEV version has a higher retail price. Finally, combining analysis of these results and analysis of the current conditions in Kyrgyzstan, trajectories for EV adoption in geographically and economically similar nations, and data from expert stakeholder interviews, we propose a set of policy recommendations to accelerate EV uptake in Kyrgyzstan." ;
+    schema:author <http://127.0.0.1/1696029f-8664-43a6-9d5b-e253f7a0ceae>,
+        <http://127.0.0.1/36121960-7cf5-4ce3-b8ec-c4638f44ae4b>,
+        <http://127.0.0.1/584ef3bd-e3d5-47f6-bd32-3aa11f38cc55>,
+        <http://127.0.0.1/ccf954ea-2bbc-4614-86cb-c8a492b4b665>,
+        <https://orcid.org/0000-0001-7628-9259>,
+        <https://orcid.org/0000-0001-8930-805X> ;
+    schema:license "http://creativecommons.org/licenses/by/4.0/" ;
+    schema:title "Putting the foot down: Accelerating EV uptake in Kyrgyzstan" .
+
+<http://doi.org/10.1038/s41560-022-01121-7> a schema:ScholarlyArticle ;
+    schema:abstract "Energy development in Indigenous lands has been historically controversial from socio–ecological and ethical perspectives. Energy-development projects often privilege the knowledge of a narrow group, while, simultaneously, Indigenous knowledge and alternative epistemologies have been understudied in academic energy-access discourses and largely ignored in the planning and implementation of energy interventions. Here university-affiliated academics teamed up with Indigenous scholars and leaders to examine Indigenous perspectives in energy research and practice. We identify three core issues embedded in existing energy-development initiatives: an inconsistent use of the term ‘Indigenous’; a lack of inclusion of Indigenous knowledge and alternative epistemologies in energy-development projects; and a prevalence of inadequate methodological attempts to include such Indigenous knowledge. To enable more symmetric and people-centric sustainable energy interventions, we propose and illustrate a ‘cosmologies of energy’ approach that focuses on learning from Indigenous oral narratives to unpack Indigenous people’s lived experiences, alternative perspectives and associated practices of energy." ;
+    schema:author <http://127.0.0.1/0988d718-9e98-4673-80b4-ffd31bdf7b75>,
+        <http://127.0.0.1/8e80e5d4-deeb-43ab-a190-bbb9bdc87900>,
+        <http://127.0.0.1/ea909217-c77c-4ec0-bf39-5e9065cdbd42>,
+        <https://orcid.org/0000-0003-2352-1362> ;
+    schema:license "https://www.springernature.com/gp/researchers/text-and-data-mining" ;
+    schema:title "Indigenous cosmologies of energy for a sustainable energy future" .
+
+<http://doi.org/10.1038/s41560-022-01152-0> a schema:ScholarlyArticle ;
+    schema:abstract "Aligning development and climate goals means Africa’s energy systems will be based on clean energy technologies in the long term, but pathways to get there are uncertain and variable across countries. Although current debates about natural gas and renewables in Africa are heated, they largely ignore the substantial context specificity of the starting points, development objectives and uncertainties of each African country’s energy system trajectory. Here we—an interdisciplinary and majority African group of authors—highlight that each country faces a distinct solution space and set of uncertainties for using renewables or fossil fuels to meet its development objectives. For example, Ethiopia is headed for an accelerated green-growth pathway, but Mozambique is at a crossroads of natural gas expansion with implicit large-scale technological, economic, financial and social risks and uncertainties. We provide geopolitical, policy, finance and research recommendations to create firm country-specific evidence to identify adequate energy system pathways for development and to enable their implementation." ;
+    schema:author <http://127.0.0.1/0298b509-2850-4dc0-ac11-b09ff5781b09>,
+        <http://127.0.0.1/10ef32d6-ccac-4e11-8e36-b4f89a3b1b1b>,
+        <http://127.0.0.1/1729c430-a420-4d30-ba8b-2f1e630a2e46>,
+        <http://127.0.0.1/1aa9158a-96cc-42e8-b467-fc8cf3f9530b>,
+        <http://127.0.0.1/1be6442f-c612-41f3-8873-92a3e7e3a90f>,
+        <http://127.0.0.1/41a919ee-d20c-4663-b459-81cdbbae2a0a>,
+        <http://127.0.0.1/65a7976d-064e-41c7-9fe0-b679d5990180>,
+        <http://127.0.0.1/7e71bfeb-d1f8-4302-bf46-d45151e8354d>,
+        <http://127.0.0.1/836af3e5-d834-4ebf-beba-7928e3bfda16>,
+        <http://127.0.0.1/85629629-5aa8-4623-a31f-86b164ae86bb>,
+        <http://127.0.0.1/9c18e676-9456-480c-83a6-af8650007212>,
+        <http://127.0.0.1/a46f40ad-ab6d-4df5-b612-fe89935750f8>,
+        <http://127.0.0.1/b76b9e7c-e582-4166-82c0-7b81a19b700c>,
+        <http://127.0.0.1/c287a480-6c6e-4902-99c4-401bb677c09d>,
+        <http://127.0.0.1/c9552e8f-8de3-4a61-82dc-d992d3846990>,
+        <http://127.0.0.1/edad1209-0c00-4fe7-81fe-3c68c296fc94>,
+        <http://127.0.0.1/f075419e-f9ac-450c-9c79-d3267c9cf276>,
+        <http://127.0.0.1/fc99e62a-52e9-4148-bca6-3afd7c4bcb40>,
+        <https://orcid.org/0000-0001-5507-8399>,
+        <https://orcid.org/0000-0001-6419-4957>,
+        <https://orcid.org/0000-0001-6981-6401>,
+        <https://orcid.org/0000-0001-7628-9259>,
+        <https://orcid.org/0000-0001-8464-1718>,
+        <https://orcid.org/0000-0001-8617-5175>,
+        <https://orcid.org/0000-0001-8697-5471>,
+        <https://orcid.org/0000-0001-8834-2766>,
+        <https://orcid.org/0000-0001-9720-332X>,
+        <https://orcid.org/0000-0001-9802-7938>,
+        <https://orcid.org/0000-0002-0133-485X>,
+        <https://orcid.org/0000-0002-0979-8181>,
+        <https://orcid.org/0000-0002-1149-8938>,
+        <https://orcid.org/0000-0002-2156-1603>,
+        <https://orcid.org/0000-0002-5325-9214>,
+        <https://orcid.org/0000-0002-5509-5866>,
+        <https://orcid.org/0000-0002-5826-4071>,
+        <https://orcid.org/0000-0002-6217-9726>,
+        <https://orcid.org/0000-0002-6544-6359>,
+        <https://orcid.org/0000-0002-7971-2187>,
+        <https://orcid.org/0000-0002-8570-3287>,
+        <https://orcid.org/0000-0002-9565-305X>,
+        <https://orcid.org/0000-0003-0098-5420>,
+        <https://orcid.org/0000-0003-0590-4546>,
+        <https://orcid.org/0000-0003-0989-5456>,
+        <https://orcid.org/0000-0003-1078-5561>,
+        <https://orcid.org/0000-0003-1356-5548>,
+        <https://orcid.org/0000-0003-1739-7027>,
+        <https://orcid.org/0000-0003-2100-7888>,
+        <https://orcid.org/0000-0003-2219-1402>,
+        <https://orcid.org/0000-0003-2984-7777>,
+        <https://orcid.org/0000-0003-3094-8647>,
+        <https://orcid.org/0000-0003-3191-8896>,
+        <https://orcid.org/0000-0003-3219-8173>,
+        <https://orcid.org/0000-0003-3511-9960>,
+        <https://orcid.org/0000-0003-3995-0241> ;
+    schema:license "https://www.springer.com/tdm" ;
+    schema:title "Africa needs context-relevant evidence to shape its clean energy future" .
+
+<http://doi.org/10.1038/s41598-023-28377-7> a schema:ScholarlyArticle ;
+    schema:abstract "As the world transitions to net zero, energy storage is becoming increasingly important for applications such as electric vehicles, mini-grids, and utility-scale grid stability. The growing demand for storage will constrain raw battery materials, reduce the availability of new batteries, and increase the rate of battery retirement. As retired batteries are difficult to recycle into components, to avoid huge amounts of battery waste, reuse and repurposing options are needed. In this research, we explore the feasibility of using second-life batteries (which have been retired from their first intended life) and solar photovoltaics to provide affordable energy access to primary schools in Kenya. Based on interviews with 12 East African schools, realistic system sizes were determined with varying solar photovoltaic sizes (5–10 kW in 2.5 kW increments) and lithium-ion battery capacities (5–20 kWh in 5 kWh increments). Each combination was simulated under four scenarios as a sensitivity analysis of battery transportation costs (i.e., whether they are sourced locally or imported). A techno-economic analysis is undertaken to compare new and second-life batteries in the resulting 48 system scenarios in terms of cost and performance. We find that second-life batteries decrease the levelized cost of electricity by 5.6–35.3% in 97.2% of scenarios compared to similar systems with new batteries, and by 41.9–64.5% compared to the cost of the same energy service provided by the utility grid. The systems with the smallest levelized cost of electricity (i.e., 0.11 USD/kWh) use either 7.5 kW or 10 kW of solar with 20 kWh of storage. Across all cases, the payback period is decreased by 8.2–42.9% using second-life batteries compared to new batteries; the system with the smallest payback period (i.e., 2.9 years) uses 5 kW solar and 5 kWh storage. These results show second-life batteries to be viable and cost-competitive compared to new batteries for school electrification in Kenya, providing the same benefits while reducing waste." ;
+    schema:author <http://127.0.0.1/03f91e9a-1e54-4665-9367-ce5e810b603a>,
+        <http://127.0.0.1/0734491e-9739-4bf3-b032-c5d227c9974d>,
+        <http://127.0.0.1/b7676321-8924-4e4c-bacf-552a928f253d>,
+        <http://127.0.0.1/ee256610-9003-4de0-90a8-70bea740533c>,
+        <https://orcid.org/0000-0001-7628-9259>,
+        <https://orcid.org/0000-0002-7072-9150>,
+        <https://orcid.org/0000-0003-3200-4308> ;
+    schema:license "https://creativecommons.org/licenses/by/4.0" ;
+    schema:title "Second-life battery systems for affordable energy access in Kenyan primary schools" .
+
+<http://doi.org/10.1038/s41893-021-00721-7> a schema:ScholarlyArticle ;
+    schema:abstract "Sustainably transitioning to electric vehicles is challenging where transport and electricity systems are poorly defined due to a lack of data, such as those dominated by paratransit (informal, privately owned ‘public’ transport). We call for a more systemic approach to data collection as a key enabler for this transition." ;
+    schema:author <https://orcid.org/0000-0001-7628-9259>,
+        <https://orcid.org/0000-0002-3946-4406> ;
+    schema:license "https://www.springernature.com/gp/researchers/text-and-data-mining" ;
+    schema:title "Data needed to decarbonize paratransit in Sub-Saharan Africa" .
+
+<http://doi.org/10.1146/annurev-environ-112420-020640> a schema:ScholarlyArticle ;
+    schema:abstract "When deep recessions hit, some governments spend to rescue and recover their economies. Key economic objectives of such countercyclical spending include protecting and creating jobs while reinvigorating economic growth?but governments can also use this spending to achieve long-term social and environmental goals. During the coronavirus disease 2019 (COVID-19) pandemic, claims have been made that green recovery investments can meet both economic and environmental objectives. Here, we investigate the evidence behind these claims. We create a bespoke supervised machine learning algorithm to identify a comprehensive literature set. We analyze this literature using both structured qualitative assessment and machine learning models. We find evidence that green investments can indeed create more jobs and deliver higher fiscal multipliers than non-green investments. For policymakers, we suggest strong prioritization of green spending in recovery. For researchers, we highlight many research gaps and unalignment of research patterns with spending patterns." ;
+    schema:author <http://127.0.0.1/2c12f3f2-7c7c-47d0-9079-bea73841775e>,
+        <http://127.0.0.1/aed74553-4e48-4424-a965-c37e165068f0>,
+        <https://orcid.org/0000-0002-9980-4126> ;
+    schema:license "[]" ;
+    schema:title "How Stimulating Is a Green Stimulus? The Economic Attributes of Green Fiscal Spending" .
+
+<http://doi.org/10.3390/en14041209> a schema:ScholarlyArticle ;
+    schema:abstract "Ethiopia is a low-income country, with low electricity access (45%) and an inefficient power transmission network. The government aims to achieve universal access and become an electricity exporter in the region by 2025. This study provides an invaluable perspective on different aspects of Ethiopia’s energy transition, focusing on achieving universal access and covering the country’s electricity needs during 2015–2065. We co-developed and investigated three scenarios to examine the policy and technology levels available to the government to meet their national priorities. To conduct this analysis, we soft-linked OnSSET, a modelling tool used for geospatial analysis, with OSeMOSYS, a cost-optimization modelling tool used for medium to long-run energy planning. Our results show that the country needs to diversify its power generation system to achieve universal access and cover its future electricity needs by increasing its overall carbon dioxide emissions and fully exploit hydropower. With the aim of achieving universal access by 2025, the newly electrified population is supplied primarily by the grid (65%), followed by stand-alone (32%) technologies. Similarly, until 2065, most of the electrified people by 2025 will continue to be grid-connected (99%). The country’s exports will increase to 17 TWh by 2065, up from 832 GWh in 2015, leading to a cumulative rise in electricity export revenues of 184 billion USD." ;
+    schema:author <https://orcid.org/0000-0001-6419-4957>,
+        <https://orcid.org/0000-0001-7537-5470>,
+        <https://orcid.org/0000-0001-8801-9686>,
+        <https://orcid.org/0000-0001-9367-1791>,
+        <https://orcid.org/0000-0002-1565-2752>,
+        <https://orcid.org/0000-0002-6179-927X>,
+        <https://orcid.org/0000-0003-3149-2485> ;
+    schema:license "https://creativecommons.org/licenses/by/4.0/" ;
+    schema:title "Influence of Electrification Pathways in the Electricity Sector of Ethiopia—Policy Implications Linking Spatial Electrification Analysis and Medium to Long-Term Energy Planning" .
+
+<http://doi.org/10.3390/en14185827> a schema:ScholarlyArticle ;
+    schema:abstract "Almost all countries have committed to develop Nationally Determined Contributions (NDC) to reduce GHG emissions. They determine the level of GHG mitigation that, as a nation, they will commit to reducing. Zimbabwe has ambitious and laudable GHG mitigation targets. Compared to a coal-based future, emissions will be reduced by 33% per capita by 2030. If historical climate conditions continue, it can do this at low or negative cost if suitable sources of climate financing are in place. The NDC plots a positive future. However, much of Zimbabwe’s NDC mitigation center on hydropower generation and other measures that are dangerously vulnerable to climate change. Should the climate change in accordance with recent projections, these investments will be at risk, severely constraining electricity supply and causing high degrees of economic damage. This paper uses the Open-Source energy Modelling SYStem (OSeMOSYS) to consider two adaptation pathways that address this vulnerability. In the first, the country turns to a historically accessible option, namely the deployment of coal. In so doing, the electrical system is made more resilient, but emissions ramp up. The second pathway ‘climate proofs’ the power sector by boosting solar and wind capacity, using hydropower to provide balance for these new renewable resources, and introducing significant energy efficiency measures. This second pathway would require a set of extra accompanying investments and changes to the power market rules, but allows for both system resilience and NDC targets to be met. The paper shows that Zimbabwe’s low emissions growth can be made resilient, and while this path promises strong benefits, it also requires strong commitment and political will. From this paper insights are drawn and requirements for future analysis are made. Two critical insights are that: (i) NDCs that focus on mitigation should include resilience in their design. If they do not, they can introduce deep vulnerability; (ii) a departure from historical electricity market structures appears to hold potential for strong environmental, cost and reliability gains." ;
+    schema:author <http://127.0.0.1/eea52748-cbc8-4a34-b99c-60ec22c4124d>,
+        <https://orcid.org/0000-0001-6419-4957>,
+        <https://orcid.org/0000-0003-2540-4143> ;
+    schema:license "https://creativecommons.org/licenses/by/4.0/" ;
+    schema:title "Potential Climate Change Risks to Meeting Zimbabwe’s NDC Goals and How to Become Resilient" .
+
+<http://doi.org/10.3390/su14010453> a schema:ScholarlyArticle ;
+    schema:abstract "In this paper we investigate the economic response of rural households to the 2013 floods in Pakistan. The case study illustrates the important roles of labor supply adjustments and income diversification in coping with climate-related risks. Using detailed household panel data that were collected before and after the 2013 floods, we find that the exposure to flood results in lower participation in farm activities. The overall effects are decreased diversification in the sources of income and ambiguous reduction in inequality which is associated with overall declines in incomes. These changes could be locked in if affected households do not have sufficient assets to resume farming. The results suggest intervention points for public policy, related to labor mobility and access to capital." ;
+    schema:author <http://127.0.0.1/413088bb-c3d9-42c6-ae66-8d28b2b1f361>,
+        <https://orcid.org/0000-0003-2100-7888> ;
+    schema:license "https://creativecommons.org/licenses/by/4.0/" ;
+    schema:title "Income Diversification and Income Inequality: Household Responses to the 2013 Floods in Pakistan" .
+
+<http://127.0.0.1/0298b509-2850-4dc0-ac11-b09ff5781b09> a schema:Person ;
+    schema:familyName "Khennas" ;
+    schema:gender schema:Male ;
+    schema:givenName "Ismail" ;
+    schema:name "Ismail Khennas" .
+
+<http://127.0.0.1/03f91e9a-1e54-4665-9367-ce5e810b603a> a schema:Person ;
+    schema:familyName "Downey" ;
+    schema:gender schema:Male ;
+    schema:givenName "Michael" ;
+    schema:name "Michael Downey" .
+
+<http://127.0.0.1/0734491e-9739-4bf3-b032-c5d227c9974d> a schema:Person ;
+    schema:familyName "Jones" ;
+    schema:gender schema:Male ;
+    schema:givenName "Bernie" ;
+    schema:name "Bernie Jones" .
+
+<http://127.0.0.1/0988d718-9e98-4673-80b4-ffd31bdf7b75> a schema:Person ;
+    schema:familyName "Fulkaxò Cruz" ;
+    schema:gender schema:Female ;
+    schema:givenName "Denizia Kawany" ;
+    schema:name "Denizia Kawany Fulkaxò Cruz" .
+
+<http://127.0.0.1/09ae4e2e-9750-4199-a867-e5b56dde5f1b> a schema:Person ;
+    schema:familyName "Dvarskas" ;
+    schema:gender schema:Male ;
+    schema:givenName "Anthony" ;
+    schema:name "Anthony Dvarskas" .
+
+<http://127.0.0.1/10ef32d6-ccac-4e11-8e36-b4f89a3b1b1b> a schema:Person ;
+    schema:familyName "Nago" ;
+    schema:gender schema:Female ;
+    schema:givenName "Minette" ;
+    schema:name "Minette Nago" .
+
+<http://127.0.0.1/14eb02f7-cc20-4eed-8cb6-3f0226fc3ce0> a schema:Person ;
+    schema:familyName "Hu" ;
+    schema:gender schema:Female ;
+    schema:givenName "Emily" ;
+    schema:name "Emily Hu" .
+
+<http://127.0.0.1/1696029f-8664-43a6-9d5b-e253f7a0ceae> a schema:Person ;
+    schema:familyName "Kondev" ;
+    schema:gender schema:Male ;
+    schema:givenName "Bozhil" ;
+    schema:name "Bozhil Kondev" .
+
+<http://127.0.0.1/1729c430-a420-4d30-ba8b-2f1e630a2e46> a schema:Person ;
+    schema:familyName "Okereke" ;
+    schema:gender schema:Male ;
+    schema:givenName "Chukwumerije" ;
+    schema:name "Chukwumerije Okereke" .
+
+<http://127.0.0.1/1aa9158a-96cc-42e8-b467-fc8cf3f9530b> a schema:Person ;
+    schema:familyName "Agbemabiese" ;
+    schema:gender schema:Male ;
+    schema:givenName "Lawrence" ;
+    schema:name "Lawrence Agbemabiese" .
+
+<http://127.0.0.1/1be6442f-c612-41f3-8873-92a3e7e3a90f> a schema:Person ;
+    schema:familyName "Hailu" ;
+    schema:gender schema:Male ;
+    schema:givenName "Yohannes" ;
+    schema:name "Yohannes Hailu" .
+
+<http://127.0.0.1/203880d8-5b83-4c6c-a34e-01ca2856741a> a schema:Person ;
+    schema:familyName "Lok" ;
+    schema:gender schema:Male ;
+    schema:givenName "Martin" ;
+    schema:name "Martin Lok" .
+
+<http://127.0.0.1/2c12f3f2-7c7c-47d0-9079-bea73841775e> a schema:Person ;
+    schema:familyName "Yau" ;
+    schema:gender schema:Male ;
+    schema:givenName "Nigel" ;
+    schema:name "Nigel Yau" .
+
+<http://127.0.0.1/34b6ea53-e6e2-46d7-84e9-b82d6691a93d> a schema:Person ;
+    schema:familyName "Hwang" ;
+    schema:gender schema:Male ;
+    schema:givenName "Gyubin" ;
+    schema:name "Gyubin Hwang" .
+
+<http://127.0.0.1/36121960-7cf5-4ce3-b8ec-c4638f44ae4b> a schema:Person ;
+    schema:familyName "Zhou" ;
+    schema:gender schema:Male ;
+    schema:givenName "Zhaoqi" ;
+    schema:name "Zhaoqi Zhou" .
+
+<http://127.0.0.1/39653007-b311-4472-a0be-4f3e3ed247b5> a schema:Person ;
+    schema:familyName "Merdekawati" ;
+    schema:gender schema:Female ;
+    schema:givenName "Monika" ;
+    schema:name "Monika Merdekawati" .
+
+<http://127.0.0.1/413088bb-c3d9-42c6-ae66-8d28b2b1f361> a schema:Person ;
+    schema:familyName "Eskander" ;
+    schema:gender schema:Male ;
+    schema:givenName "Shaikh M. S. U." ;
+    schema:name "Shaikh M. S. U. Eskander" .
+
+<http://127.0.0.1/41a919ee-d20c-4663-b459-81cdbbae2a0a> a schema:Person ;
+    schema:familyName "Denton" ;
+    schema:gender schema:Female ;
+    schema:givenName "Fatima" ;
+    schema:name "Fatima Denton" .
+
+<http://127.0.0.1/4e0703e1-b6b7-4e92-b140-88194896650a> a schema:Person ;
+    schema:familyName "d'Avezac" ;
+    schema:gender schema:Male ;
+    schema:givenName "Mayeul" ;
+    schema:name "Mayeul d'Avezac" .
+
+<http://127.0.0.1/50f2392e-b0f6-47b8-abce-29f33e88efce> a schema:Person ;
+    schema:familyName "Conforti" ;
+    schema:gender schema:Female ;
+    schema:givenName "Sofia" ;
+    schema:name "Sofia Conforti" .
+
+<http://127.0.0.1/584ef3bd-e3d5-47f6-bd32-3aa11f38cc55> a schema:Person ;
+    schema:familyName "Sultanaliev" ;
+    schema:gender schema:Male ;
+    schema:givenName "Kanat" ;
+    schema:name "Kanat Sultanaliev" .
+
+<http://127.0.0.1/65a7976d-064e-41c7-9fe0-b679d5990180> a schema:Person ;
+    schema:familyName "Sokona" ;
+    schema:gender schema:Male ;
+    schema:givenName "Mohamed" ;
+    schema:name "Mohamed Sokona" .
+
+<http://127.0.0.1/73bbc494-5181-4eb9-81d6-4a0df2d71d23> a schema:Person ;
+    schema:familyName "Sesay" ;
+    schema:givenName "S." ;
+    schema:name "S. Sesay" .
+
+<http://127.0.0.1/7e71bfeb-d1f8-4302-bf46-d45151e8354d> a schema:Person ;
+    schema:familyName "Bekele" ;
+    schema:gender schema:Male ;
+    schema:givenName "Getachew" ;
+    schema:name "Getachew Bekele" .
+
+<http://127.0.0.1/836af3e5-d834-4ebf-beba-7928e3bfda16> a schema:Person ;
+    schema:familyName "Tesfamichael" ;
+    schema:gender schema:Female ;
+    schema:givenName "Meron" ;
+    schema:name "Meron Tesfamichael" .
+
+<http://127.0.0.1/85629629-5aa8-4623-a31f-86b164ae86bb> a schema:Person ;
+    schema:familyName "Goundiam" ;
+    schema:gender schema:Male ;
+    schema:givenName "Mamadou" ;
+    schema:name "Mamadou Goundiam" .
+
+<http://127.0.0.1/8bff6c53-261d-429c-bea7-4f07a18dbb6a> a schema:Person ;
+    schema:familyName "Greenfield" ;
+    schema:gender schema:Male ;
+    schema:givenName "Oliver" ;
+    schema:name "Oliver Greenfield" .
+
+<http://127.0.0.1/8e80e5d4-deeb-43ab-a190-bbb9bdc87900> a schema:Person ;
+    schema:familyName "Ushigua" ;
+    schema:gender schema:Male ;
+    schema:givenName "Manari" ;
+    schema:name "Manari Ushigua" .
+
+<http://127.0.0.1/94bf306d-7c69-4638-bbfd-af7371662296> a schema:Person ;
+    schema:familyName "Petrarulo" ;
+    schema:gender schema:Male ;
+    schema:givenName "Luca" ;
+    schema:name "Luca Petrarulo" .
+
+<http://127.0.0.1/9c18e676-9456-480c-83a6-af8650007212> a schema:Person ;
+    schema:familyName "Adam" ;
+    schema:gender schema:Male ;
+    schema:givenName "Jean-Paul" ;
+    schema:name "Jean-Paul Adam" .
+
+<http://127.0.0.1/a46f40ad-ab6d-4df5-b612-fe89935750f8> a schema:Person ;
+    schema:familyName "Gujba" ;
+    schema:gender schema:Male ;
+    schema:givenName "Haruna Kachalla" ;
+    schema:name "Haruna Kachalla Gujba" .
+
+<http://127.0.0.1/a4d05877-6514-4270-a0e1-3c1584ca81cd> a schema:Person ;
+    schema:familyName "Tchouambe" ;
+    schema:gender schema:Male ;
+    schema:givenName "Jeffrey" ;
+    schema:name "Jeffrey Tchouambe" .
+
+<http://127.0.0.1/abd3c013-38ba-4c85-a0fa-0d7be0ff6dcf> a schema:Person ;
+    schema:familyName "Lanza" ;
+    schema:gender schema:Female ;
+    schema:givenName "Micaela Flores" ;
+    schema:name "Micaela Flores Lanza" .
+
+<http://127.0.0.1/aed74553-4e48-4424-a965-c37e165068f0> a schema:Person ;
+    schema:familyName "Hepburn" ;
+    schema:gender schema:Male ;
+    schema:givenName "Cameron" ;
+    schema:name "Cameron Hepburn" .
+
+<http://127.0.0.1/b18b54f3-fe41-4e12-b7fd-aceccfb93f89> a schema:Person ;
+    schema:familyName "Sachs" ;
+    schema:gender schema:Female ;
+    schema:givenName "Julia" ;
+    schema:name "Julia Sachs" .
+
+<http://127.0.0.1/b2351ce4-05d4-4672-9dac-d5f5ab0163c9> a schema:Person ;
+    schema:familyName "Brener" ;
+    schema:gender schema:Male ;
+    schema:givenName "Andrea Babic" ;
+    schema:name "Andrea Babic Brener" .
+
+<http://127.0.0.1/b380f241-20cc-4fc6-893f-4f8c507309e5> a schema:Person ;
+    schema:familyName "Obst" ;
+    schema:gender schema:Male ;
+    schema:givenName "Carl" ;
+    schema:name "Carl Obst" .
+
+<http://127.0.0.1/b7676321-8924-4e4c-bacf-552a928f253d> a schema:Person ;
+    schema:familyName "Rabie" ;
+    schema:gender schema:Male ;
+    schema:givenName "Khaled" ;
+    schema:name "Khaled Rabie" .
+
+<http://127.0.0.1/b76b9e7c-e582-4166-82c0-7b81a19b700c> a schema:Person ;
+    schema:familyName "Malo" ;
+    schema:gender schema:Female ;
+    schema:givenName "Ifeoma" ;
+    schema:name "Ifeoma Malo" .
+
+<http://127.0.0.1/bdda0e8f-1e42-4cac-9d8c-16b463312a02> a schema:Person ;
+    schema:familyName "Caulker" ;
+    schema:givenName "D." ;
+    schema:name "D. Caulker" .
+
+<http://127.0.0.1/c23e57c1-3af1-4694-9cff-edb5be4eea29> a schema:Person ;
+    schema:familyName "Bass" ;
+    schema:gender schema:Male ;
+    schema:givenName "Steve" ;
+    schema:name "Steve Bass" .
+
+<http://127.0.0.1/c287a480-6c6e-4902-99c4-401bb677c09d> a schema:Person ;
+    schema:familyName "Aklilu" ;
+    schema:gender schema:Female ;
+    schema:givenName "Mekalia Paulos" ;
+    schema:name "Mekalia Paulos Aklilu" .
+
+<http://127.0.0.1/c9552e8f-8de3-4a61-82dc-d992d3846990> a schema:Person ;
+    schema:familyName "Mofor" ;
+    schema:gender schema:Male ;
+    schema:givenName "Linus" ;
+    schema:name "Linus Mofor" .
+
+<http://127.0.0.1/cb6cc50b-33d3-4ced-a290-90a3bcccff06> a schema:Person ;
+    schema:familyName "Hakker" ;
+    schema:gender schema:Female ;
+    schema:givenName "Maaike E." ;
+    schema:name "Maaike E. Hakker" .
+
+<http://127.0.0.1/ccc1e7ee-fc5c-45af-8036-e6650e512cac> a schema:Person ;
+    schema:familyName "Mwendwa" ;
+    schema:gender schema:Male ;
+    schema:givenName "Daniel Mutia" ;
+    schema:name "Daniel Mutia Mwendwa" .
+
+<http://127.0.0.1/ccf954ea-2bbc-4614-86cb-c8a492b4b665> a schema:Person ;
+    schema:familyName "Sabyrbekov" ;
+    schema:gender schema:Male ;
+    schema:givenName "Rahat" ;
+    schema:name "Rahat Sabyrbekov" .
+
+<http://127.0.0.1/d8f6438a-ea16-4601-b505-d773f7caa9fe> a schema:Person ;
+    schema:familyName "Portela" ;
+    schema:gender schema:Female ;
+    schema:givenName "Rosimeiry" ;
+    schema:name "Rosimeiry Portela" .
+
+<http://127.0.0.1/ea61459a-8e48-4e11-88d4-8cd084b3885f> a schema:Person ;
+    schema:familyName "Dalkmann" ;
+    schema:gender schema:Male ;
+    schema:givenName "Holger" ;
+    schema:name "Holger Dalkmann" .
+
+<http://127.0.0.1/ea909217-c77c-4ec0-bf39-5e9065cdbd42> a schema:Person ;
+    schema:familyName "Tumwebaze" ;
+    schema:gender schema:Male ;
+    schema:givenName "Scorah" ;
+    schema:name "Scorah Tumwebaze" .
+
+<http://127.0.0.1/ebd68764-82ca-40a0-b00f-07583b8ed918> a schema:Person ;
+    schema:familyName "Khanfar" ;
+    schema:gender schema:Female ;
+    schema:givenName "Layla" ;
+    schema:name "Layla Khanfar" .
+
+<http://127.0.0.1/edad1209-0c00-4fe7-81fe-3c68c296fc94> a schema:Person ;
+    schema:familyName "Alao" ;
+    schema:gender schema:Male ;
+    schema:givenName "Olakunle" ;
+    schema:name "Olakunle Alao" .
+
+<http://127.0.0.1/ee256610-9003-4de0-90a8-70bea740533c> a schema:Person ;
+    schema:familyName "Kebir" ;
+    schema:gender schema:Female ;
+    schema:givenName "Nisrine" ;
+    schema:name "Nisrine Kebir" .
+
+<http://127.0.0.1/eea52748-cbc8-4a34-b99c-60ec22c4124d> a schema:Person ;
+    schema:familyName "Benitez" ;
+    schema:gender schema:Male ;
+    schema:givenName "Pablo C." ;
+    schema:name "Pablo C. Benitez" .
+
+<http://127.0.0.1/f075419e-f9ac-450c-9c79-d3267c9cf276> a schema:Person ;
+    schema:familyName "Shenga" ;
+    schema:gender schema:Male ;
+    schema:givenName "Carlos" ;
+    schema:name "Carlos Shenga" .
+
+<http://127.0.0.1/fc99e62a-52e9-4148-bca6-3afd7c4bcb40> a schema:Person ;
+    schema:familyName "Davidson" ;
+    schema:gender schema:Male ;
+    schema:givenName "Ogunlade" ;
+    schema:name "Ogunlade Davidson" .
+
+<http://127.0.0.1/id/np_ghana> a org:OrganizationalUnit ;
+    skos:prefLabel "Ghana" ;
+    org:unitOf <http://127.0.0.1/id/ws1> .
+
+<http://127.0.0.1/id/np_india> a org:OrganizationalUnit ;
+    skos:prefLabel "India" ;
+    org:unitOf <http://127.0.0.1/id/ws1> .
+
+<http://127.0.0.1/id/np_kenya> a org:OrganizationalUnit ;
+    skos:prefLabel "Kenya" ;
+    org:unitOf <http://127.0.0.1/id/ws1> .
+
+<http://127.0.0.1/id/np_laos> a org:OrganizationalUnit ;
+    skos:prefLabel "Laos" ;
+    org:unitOf <http://127.0.0.1/id/ws1> .
+
+<http://127.0.0.1/id/np_vietnam> a org:OrganizationalUnit ;
+    skos:prefLabel "Vietnam" ;
+    org:unitOf <http://127.0.0.1/id/ws1> .
+
+<http://127.0.0.1/id/np_zambia> a org:OrganizationalUnit ;
+    skos:prefLabel "Zambia" ;
+    org:unitOf <http://127.0.0.1/id/ws1> .
+
+<http://127.0.0.1/id/ws2_ipa02> a org:OrganizationalUnit ;
+    skos:prefLabel "Sum4All-Secratariate" ;
+    org:unitOf <http://127.0.0.1/id/oa1> .
+
+<http://127.0.0.1/id/ws2_ipa06> a org:OrganizationalUnit ;
+    skos:prefLabel "Sum4All. Energy & Mobility WG." ;
+    org:unitOf <http://127.0.0.1/id/oa1> .
+
+<http://127.0.0.1/id/ws2_ipa08> a org:OrganizationalUnit ;
+    skos:prefLabel "Green Grids Initiative" ;
+    org:unitOf <http://127.0.0.1/id/oa1> .
+
+<https://orcid.org/0000-0001-5487-1002> a schema:Person ;
+    schema:familyName "Korkovelos" ;
+    schema:gender schema:Male ;
+    schema:givenName "Alexandros" ;
+    schema:name "Alexandros Korkovelos" .
+
+<https://orcid.org/0000-0001-6981-6401> a schema:Person ;
+    schema:familyName "Sokona" ;
+    schema:gender schema:Male ;
+    schema:givenName "Youba" ;
+    schema:name "Youba Sokona" .
+
+<https://orcid.org/0000-0001-7168-7936> a schema:Person ;
+    schema:familyName "Bouden" ;
+    schema:gender schema:Male ;
+    schema:givenName "Chiheb" ;
+    schema:name "Chiheb Bouden" .
+
+<https://orcid.org/0000-0001-7243-1641> a schema:Person ;
+    schema:familyName "Coyle" ;
+    schema:gender schema:Female ;
+    schema:givenName "Diane" ;
+    schema:name "Diane Coyle" .
+
+<https://orcid.org/0000-0001-8170-8024> a schema:Person ;
+    schema:familyName "Bassi" ;
+    schema:gender schema:Female ;
+    schema:givenName "Andrea M." ;
+    schema:name "Andrea M. Bassi" .
+
+<https://orcid.org/0000-0001-8345-5999> a schema:Person ;
+    schema:familyName "Kocaman" ;
+    schema:gender schema:Female ;
+    schema:givenName "Ayse Selin" ;
+    schema:name "Ayse Selin Kocaman" .
+
+<https://orcid.org/0000-0001-8568-2001> a schema:Person ;
+    schema:familyName "Sedzro" ;
+    schema:gender schema:Female ;
+    schema:givenName "Delight" ;
+    schema:name "Delight Sedzro" .
+
+<https://orcid.org/0000-0001-8617-5175> a schema:Person ;
+    schema:familyName "Egli" ;
+    schema:gender schema:Male ;
+    schema:givenName "Florian" ;
+    schema:name "Florian Egli" .
+
+<https://orcid.org/0000-0001-8697-5471> a schema:Person ;
+    schema:familyName "Hoka" ;
+    schema:gender schema:Female ;
+    schema:givenName "Helen" ;
+    schema:name "Helen Hoka" .
+
+<https://orcid.org/0000-0001-8801-9686> a schema:Person ;
+    schema:familyName "Eludoyin" ;
+    schema:gender schema:Male ;
+    schema:givenName "Elusiyan" ;
+    schema:name "Elusiyan Eludoyin" .
+
+<https://orcid.org/0000-0001-8834-2766> a schema:Person ;
+    schema:familyName "Gebresilassie" ;
+    schema:gender schema:Male ;
+    schema:givenName "Eshetu Gebrekidan" ;
+    schema:name "Eshetu Gebrekidan Gebresilassie" .
+
+<https://orcid.org/0000-0001-9053-5540> a schema:Person ;
+    schema:familyName "Mannan" ;
+    schema:gender schema:Male ;
+    schema:givenName "Imran" ;
+    schema:name "Imran Mannan" .
+
+<https://orcid.org/0000-0001-9061-8485> a schema:Person ;
+    schema:familyName "Ramos" ;
+    schema:gender schema:Female ;
+    schema:givenName "Eunice Pereira" ;
+    schema:name "Eunice Pereira Ramos" .
+
+<https://orcid.org/0000-0001-9774-2729> a schema:Person ;
+    schema:familyName "Crozier" ;
+    schema:gender schema:Female ;
+    schema:givenName "Constance" ;
+    schema:name "Constance Crozier" .
+
+<https://orcid.org/0000-0001-9802-7938> a schema:Person ;
+    schema:familyName "Twesigye" ;
+    schema:gender schema:Male ;
+    schema:givenName "Peter" ;
+    schema:name "Peter Twesigye" .
+
+<https://orcid.org/0000-0002-0042-2559> a schema:Person ;
+    schema:familyName "Agarwala" ;
+    schema:gender schema:Male ;
+    schema:givenName "Matthew" ;
+    schema:name "Matthew Agarwala" .
+
+<https://orcid.org/0000-0002-0133-485X> a schema:Person ;
+    schema:familyName "Diemuodeke" ;
+    schema:gender schema:Male ;
+    schema:givenName "E. Ogheneruona" ;
+    schema:name "E. Ogheneruona Diemuodeke" .
+
+<https://orcid.org/0000-0002-0233-6646> a schema:Person ;
+    schema:familyName "Giarola" ;
+    schema:gender schema:Female ;
+    schema:givenName "Sara" ;
+    schema:name "Sara Giarola" .
+
+<https://orcid.org/0000-0002-0538-7887> a schema:Person ;
+    schema:familyName "Khavari" ;
+    schema:gender schema:Male ;
+    schema:givenName "Babak" ;
+    schema:name "Babak Khavari" .
+
+<https://orcid.org/0000-0002-0979-8181> a schema:Person ;
+    schema:familyName "Kruger" ;
+    schema:gender schema:Male ;
+    schema:givenName "Wikus" ;
+    schema:name "Wikus Kruger" .
+
+<https://orcid.org/0000-0002-1140-1403> a schema:Person ;
+    schema:familyName "Akbas" ;
+    schema:gender schema:Female ;
+    schema:givenName "Beste" ;
+    schema:name "Beste Akbas" .
+
+<https://orcid.org/0000-0002-1149-8938> a schema:Person ;
+    schema:familyName "Probst" ;
+    schema:gender schema:Male ;
+    schema:givenName "Benedict" ;
+    schema:name "Benedict Probst" .
+
+<https://orcid.org/0000-0002-1236-7091> a schema:Person ;
+    schema:familyName "Wu" ;
+    schema:gender schema:Male ;
+    schema:givenName "Mingbo" ;
+    schema:name "Mingbo Wu" .
+
+<https://orcid.org/0000-0002-1596-6831> a schema:Person ;
+    schema:familyName "Necibi" ;
+    schema:gender schema:Male ;
+    schema:givenName "Thameur" ;
+    schema:name "Thameur Necibi" .
+
+<https://orcid.org/0000-0002-1668-4086> a schema:Person ;
+    schema:familyName "Suryadi" ;
+    schema:gender schema:Male ;
+    schema:givenName "Beni" ;
+    schema:name "Beni Suryadi" .
+
+<https://orcid.org/0000-0002-2535-4134> a schema:Person ;
+    schema:familyName "Shivakumar" ;
+    schema:gender schema:Male ;
+    schema:givenName "Abhishek" ;
+    schema:name "Abhishek Shivakumar" .
+
+<https://orcid.org/0000-0002-3709-7323> a schema:Person ;
+    schema:familyName "Schaeffer" ;
+    schema:gender schema:Male ;
+    schema:givenName "Roberto" ;
+    schema:name "Roberto Schaeffer" .
+
+<https://orcid.org/0000-0002-5325-9214> a schema:Person ;
+    schema:familyName "Steckel" ;
+    schema:gender schema:Male ;
+    schema:givenName "Jan Christoph" ;
+    schema:name "Jan Christoph Steckel" .
+
+<https://orcid.org/0000-0002-5509-5866> a schema:Person ;
+    schema:familyName "Gebreslassie" ;
+    schema:gender schema:Male ;
+    schema:givenName "Mulualem" ;
+    schema:name "Mulualem Gebreslassie" .
+
+<https://orcid.org/0000-0002-5708-6824> a schema:Person ;
+    schema:familyName "Vardon" ;
+    schema:gender schema:Male ;
+    schema:givenName "Michael" ;
+    schema:name "Michael Vardon" .
+
+<https://orcid.org/0000-0002-5826-4071> a schema:Person ;
+    schema:familyName "Winkler" ;
+    schema:gender schema:Male ;
+    schema:givenName "Harald" ;
+    schema:name "Harald Winkler" .
+
+<https://orcid.org/0000-0002-6027-4818> a schema:Person ;
+    schema:familyName "Ahsan" ;
+    schema:gender schema:Male ;
+    schema:givenName "Aniq" ;
+    schema:name "Aniq Ahsan" .
+
+<https://orcid.org/0000-0002-6179-927X> a schema:Person ;
+    schema:familyName "Broad" ;
+    schema:gender schema:Male ;
+    schema:givenName "Oliver" ;
+    schema:name "Oliver Broad" .
+
+<https://orcid.org/0000-0002-6217-9726> a schema:Person ;
+    schema:familyName "Dagnachew" ;
+    schema:gender schema:Male ;
+    schema:givenName "Anteneh G." ;
+    schema:name "Anteneh G. Dagnachew" .
+
+<https://orcid.org/0000-0002-6352-2928> a schema:Person ;
+    schema:familyName "Williams" ;
+    schema:gender schema:Male ;
+    schema:givenName "Eric" ;
+    schema:name "Eric Williams" .
+
+<https://orcid.org/0000-0002-6434-5142> a schema:Person ;
+    schema:familyName "Harrison" ;
+    schema:gender schema:Male ;
+    schema:givenName "John" ;
+    schema:name "John Harrison" .
+
+<https://orcid.org/0000-0002-6544-6359> a schema:Person ;
+    schema:familyName "Ouedraogo" ;
+    schema:gender schema:Female ;
+    schema:givenName "S. Nadia" ;
+    schema:name "S. Nadia Ouedraogo" .
+
+<https://orcid.org/0000-0002-7360-6332> a schema:Person ;
+    schema:familyName "Bock" ;
+    schema:gender schema:Female ;
+    schema:givenName "Franziska" ;
+    schema:name "Franziska Bock" .
+
+<https://orcid.org/0000-0002-7730-8041> a schema:Person ;
+    schema:familyName "Khosla" ;
+    schema:gender schema:Female ;
+    schema:givenName "Radhika" ;
+    schema:name "Radhika Khosla" .
+
+<https://orcid.org/0000-0002-7971-2187> a schema:Person ;
+    schema:familyName "Schmidt" ;
+    schema:gender schema:Male ;
+    schema:givenName "Tobias S." ;
+    schema:name "Tobias S. Schmidt" .
+
+<https://orcid.org/0000-0002-8570-3287> a schema:Person ;
+    schema:familyName "Batidzirai" ;
+    schema:gender schema:Male ;
+    schema:givenName "Bothwell" ;
+    schema:name "Bothwell Batidzirai" .
+
+<https://orcid.org/0000-0002-9870-297X> a schema:Person ;
+    schema:familyName "Siikamaki" ;
+    schema:gender schema:Male ;
+    schema:givenName "Juha" ;
+    schema:name "Juha Siikamaki" .
+
+<https://orcid.org/0000-0003-0098-5420> a schema:Person ;
+    schema:familyName "Schmidt" ;
+    schema:gender schema:Female ;
+    schema:givenName "Maria" ;
+    schema:name "Maria Schmidt" .
+
+<https://orcid.org/0000-0003-0266-2705> a schema:Person ;
+    schema:familyName "Niet" ;
+    schema:gender schema:Male ;
+    schema:givenName "Taco" ;
+    schema:name "Taco Niet" .
+
+<https://orcid.org/0000-0003-0292-7830> a schema:Person ;
+    schema:familyName "Lucas" ;
+    schema:gender schema:Male ;
+    schema:givenName "Paul" ;
+    schema:name "Paul Lucas" .
+
+<https://orcid.org/0000-0003-0492-5986> org:memberOf <http://127.0.0.1/id/ws1> .
+
+<https://orcid.org/0000-0003-0741-0021> a schema:Person ;
+    schema:familyName "Mhiri" ;
+    schema:gender schema:Female ;
+    schema:givenName "Nesrine" ;
+    schema:name "Nesrine Mhiri" .
+
+<https://orcid.org/0000-0003-0989-5456> a schema:Person ;
+    schema:familyName "Abraham" ;
+    schema:gender schema:Male ;
+    schema:givenName "Edo" ;
+    schema:name "Edo Abraham" .
+
+<https://orcid.org/0000-0003-1078-5561> a schema:Person ;
+    schema:familyName "Sterl" ;
+    schema:gender schema:Male ;
+    schema:givenName "Sebastian" ;
+    schema:name "Sebastian Sterl" .
+
+<https://orcid.org/0000-0003-1263-1654> a schema:Person ;
+    schema:familyName "Chan" ;
+    schema:gender schema:Female ;
+    schema:givenName "Hoy-Yen" ;
+    schema:name "Hoy-Yen Chan" .
+
+<https://orcid.org/0000-0003-1356-5548> a schema:Person ;
+    schema:familyName "Isah" ;
+    schema:gender schema:Male ;
+    schema:givenName "Abdulrasheed" ;
+    schema:name "Abdulrasheed Isah" .
+
+<https://orcid.org/0000-0003-2219-1402> a schema:Person ;
+    schema:familyName "Steffen" ;
+    schema:gender schema:Male ;
+    schema:givenName "Bjarne" ;
+    schema:name "Bjarne Steffen" .
+
+<https://orcid.org/0000-0003-2540-4143> a schema:Person ;
+    schema:familyName "Boehlert" ;
+    schema:gender schema:Male ;
+    schema:givenName "Brent" ;
+    schema:name "Brent Boehlert" .
+
+<https://orcid.org/0000-0003-2940-6445> a schema:Person ;
+    schema:familyName "Farrell" ;
+    schema:gender schema:Female ;
+    schema:givenName "Catherine A." ;
+    schema:name "Catherine A. Farrell" .
+
+<https://orcid.org/0000-0003-2984-7777> a schema:Person ;
+    schema:familyName "Kammen" ;
+    schema:gender schema:Male ;
+    schema:givenName "Daniel" ;
+    schema:name "Daniel Kammen" .
+
+<https://orcid.org/0000-0003-3086-5921> a schema:Person ;
+    schema:familyName "Iwami" ;
+    schema:gender schema:Female ;
+    schema:givenName "Michiyo" ;
+    schema:name "Michiyo Iwami" .
+
+<https://orcid.org/0000-0003-3094-8647> a schema:Person ;
+    schema:familyName "Omukuti" ;
+    schema:gender schema:Female ;
+    schema:givenName "Jessica" ;
+    schema:name "Jessica Omukuti" .
+
+<https://orcid.org/0000-0003-3100-4306> a schema:Person ;
+    schema:familyName "Kell" ;
+    schema:gender schema:Male ;
+    schema:givenName "Alexander" ;
+    schema:name "Alexander Kell" .
+
+<https://orcid.org/0000-0003-3149-2485> a schema:Person ;
+    schema:familyName "Walle" ;
+    schema:gender schema:Male ;
+    schema:givenName "Tewodros" ;
+    schema:name "Tewodros Walle" .
+
+<https://orcid.org/0000-0003-3174-0362> a schema:Person ;
+    schema:familyName "Charbonnier" ;
+    schema:gender schema:Female ;
+    schema:givenName "Flora" ;
+    schema:name "Flora Charbonnier" .
+
+<https://orcid.org/0000-0003-3200-4308> a schema:Person ;
+    schema:familyName "Bhagavathy" ;
+    schema:gender schema:Female ;
+    schema:givenName "Sivapriya Mothilal" ;
+    schema:name "Sivapriya Mothilal Bhagavathy" .
+
+<https://orcid.org/0000-0003-3219-8173> a schema:Person ;
+    schema:familyName "Tembo" ;
+    schema:gender schema:Male ;
+    schema:givenName "Bernard" ;
+    schema:name "Bernard Tembo" .
+
+<https://orcid.org/0000-0003-3235-6469> a schema:Person ;
+    schema:familyName "Carvajal" ;
+    schema:gender schema:Female ;
+    schema:givenName "Andrea Espinoza" ;
+    schema:name "Andrea Espinoza Carvajal" .
+
+<https://orcid.org/0000-0003-3511-9960> a schema:Person ;
+    schema:familyName "Agutu" ;
+    schema:gender schema:Male ;
+    schema:givenName "Churchill" ;
+    schema:name "Churchill Agutu" .
+
+<https://orcid.org/0000-0003-3526-7242> a schema:Person ;
+    schema:familyName "King" ;
+    schema:gender schema:Male ;
+    schema:givenName "Steven" ;
+    schema:name "Steven King" .
+
+<https://orcid.org/0000-0003-3630-9192> a schema:Person ;
+    schema:familyName "Chen" ;
+    schema:gender schema:Female ;
+    schema:givenName "Yishan" ;
+    schema:name "Yishan Chen" .
+
+<https://orcid.org/0000-0003-3947-8725> org:memberOf <http://127.0.0.1/id/ws4> .
+
+<https://orcid.org/0000-0003-4022-5506> a schema:Person ;
+    schema:familyName "Taliotis" ;
+    schema:gender schema:Male ;
+    schema:givenName "Constantinos" ;
+    schema:name "Constantinos Taliotis" .
+
+<https://orcid.org/0000-0003-4648-5261> org:memberOf <http://127.0.0.1/id/oxford> .
+
+<http://127.0.0.1/4330e382-4f96-4fcc-a7fa-aa467c641865> a schema:Person ;
+    schema:familyName "Wheeler" ;
+    schema:gender schema:Male ;
+    schema:givenName "Scot" ;
+    schema:name "Scot Wheeler" .
+
+<http://127.0.0.1/id/cambridge> a org:Organization ;
+    owl:sameAs <http://dbpedia.org/resource/University_of_Cambridge> ;
+    skos:prefLabel "University of Cambridge" ;
+    org:hasMember <https://orcid.org/0000-0001-9185-3022>,
+        <https://orcid.org/0000-0003-4347-5025> ;
+    org:memberOf <http://127.0.0.1/ccg> .
+
+<http://127.0.0.1/id/oa3> a org:OrganizationalUnit ;
+    skos:prefLabel "Output Area 3" ;
+    org:hasUnit <http://127.0.0.1/id/ws7a> ;
+    org:unitOf <http://127.0.0.1/ccg> .
+
+<http://127.0.0.1/id/ws2_ipa01> a org:OrganizationalUnit ;
+    skos:prefLabel "ADB-CCG Central" ;
+    org:hasMember <https://orcid.org/0000-0001-8930-805X> ;
+    org:unitOf <http://127.0.0.1/id/oa1> .
+
+<http://127.0.0.1/id/ws2_ipa03> a org:OrganizationalUnit ;
+    skos:prefLabel "WBG-CCG Central" ;
+    org:hasMember <https://orcid.org/0000-0001-6419-4957> ;
+    org:unitOf <http://127.0.0.1/id/oa1> .
+
+<http://127.0.0.1/id/ws2_ipa04> a org:OrganizationalUnit ;
+    skos:prefLabel "OpTIMUSCommunity" ;
+    org:hasMember <https://orcid.org/0000-0002-1214-8913> ;
+    org:unitOf <http://127.0.0.1/id/oa1> .
+
+<http://127.0.0.1/id/ws2_ipa05> a org:OrganizationalUnit ;
+    skos:prefLabel "Green Climate Fund" ;
+    org:hasMember <https://orcid.org/0000-0001-6419-4957> ;
+    org:unitOf <http://127.0.0.1/id/oa1> .
+
+<http://127.0.0.1/id/ws2_ipa07> a org:OrganizationalUnit ;
+    skos:prefLabel "Sum4All/ADB. Finance WG" ;
+    org:hasMember <https://orcid.org/0000-0001-8930-805X> ;
+    org:unitOf <http://127.0.0.1/id/oa1> .
+
+<http://127.0.0.1/id/ws2_ipa09> a org:OrganizationalUnit ;
+    skos:prefLabel "Rapid Response Function" ;
+    org:hasMember <https://orcid.org/0000-0002-8906-6844> ;
+    org:unitOf <http://127.0.0.1/id/oa1> .
+
+<http://127.0.0.1/id/ws2_ipa10> a org:OrganizationalUnit ;
+    skos:prefLabel "Planning Principles & U4RIA" ;
+    org:hasMember <https://orcid.org/0000-0001-9367-1791> ;
+    org:unitOf <http://127.0.0.1/id/oa1> .
+
+<http://127.0.0.1/id/ws2_ipa11> a org:OrganizationalUnit ;
+    skos:prefLabel "Open Learn Collection" ;
+    org:hasMember <https://orcid.org/0000-0001-6419-4957> ;
+    org:unitOf <http://127.0.0.1/id/oa1> .
+
+<http://127.0.0.1/id/ws2_ipa12> a org:OrganizationalUnit ;
+    skos:prefLabel " Starter Data Kits" ;
+    org:hasMember <https://orcid.org/0000-0002-1214-8913> ;
+    org:unitOf <http://127.0.0.1/id/oa1> .
+
+<http://127.0.0.1/id/ws3> a org:OrganizationalUnit ;
+    skos:prefLabel "System Design" ;
+    org:hasMember <https://orcid.org/0000-0001-9720-332X> ;
+    org:unitOf <http://127.0.0.1/id/oa2> .
+
+<http://127.0.0.1/id/ws5> a org:OrganizationalUnit ;
+    skos:prefLabel "Economics & Policy" ;
+    org:hasMember <https://orcid.org/0000-0003-2100-7888> ;
+    org:unitOf <http://127.0.0.1/id/oa2> .
+
+<http://127.0.0.1/id/ws5b> a org:OrganizationalUnit ;
+    skos:prefLabel "Decarbonising Transport" ;
+    org:hasMember <https://orcid.org/0000-0001-8930-805X> ;
+    org:unitOf <http://127.0.0.1/id/oa2> .
+
+<http://127.0.0.1/id/ws5c> a org:OrganizationalUnit ;
+    skos:prefLabel "Investment Pipelines" ;
+    org:hasMember <https://orcid.org/0000-0003-0604-2327> ;
+    org:unitOf <http://127.0.0.1/id/oa2> .
+
+<https://orcid.org/0000-0001-5507-8399> a schema:Person ;
+    schema:familyName "Kemausuor" ;
+    schema:gender schema:Male ;
+    schema:givenName "Francis" ;
+    schema:name "Francis Kemausuor" .
+
+<https://orcid.org/0000-0001-7355-677X> org:memberOf <http://127.0.0.1/id/ucl>,
+        <http://127.0.0.1/id/ws5a> .
+
+<https://orcid.org/0000-0001-9185-3022> a schema:Person ;
+    org:memberOf <http://127.0.0.1/id/cambridge> ;
+    schema:familyName "Cervantes Barron" ;
+    schema:gender schema:Female ;
+    schema:givenName "Karla" ;
+    schema:name "Karla Cervantes Barron" .
+
+<https://orcid.org/0000-0001-9325-8147> a schema:Person ;
+    org:memberOf <http://127.0.0.1/id/ws2_ipa13> ;
+    schema:familyName "Yeganyan" ;
+    schema:gender schema:Male ;
+    schema:givenName "Rudolf" ;
+    schema:name "Rudolf Yeganyan" .
+
+<https://orcid.org/0000-0002-1565-2752> a schema:Person ;
+    schema:familyName "Sahlberg" ;
+    schema:gender schema:Male ;
+    schema:givenName "Andreas" ;
+    schema:name "Andreas Sahlberg" .
+
+<https://orcid.org/0000-0002-2024-9191> org:memberOf <http://127.0.0.1/id/oxford>,
+        <http://127.0.0.1/id/ws4> .
+
+<https://orcid.org/0000-0002-3363-8620> a schema:Person ;
+    schema:familyName "Yang" ;
+    schema:gender schema:Male ;
+    schema:givenName "Liu" ;
+    schema:name "Liu Yang" .
+
+<https://orcid.org/0000-0002-3946-4406> a schema:Person ;
+    schema:familyName "Collett" ;
+    schema:gender schema:Female ;
+    schema:givenName "Katherine A." ;
+    schema:name "Katherine A. Collett" .
+
+<https://orcid.org/0000-0002-4770-4051> a schema:Person ;
+    org:memberOf <http://127.0.0.1/id/kth> ;
+    schema:familyName "Fuso Nerini" ;
+    schema:gender schema:Male ;
+    schema:givenName "Francesco" ;
+    schema:name "Francesco Fuso Nerini" .
+
+<https://orcid.org/0000-0002-4879-9259> a schema:Person ;
+    schema:familyName "van Dam" ;
+    schema:gender schema:Male ;
+    schema:givenName "Koen" ;
+    schema:name "Koen van Dam" .
+
+<https://orcid.org/0000-0002-8906-6844> org:memberOf <http://127.0.0.1/id/imperial>,
+        <http://127.0.0.1/id/ws2_ipa09> .
+
+<https://orcid.org/0000-0002-9484-9632> a schema:Person ;
+    schema:familyName "Conforti" ;
+    schema:gender schema:Female ;
+    schema:givenName "Costanza" ;
+    schema:name "Costanza Conforti" .
+
+<https://orcid.org/0000-0002-9565-305X> a schema:Person ;
+    schema:familyName "Yussuff" ;
+    schema:gender schema:Male ;
+    schema:givenName "Abdulmutalib" ;
+    schema:name "Abdulmutalib Yussuff" .
+
+<https://orcid.org/0000-0002-9980-4126> a schema:Person ;
+    schema:familyName "O'Callaghan" ;
+    schema:gender schema:Male ;
+    schema:givenName "Brian" ;
+    schema:name "Brian O'Callaghan" .
+
+<https://orcid.org/0000-0003-0604-2327> org:memberOf <http://127.0.0.1/id/oxford>,
+        <http://127.0.0.1/id/ws5c> .
+
+<https://orcid.org/0000-0003-1739-7027> a schema:Person ;
+    schema:familyName "Nock" ;
+    schema:gender schema:Female ;
+    schema:givenName "Destenie" ;
+    schema:name "Destenie Nock" .
+
+<https://orcid.org/0000-0003-1793-2552> org:memberOf <http://127.0.0.1/id/oa2>,
+        <http://127.0.0.1/id/ucl> .
+
+<https://orcid.org/0000-0003-2352-1362> a schema:Person ;
+    schema:familyName "Mazzone" ;
+    schema:gender schema:Female ;
+    schema:givenName "Antonella" ;
+    schema:name "Antonella Mazzone" .
+
+<https://orcid.org/0000-0003-2407-2490> a schema:Person ;
+    schema:familyName "Brophy" ;
+    schema:gender schema:Female ;
+    schema:givenName "Aoife" ;
+    schema:name "Aoife Brophy" .
+
+<http://127.0.0.1/id/imperial> a org:Organization ;
+    owl:sameAs <http://dbpedia.org/resource/Imperial_College_London> ;
+    skos:prefLabel "Imperial College London" ;
+    org:hasMember <https://orcid.org/0000-0001-7957-8451>,
+        <https://orcid.org/0000-0001-9720-332X>,
+        <https://orcid.org/0000-0002-8906-6844> ;
+    org:memberOf <http://127.0.0.1/ccg> .
+
+<http://127.0.0.1/id/loughborough> a org:Organization ;
+    owl:sameAs <http://dbpedia.org/resource/Loughborough_University> ;
+    skos:prefLabel "University of Loughborough" ;
+    org:hasMember <https://orcid.org/0000-0001-6419-4957>,
+        <https://orcid.org/0000-0001-7957-8451>,
+        <https://orcid.org/0000-0002-1214-8913> ;
+    org:memberOf <http://127.0.0.1/ccg> .
+
+<http://127.0.0.1/id/ws2_ipa13> a org:OrganizationalUnit ;
+    skos:prefLabel "Summer School and EMPs" ;
+    org:hasMember <https://orcid.org/0000-0001-6419-4957>,
+        <https://orcid.org/0000-0001-9325-8147> ;
+    org:unitOf <http://127.0.0.1/id/oa1> .
+
+<http://127.0.0.1/id/ws2_ipa14> a org:OrganizationalUnit ;
+    skos:prefLabel "COP Policy Brief Research" ;
+    org:hasMember <https://orcid.org/0000-0001-7628-9259>,
+        <https://orcid.org/0000-0001-8464-1718> ;
+    org:unitOf <http://127.0.0.1/id/oa1> .
+
+<http://127.0.0.1/id/ws5a> a org:OrganizationalUnit ;
+    skos:prefLabel "Policies for CCG" ;
+    org:hasMember <https://orcid.org/0000-0001-7355-677X>,
+        <https://orcid.org/0000-0002-2156-1603> ;
+    org:unitOf <http://127.0.0.1/id/oa2> .
+
+<http://127.0.0.1/id/ws7a> a org:OrganizationalUnit ;
+    skos:prefLabel "Platform" ;
+    org:hasMember <https://orcid.org/0000-0001-6591-3028>,
+        <https://orcid.org/0000-0001-9367-1791> ;
+    org:unitOf <http://127.0.0.1/id/oa3> .
+
+<https://orcid.org/0000-0001-6591-3028> a schema:Person ;
+    org:memberOf <http://127.0.0.1/id/kth>,
+        <http://127.0.0.1/id/ws7a> ;
+    schema:familyName "Beltramo" ;
+    schema:gender schema:Female ;
+    schema:givenName "Agnese" ;
+    schema:name "Agnese Beltramo" .
+
+<https://orcid.org/0000-0001-7537-5470> a schema:Person ;
+    org:memberOf <http://127.0.0.1/id/kth> ;
+    schema:familyName "Pappis" ;
+    schema:gender schema:Male ;
+    schema:givenName "Ioannis" ;
+    schema:name "Ioannis Pappis" .
+
+<https://orcid.org/0000-0001-7957-8451> a schema:Person ;
+    org:memberOf <http://127.0.0.1/id/imperial>,
+        <http://127.0.0.1/id/loughborough> ;
+    schema:familyName "Tan" ;
+    schema:gender schema:Female ;
+    schema:givenName "Naomi" ;
+    schema:name "Naomi Tan" .
+
+<https://orcid.org/0000-0002-1214-8913> org:memberOf <http://127.0.0.1/id/loughborough>,
+        <http://127.0.0.1/id/ws2_ipa04>,
+        <http://127.0.0.1/id/ws2_ipa12> .
+
+<https://orcid.org/0000-0002-2156-1603> a schema:Person ;
+    org:memberOf <http://127.0.0.1/id/ucl>,
+        <http://127.0.0.1/id/ws5a> ;
+    schema:familyName "Tomei" ;
+    schema:gender schema:Female ;
+    schema:givenName "Julia" ;
+    schema:name "Julia Tomei" .
+
+<https://orcid.org/0000-0003-3995-0241> a schema:Person ;
+    org:memberOf <http://127.0.0.1/id/oa1>,
+        <http://127.0.0.1/id/ucl> ;
+    schema:familyName "Somavilla Croxatto" ;
+    schema:gender schema:Male ;
+    schema:givenName "Lucas" ;
+    schema:name "Lucas Somavilla Croxatto" .
+
+<https://orcid.org/0000-0003-4347-5025> a schema:Person ;
+    org:memberOf <http://127.0.0.1/id/cambridge>,
+        <http://127.0.0.1/id/ws4> ;
+    schema:familyName "Cullen" ;
+    schema:gender schema:Male ;
+    schema:givenName "Jonathan M." ;
+    schema:name "Jonathan M. Cullen" .
+
+<http://127.0.0.1/id/ws3a> a org:OrganizationalUnit ;
+    skos:prefLabel "GIS" ;
+    org:hasMember <https://orcid.org/0000-0001-6419-4957>,
+        <https://orcid.org/0000-0001-7628-9259>,
+        <https://orcid.org/0000-0002-7072-9150> ;
+    org:unitOf <http://127.0.0.1/id/oa2> .
+
+<http://127.0.0.1/id/ws4> a org:OrganizationalUnit ;
+    skos:prefLabel "System Interactions" ;
+    org:hasMember <https://orcid.org/0000-0002-2024-9191>,
+        <https://orcid.org/0000-0003-3947-8725>,
+        <https://orcid.org/0000-0003-4347-5025> ;
+    org:unitOf <http://127.0.0.1/id/oa2> .
+
+<https://orcid.org/0000-0001-5378-1128> a schema:Person ;
+    schema:familyName "McCulloch" ;
+    schema:gender schema:Male ;
+    schema:givenName "Malcolm D." ;
+    schema:name "Malcolm D. McCulloch" .
+
+<https://orcid.org/0000-0001-8371-9325> a schema:Person ;
+    org:memberOf <http://127.0.0.1/id/kth> ;
+    schema:familyName "Gardumi" ;
+    schema:gender schema:Male ;
+    schema:givenName "Francesco" ;
+    schema:name "Francesco Gardumi" .
+
+<https://orcid.org/0000-0001-8464-1718> a schema:Person ;
+    org:memberOf <http://127.0.0.1/id/oa2>,
+        <http://127.0.0.1/id/ucl>,
+        <http://127.0.0.1/id/ws2_ipa14> ;
+    schema:familyName "Watson" ;
+    schema:gender schema:Male ;
+    schema:givenName "Jim" ;
+    schema:name "Jim Watson" .
+
+<https://orcid.org/0000-0001-9720-332X> a schema:Person ;
+    org:memberOf <http://127.0.0.1/id/imperial>,
+        <http://127.0.0.1/id/ws3> ;
+    schema:familyName "Hawkes" ;
+    schema:gender schema:Male ;
+    schema:givenName "Adam D." ;
+    schema:name "Adam D. Hawkes" .
+
+<https://orcid.org/0000-0003-0590-4546> a schema:Person ;
+    schema:familyName "Trotter" ;
+    schema:gender schema:Male ;
+    schema:givenName "Philipp" ;
+    schema:name "Philipp Trotter" .
+
+<https://orcid.org/0000-0003-2100-7888> a schema:Person ;
+    org:memberOf <http://127.0.0.1/id/oxford>,
+        <http://127.0.0.1/id/ws5> ;
+    schema:familyName "Fankhauser" ;
+    schema:gender schema:Male ;
+    schema:givenName "Samuel" ;
+    schema:name "Samuel Fankhauser" .
+
+<http://127.0.0.1/id/kth> a org:Organization ;
+    owl:sameAs <http://dbpedia.org/resource/KTH_Royal_Institute_of_Technology> ;
+    skos:prefLabel "KTH Royal Institute of Technology" ;
+    org:hasMember <https://orcid.org/0000-0001-6591-3028>,
+        <https://orcid.org/0000-0001-7537-5470>,
+        <https://orcid.org/0000-0001-8371-9325>,
+        <https://orcid.org/0000-0001-9367-1791>,
+        <https://orcid.org/0000-0002-4770-4051> ;
+    org:memberOf <http://127.0.0.1/ccg> .
+
+<https://orcid.org/0000-0001-8930-805X> a schema:Person ;
+    org:memberOf <http://127.0.0.1/id/oxford>,
+        <http://127.0.0.1/id/ws2_ipa01>,
+        <http://127.0.0.1/id/ws2_ipa07>,
+        <http://127.0.0.1/id/ws5b> ;
+    schema:familyName "Dixon" ;
+    schema:gender schema:Male ;
+    schema:givenName "James" ;
+    schema:name "James Dixon" .
+
+<https://orcid.org/0000-0003-3191-8896> a schema:Person ;
+    org:memberOf <http://127.0.0.1/id/oa1>,
+        <http://127.0.0.1/id/ucl> ;
+    schema:familyName "Mulugetta" ;
+    schema:gender schema:Male ;
+    schema:givenName "Yacob" ;
+    schema:name "Yacob Mulugetta" .
+
+<http://127.0.0.1/id/ucl> a org:Organization ;
+    owl:sameAs <http://dbpedia.org/resource/University_College_London> ;
+    skos:prefLabel "University College London" ;
+    org:hasMember <https://orcid.org/0000-0001-7355-677X>,
+        <https://orcid.org/0000-0001-8464-1718>,
+        <https://orcid.org/0000-0002-2156-1603>,
+        <https://orcid.org/0000-0003-1793-2552>,
+        <https://orcid.org/0000-0003-3191-8896>,
+        <https://orcid.org/0000-0003-3995-0241> ;
+    org:memberOf <http://127.0.0.1/ccg> .
+
+<https://orcid.org/0000-0001-9367-1791> a schema:Person ;
+    org:memberOf <http://127.0.0.1/id/kth>,
+        <http://127.0.0.1/id/ws2_ipa10>,
+        <http://127.0.0.1/id/ws7a> ;
+    schema:familyName "Usher" ;
+    schema:gender schema:Male ;
+    schema:givenName "Will" ;
+    schema:name "Will Usher" .
+
+<http://127.0.0.1/id/oxford> a org:Organization ;
+    owl:sameAs <http://dbpedia.org/resource/University_of_Oxford> ;
+    skos:prefLabel "University of Oxford" ;
+    org:hasMember <https://orcid.org/0000-0001-7628-9259>,
+        <https://orcid.org/0000-0001-8930-805X>,
+        <https://orcid.org/0000-0002-2024-9191>,
+        <https://orcid.org/0000-0002-7072-9150>,
+        <https://orcid.org/0000-0003-0604-2327>,
+        <https://orcid.org/0000-0003-2100-7888>,
+        <https://orcid.org/0000-0003-4648-5261> ;
+    org:memberOf <http://127.0.0.1/ccg> .
+
+<http://127.0.0.1/id/ws1> a org:OrganizationalUnit ;
+    skos:prefLabel "National Partnerships" ;
+    org:hasMember <https://orcid.org/0000-0003-0492-5986> ;
+    org:hasUnit <http://127.0.0.1/id/np_ghana>,
+        <http://127.0.0.1/id/np_india>,
+        <http://127.0.0.1/id/np_kenya>,
+        <http://127.0.0.1/id/np_laos>,
+        <http://127.0.0.1/id/np_vietnam>,
+        <http://127.0.0.1/id/np_zambia> ;
+    org:unitOf <http://127.0.0.1/id/oa1> .
+
+<https://orcid.org/0000-0002-7072-9150> a schema:Person ;
+    org:memberOf <http://127.0.0.1/id/oxford>,
+        <http://127.0.0.1/id/ws3a> ;
+    schema:familyName "Leonard" ;
+    schema:gender schema:Female ;
+    schema:givenName "Alycia" ;
+    schema:name "Alycia Leonard" .
+
+<http://127.0.0.1/id/oa2> a org:OrganizationalUnit ;
+    skos:prefLabel "Output Area 2" ;
+    org:hasMember <https://orcid.org/0000-0001-7628-9259>,
+        <https://orcid.org/0000-0001-8464-1718>,
+        <https://orcid.org/0000-0003-1793-2552> ;
+    org:hasUnit <http://127.0.0.1/id/ws3>,
+        <http://127.0.0.1/id/ws3a>,
+        <http://127.0.0.1/id/ws4>,
+        <http://127.0.0.1/id/ws5>,
+        <http://127.0.0.1/id/ws5a>,
+        <http://127.0.0.1/id/ws5b>,
+        <http://127.0.0.1/id/ws5c> ;
+    org:unitOf <http://127.0.0.1/ccg> .
+
+<http://127.0.0.1/ccg> a org:OrganizationalCollaboration ;
+    skos:prefLabel "Climate Compatible Growth" ;
+    org:hasUnit <http://127.0.0.1/id/oa1>,
+        <http://127.0.0.1/id/oa2>,
+        <http://127.0.0.1/id/oa3> .
+
+<https://orcid.org/0000-0001-7628-9259> a schema:Person ;
+    org:memberOf <http://127.0.0.1/id/oa2>,
+        <http://127.0.0.1/id/oxford>,
+        <http://127.0.0.1/id/ws2_ipa14>,
+        <http://127.0.0.1/id/ws3a> ;
+    schema:familyName "Hirmer" ;
+    schema:gender schema:Female ;
+    schema:givenName "Stephanie" ;
+    schema:name "Stephanie Hirmer" .
+
+<https://orcid.org/0000-0001-6419-4957> a schema:Person ;
+    org:memberOf <http://127.0.0.1/id/loughborough>,
+        <http://127.0.0.1/id/ws2_ipa03>,
+        <http://127.0.0.1/id/ws2_ipa05>,
+        <http://127.0.0.1/id/ws2_ipa11>,
+        <http://127.0.0.1/id/ws2_ipa13>,
+        <http://127.0.0.1/id/ws3a> ;
+    schema:familyName "Howells" ;
+    schema:gender schema:Male ;
+    schema:givenName "Mark" ;
+    schema:name "Mark Howells" .
+
+<http://127.0.0.1/id/oa1> a org:OrganizationalUnit ;
+    skos:prefLabel "Output Area 1" ;
+    org:hasMember <https://orcid.org/0000-0003-3191-8896>,
+        <https://orcid.org/0000-0003-3995-0241> ;
+    org:hasUnit <http://127.0.0.1/id/ws1>,
+        <http://127.0.0.1/id/ws2_ipa01>,
+        <http://127.0.0.1/id/ws2_ipa02>,
+        <http://127.0.0.1/id/ws2_ipa03>,
+        <http://127.0.0.1/id/ws2_ipa04>,
+        <http://127.0.0.1/id/ws2_ipa05>,
+        <http://127.0.0.1/id/ws2_ipa06>,
+        <http://127.0.0.1/id/ws2_ipa07>,
+        <http://127.0.0.1/id/ws2_ipa08>,
+        <http://127.0.0.1/id/ws2_ipa09>,
+        <http://127.0.0.1/id/ws2_ipa10>,
+        <http://127.0.0.1/id/ws2_ipa11>,
+        <http://127.0.0.1/id/ws2_ipa12>,
+        <http://127.0.0.1/id/ws2_ipa13>,
+        <http://127.0.0.1/id/ws2_ipa14> ;
+    org:unitOf <http://127.0.0.1/ccg> .
+
