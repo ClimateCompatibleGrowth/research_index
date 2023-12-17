@@ -1,78 +1,35 @@
-from flask import Flask
-from flask_restful import Resource, Api, fields, marshal_with
+from flask import Flask, render_template
 
-from rdflib import Graph, URIRef
-from rdflib.namespace import RDF, SDO
-
+from model import AuthorModel, OutputModel
 
 app = Flask(__name__)
-api = Api(app)
 
 
-g = Graph(bind_namespaces="rdflib")
-g.parse('authors.ttl', format='turtle')
+author_model = AuthorModel()
 
 
+@app.route('/authors/<id>')
+def author(id: int):
+    entity = author_model.get(int(id), collabs=True)
+    app.logger.info(entity)
+    return render_template('author.html', title='Author', author=entity)
 
 
-class Authors(Resource):
-
-    resource_fields = {
-        'id': fields.String,
-        'givenName': fields.String,
-        'familyName': fields.String,
-        'gender': fields.String
-    }
-
-    @marshal_with(resource_fields, envelope='resource')
-    def get(self):
-        query_object = """
-            SELECT ?id ?givenName ?familyName ?gender
-            WHERE {
-                ?id a sdo:Person ;
-                    sdo:givenName ?givenName ;
-                    sdo:familyName ?familyName ;
-                    sdo:gender ?gender .
-
-            }
-            """
-        result = g.query(query_object, initNs={'sdo': SDO})
-
-        return [{'id': result.id,
-                 'givenName': result.givenName,
-                 'familyName': result.familyName,
-                 'gender': result.gender} for result in result]
+output_model = OutputModel()
 
 
-def abort_if_author_doesnt_exist(author_id):
-    if author_id not in TODOS:
-        abort(404, message="Todo {} doesn't exist".format(todo_id))
+@app.route('/outputs/<id>')
+def output(id: int):
+    entity = output_model.get(int(id))
+    app.logger.info(entity)
+    return render_template('output.html', title='Output', output=entity)
 
 
-class Author(Resource):
+@app.route('/')
+@app.route('/index')
+def index():
+    return render_template('index.html', title='Home')
 
-    def get(self, id):
-        query_object = """
-        SELECT ?givenName ?familyName ?gender
-        WHERE {
-            ?id a sdo:Person ;
-                sdo:givenName ?givenName ;
-                sdo:familyName ?familyName ;
-                sdo:gender ?gender .
-            }
-        """
-        result = g.query(query_object,
-                         initNs={'sdo': SDO},
-                         initBindings={'id': URIRef(id)})
-
-        return [{'id': result.id,
-                 'givenName': result.givenName,
-                 'familyName': result.familyName,
-                 'gender': result.gender} for result in result]
-
-
-api.add_resource(Authors, '/authors')
-api.add_resource(Author, '/authors/<id>')
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)

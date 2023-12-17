@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Author Information</title>
+</head>
+<body>
+    <h1>Author Information</h1>
+    <p>First Name: {{ author.givenName }}</p>
+    <p>Last Name: {{ author.familyName }}</p>
+    <p><a href="{{ author.orcid }}">
+        <img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="16" height="16" />
+        {{ author.orcid }}
+        </a></p>
+    <p>Gender: {{ author.gender }}</p>
+    Collaborators:
+    {% for colab in author.collaborators %}
+        <p><l><a href="{{ url_for('author', id=colab.id) }}">{{ colab.givenName}} {{ colab.familyName }}</a></l></p>
+    {% endfor %}
+</body>
+</html>

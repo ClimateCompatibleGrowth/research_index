@@ -1,0 +1,26 @@
+# Ignore compiled Python files
+*.pyc
+
+# Ignore virtual environment
+venv/
+
+# Ignore Flask cache
+__pycache__/
+
+# Ignore IDE files
+.vscode/
+.idea/
+
+# Ignore logs
+*.log
+
+# Ignore database files
+*.db
+
+# Ignore package build files
+*.egg-info/
+dist/
+build/
+
+# Ignore environment variables file
+.env
