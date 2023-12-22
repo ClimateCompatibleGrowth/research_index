@@ -7,6 +7,7 @@
 <body>
     <h1>Output Information</h1>
     <p><h2>{{ output.title }}</h2> </p>
+    <p>{{ output.year }}, {{ output.journal }}</p>
     <p><a href="http://doi.org/{{ output.doi }}">http://doi.org/{{ output.doi }}</a></p>
     <h2>Authors</h2>
     {% for author in output.authors %}

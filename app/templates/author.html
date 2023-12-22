@@ -17,5 +17,9 @@
     {% for colab in author.collaborators %}
         <p><l><a href="{{ url_for('author', id=colab.id) }}">{{ colab.givenName}} {{ colab.familyName }}</a></l></p>
     {% endfor %}
+    <p>Outputs:</p>
+    {% for output in author.outputs %}
+        <p><l><a href="{{ url_for('output', id=output.id) }}">{{ output.title }}</a></l></p>
+    {% endfor %}
 </body>
 </html>
