@@ -1,3 +1,40 @@
+from gqlalchemy import Memgraph, match, Node
+from gqlalchemy.query_builders.memgraph_query_builder import Operator
+
+
+db = Memgraph(host='127.0.0.1', port=7687)
+
+
+class Author:
+
+    def get(self, id):
+        """
+
+        Notes
+        -----
+        MATCH (a:Author)-[r:author_of]->(p:Article)
+        WHERE a.uuid = $uuid
+        RETURN *;
+
+        """
+        author_query = """MATCH (a:Author) WHERE a.uuid = $uuid RETURN *;"""
+        author = list(db.execute_and_fetch(author_query, parameters={'uuid': id}))[0]['a'].dict()
+
+        collab_query = """MATCH (a:Author)-[r:author_of]->(p:Article)<-[s:author_of]-(b:Author)
+                          WHERE a.uuid = $uuid
+                          RETURN DISTINCT b.uuid as uuid, b.first_name as first_name, b.last_name as last_name, b.orcid as orcid"""
+        colabs = list(db.execute_and_fetch(collab_query, parameters={'uuid': id}))
+
+        author['collaborators'] = colabs
+
+        publications_query = """MATCH (a:Author)-[r:author_of]->(p:Article) WHERE a.uuid = $uuid RETURN p.doi as doi, p.title as title;"""
+        result = list(db.execute_and_fetch(publications_query, parameters={'uuid': id}))
+        print(result)
+        author['outputs'] = result
+
+        return author
+
+
 class AuthorModel:
 
     authors = {

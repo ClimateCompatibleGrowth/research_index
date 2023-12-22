@@ -1,17 +1,19 @@
 from flask import Flask, render_template
 
 from model import AuthorModel, OutputModel
+from model import Author
 
 app = Flask(__name__)
 
 
-author_model = AuthorModel()
 
 
 @app.route('/authors/<id>')
 def author(id: int):
-    entity = author_model.get(int(id), collabs=True)
-    app.logger.info(entity)
+    author_model = Author()
+    entity = author_model.get(id)
+
+    app.logger.info(type(entity))
     return render_template('author.html', title='Author', author=entity)
 
 
