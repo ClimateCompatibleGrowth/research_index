@@ -1,13 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Author Information</title>
-</head>
-<body>
-    <h1>Author Information</h1>
-    <p>First Name: {{ author.first_name }}</p>
-    <p>Last Name: {{ author.last_name }}</p>
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>{{ author.first_name }} {{ author.last_name }}</h1>
     <p><a href="{{ author.orcid }}">
         <img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="16" height="16" />
         {{ author.orcid }}
@@ -19,7 +13,6 @@
     {% endfor %}
     <p>Outputs:</p>
     {% for output in author.outputs %}
-        <p><l><a href="{{ url_for('output', id=output.doi) }}">{{ output.title }}</a></l></p>
+        <l><a href="{{ url_for('output', id=output.uuid) }}">{{ output.title }}</a></l>
     {% endfor %}
-</body>
-</html>
+{% endblock %}
