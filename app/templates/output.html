@@ -1,9 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Output Information</h1>
-    <p><h2>{{ output.title }}</h2> </p>
-    <p>{{ output.year }}, {{ output.journal }}</p>
+    <h1>{{ output.title }}</h1>
+
+    <p>
+    {% if output.year %}{{ output.year }}, {% endif %}
+    {% if output.journal%}{ output.journal }}{% endif %}</p>
     <p><a href="http://doi.org/{{ output.doi }}">http://doi.org/{{ output.doi }}</a></p>
     <h2>Authors</h2>
     {% for author in output.authors %}
