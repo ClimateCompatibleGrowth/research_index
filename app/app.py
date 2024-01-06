@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 
-from model import Author, Output, AuthorList, OutputList
+from model import Author, Output, AuthorList, OutputList, Nodes, Edges
 
 app = Flask(__name__)
 
@@ -49,8 +49,10 @@ def output_popup(id: str):
 @app.route('/')
 @app.route('/index')
 def index():
-    outputs = OutputList().get()
-    return render_template('index.html', title='Home', data=outputs)
+    nodes = Nodes().get()
+    edges = Edges().get()
+    return render_template('index.html', title='Home',
+                           nodes=nodes, links=edges)
 
 
 if __name__ == '__main__':

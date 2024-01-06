@@ -17,7 +17,6 @@ class OutputList:
         """
         query = """MATCH (a:Article) RETURN a;"""
         results = list(db.execute_and_fetch(query))
-        print(results)
         articles = [x['a'].dict() for x in results]
 
         return articles
@@ -37,10 +36,8 @@ class AuthorList:
                    RETURN a.first_name as first_name, a.last_name as last_name, a.uuid as uuid, a.orcid as orcid, p.name as affiliation
                    ORDER BY a.last_name;"""
         results = list(db.execute_and_fetch(query))
-        print(results)
-        authors = [x for x in results]
 
-        return authors
+        return results
 
 
 class Author:
@@ -75,7 +72,6 @@ class Author:
 
         publications_query = """MATCH (a:Author)-[r:author_of]->(p:Article) WHERE a.uuid = $uuid RETURN DISTINCT p.uuid as uuid, p.title as title;"""
         result = list(db.execute_and_fetch(publications_query, parameters={'uuid': id}))
-        print(result)
         author['outputs'] = result
 
         return author
@@ -91,15 +87,36 @@ class Output:
                    WHERE p.uuid = $uuid
                    RETURN * LIMIT 1"""
         result = list(db.execute_and_fetch(query, parameters={'uuid': id}))[0]['p'].dict()
-        print(result)
 
         authors_query = """MATCH (a:Author)-[r:author_of]->(p:Article)
                             WHERE p.uuid = $uuid
                             RETURN a.uuid as uuid, a.first_name as first_name, a.last_name as last_name, a.orcid as orcid;"""
         author_result = list(db.execute_and_fetch(authors_query, parameters={'uuid': id}))
 
-        print(author_result)
-
         result['authors'] = author_result
         return result
 
+
+class Nodes:
+
+    def get(self):
+
+        query = """MATCH (a:Author)
+                RETURN a.uuid as id, 0 as group, a.first_name + " " + a.last_name as name, a.orcid as url
+                UNION ALL
+                MATCH (b:Article)
+                RETURN b.uuid as id, 1 as group, b.title as name, "https://doi.org/" + b.doi as url
+                """
+        results = list(db.execute_and_fetch(query))
+        return results
+
+
+class Edges:
+
+    def get(self):
+
+        query = """MATCH (p:Article)<-[author_of]-(a:Author)
+                RETURN p.uuid as target, a.uuid as source
+                """
+        results = list(db.execute_and_fetch(query))
+        return results
