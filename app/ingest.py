@@ -3,7 +3,7 @@ from typing import Optional
 from csv import DictReader
 from os.path import join
 
-db = Memgraph(host='127.0.0.1', port=7687)
+db = Memgraph(host='20.107.171.151', port=7687)
 db.drop_database()
 
 
