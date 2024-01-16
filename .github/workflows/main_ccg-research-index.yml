@@ -64,4 +64,4 @@ jobs:
         with:
           app-name: 'ccg-research-index'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_169A8C35EAE9448F90C160ED6342EAB8 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_9E8E585AD4BA4E729F17F88C1D8E512B }}
