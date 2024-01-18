@@ -15,6 +15,18 @@
     stroke-width: 1.5px;
   }
 
+  div.tooltip-node {
+     position: absolute;
+     text-align: center;
+     padding: .5rem;
+     background: #FFFFFF;
+     color: #313639;
+     border: 1px solid #313639;
+     border-radius: 8px;
+     pointer-events: none;
+     font-size: 1rem;
+}
+
   </style>
 
  <!--into this svg the illustration will be drawn -->
@@ -38,6 +50,12 @@
   // so that re-evaluating this cell produces the same result.
   const links = {{links|tojson}}.map(d => ({...d}));
   const nodes = {{nodes|tojson}}.map(d => ({...d}));
+
+
+  // Create a tooltip div that is hidden by default.
+  var div = d3.select("body").append("div")
+     .attr("class", "tooltip-node")
+     .style("opacity", 0);
 
   // Create a simulation with several forces.
   const simulation = d3.forceSimulation(nodes)
@@ -75,6 +93,18 @@
       .text(d => d.name);
 
   node.on("dblclick", dblclick)
+
+  node.on("mouseover", function(event, d) {
+
+    div.transition()
+      .duration(200)
+      .style("opacity", .9);
+
+    div.html(d.name)
+     .style("left", (event.pageX + 10) + "px")
+     .style("top", (event.pageY - 15) + "px");
+
+    })
 
   // Add a drag behavior.
   node.call(d3.drag()
