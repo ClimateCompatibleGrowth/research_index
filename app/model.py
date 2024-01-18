@@ -7,6 +7,8 @@ MG_PORT = int(os.environ.get('MG_PORT', 7687))
 
 db = Memgraph(host=MG_HOST, port=MG_PORT)
 
+print(f"Host is {MG_HOST} and port is {MG_PORT}")
+
 
 class OutputList:
 

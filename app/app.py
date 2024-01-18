@@ -5,7 +5,6 @@ from model import Author, Output, AuthorList, OutputList, Nodes, Edges
 app = Flask(__name__)
 
 
-
 @app.route('/authors/<id>')
 def author(id: str):
     author_model = Author()
@@ -56,4 +55,4 @@ def index():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5001)
+    app.run(debug=True, port=80)
