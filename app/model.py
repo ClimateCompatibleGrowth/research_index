@@ -1,8 +1,11 @@
 from gqlalchemy import Memgraph, match, Node
 from gqlalchemy.query_builders.memgraph_query_builder import Operator
+import os
 
+MG_HOST = os.environ.get('MG_HOST', '127.0.0.1')
+MG_PORT = int(os.environ.get('MG_PORT', 7687))
 
-db = Memgraph(host='127.0.0.1', port=7687)
+db = Memgraph(host=MG_HOST, port=MG_PORT)
 
 
 class OutputList:

@@ -1,9 +1,12 @@
 from gqlalchemy import Memgraph, Node, Relationship, Field
 from typing import Optional
 from csv import DictReader
-from os.path import join
+from os.path import join, environ
 
-db = Memgraph(host='20.107.171.151', port=7687)
+MG_HOST = environ.get('MG_HOST', '127.0.0.1')
+MG_PORT = int(environ.get('MG_PORT', 7687))
+
+db = Memgraph(host=MG_HOST, port=MG_PORT)
 db.drop_database()
 
 
