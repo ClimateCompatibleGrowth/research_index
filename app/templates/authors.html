@@ -2,14 +2,25 @@
 
 {% block content %}
 {% for author in authors %}
-    <p><l><a href="{{ url_for('author', id=author.uuid) }}">{{ author.first_name}} {{ author.last_name }}</a>
-        {% if author.orcid %}
-        <a href="{{ author.orcid }}">
-            <img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="16" height="16" /></a>
+    <div class="card">
+        <div class="card-body">
+            <a href="{{ url_for('author', id=author.uuid) }}">{{ author.first_name}} {{ author.last_name }}</a>
+            {% if author.orcid %}
+                <a href="{{ author.orcid }}">
+                <img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="16" height="16" /></a>
             {% endif %}
-            {% if author.affiliation %}{{ author.affiliation }}{% endif %}
-        </l>
-    </p>
+            {% if author.affiliation %}
+                    {% for id, value in author.affiliation|dictsort %}
+                        <span class="badge bg-primary">{{ value }}</span>
+                    {% endfor %}
+            {% endif %}
+            {% if author.workstreams %}
+                {% for id, value in author.workstreams|dictsort %}
+                    <span class="badge bg-secondary">{{ value }}</span>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
     {% endfor %}
 
 {% endblock %}

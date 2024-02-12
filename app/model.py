@@ -37,9 +37,10 @@ class AuthorList:
 
         """
         query = """MATCH (a:Author)
-                   OPTIONAL MATCH (a:Author)-[:member_of]->(p:Partner)
-                   RETURN a.first_name as first_name, a.last_name as last_name, a.uuid as uuid, a.orcid as orcid, p.name as affiliation
-                   ORDER BY a.last_name;"""
+                   OPTIONAL MATCH (a)-[:member_of]->(p:Partner)
+                   OPTIONAL MATCH (a)-[:member_of]->(u:Workstream)
+                   RETURN a.first_name as first_name, a.last_name as last_name, a.uuid as uuid, a.orcid as orcid, collect(p.id, p.name) as affiliation, collect(u.id, u.name) as workstreams
+                   """
         results = list(db.execute_and_fetch(query))
 
         return results
@@ -62,8 +63,10 @@ class Author:
 
         """
         author_query = """MATCH (a:Author) WHERE a.uuid = $uuid
-                          OPTIONAL MATCH (a:Author)-[:member_of]->(p:Partner)
-                          RETURN a.uuid as uuid, a.orcid as orcid, a.first_name as first_name, a.last_name as last_name, p.name as affiliation;
+                          OPTIONAL MATCH (a)-[:member_of]->(p:Partner)
+                          OPTIONAL MATCH (a)-[:member_of]->(u:Workstream)
+                          RETURN a.uuid as uuid, a.orcid as orcid, a.first_name as first_name, a.last_name as last_name, collect(p.id, p.name) as affiliations,
+                          collect(u.id, u.name) as workstreams;
                           """
         author = list(db.execute_and_fetch(author_query, parameters={'uuid': id}))[0]
 

@@ -1,37 +1,78 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>{{ author.first_name }} {{ author.last_name }}
-    {% if author.orcid %}
-    <a href="{{ author.orcid }}">
-        <img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="24" height="24" />
-        </a>
-        {% endif %}
-    </h1>
-    {% if author.affiliation %}{{ author.affiliation }}{% endif %}
-    <!-- Collaborators: -->
-    {% if author.collaborators %}
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">Collaborators</h5>
-            <ul class="list-group list-group-flush">
-            {% for colab in author.collaborators %}
-                <li class="list-group-item"><a href="{{ url_for('author', id=colab.uuid) }}">{{ colab.first_name}} {{ colab.last_name }}</a></li>
-            {% endfor %}
-            </ul>
-    </div></div>
-    {% endif %}
 
-    {% if author.outputs %}
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">Outputs</h5>
-            <ul class="list-group list-group-flush">
-            {% for output in author.outputs %}
-            <li class="list-group-item"><a href="{{ url_for('output', id=output.uuid) }}">{{ output.title }}</a></li>
-            {% endfor %}
-            </ul>
+<div class="container">
+    <div class="row">
+        <div class="column">
+            <h1>{{ author.first_name }} {{ author.last_name }}
+            {% if author.orcid %}
+            <a href="{{ author.orcid }}">
+                <img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="24" height="24" />
+                </a>
+            {% endif %}
+            </h1>
         </div>
     </div>
-    {% endif %}
+
+    <div class="row">
+
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <!-- Affiliation -->
+                    {% if author.affiliations %}
+                        <h5 class="card-title">Affiliations</h5>
+                        {% for id, value in author.affiliations|dictsort %}
+                            <span class="badge bg-primary">{{ value }}</span>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    {% if author.workstreams %}
+                        <h5 class="card-title">Workstreams</h5>
+                        {% for id, value in author.workstreams|dictsort %}
+                            <span class="badge bg-secondary">{{ value }}</span>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <!-- Collaborators: -->
+            {% if author.collaborators %}
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Collaborators</h5>
+                    <ul class="list-group list-group-flush">
+                        {% for colab in author.collaborators %}
+                        <li class="list-group-item"><a href="{{ url_for('author', id=colab.uuid) }}">{{ colab.first_name}} {{ colab.last_name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div></div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+
+        <div class="col">
+            {% if author.outputs %}
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Outputs</h5>
+                    <ul class="list-group list-group-flush">
+                    {% for output in author.outputs %}
+                    <li class="list-group-item"><a href="{{ url_for('output', id=output.uuid) }}">{{ output.title }}</a></li>
+                    {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    </div>
+
+
 {% endblock %}
