@@ -18,15 +18,25 @@
     <div class="row">
 
         <div class="col">
-            <!-- Affiliation -->
-            {% if author.affiliation %}
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Affiliation</h5>
-                        {{ author.affiliation }}
+                    <!-- Affiliation -->
+                    {% if author.affiliations %}
+                        <h5 class="card-title">Affiliations</h5>
+                        {% for id, value in author.affiliations|dictsort %}
+                            <span class="badge bg-primary">{{ value }}</span>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    {% if author.workstreams %}
+                        <h5 class="card-title">Workstreams</h5>
+                        {% for id, value in author.workstreams|dictsort %}
+                            <span class="badge bg-secondary">{{ value }}</span>
+                        {% endfor %}
+                    {% endif %}
                 </div>
             </div>
-            {% endif %}
         </div>
 
         <div class="col">
