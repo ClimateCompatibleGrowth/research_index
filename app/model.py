@@ -37,9 +37,10 @@ class AuthorList:
 
         """
         query = """MATCH (a:Author)
-                   OPTIONAL MATCH (a:Author)-[:member_of]->(p:Partner)
-                   RETURN a.first_name as first_name, a.last_name as last_name, a.uuid as uuid, a.orcid as orcid, p.name as affiliation
-                   ORDER BY a.last_name;"""
+                   OPTIONAL MATCH (a)-[:member_of]->(p:Partner)
+                   OPTIONAL MATCH (a)-[:member_of]->(u:Workstream)
+                   RETURN a.first_name as first_name, a.last_name as last_name, a.uuid as uuid, a.orcid as orcid, collect(p.id, p.name) as affiliation, collect(u.id, u.name) as workstreams
+                   """
         results = list(db.execute_and_fetch(query))
 
         return results
