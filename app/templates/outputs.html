@@ -1,16 +1,20 @@
 {% extends "base.html" %}
 
 {% block content %}
-
     {% for output in outputs %}
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">{{ output.title }}</h5>
-
-                {% if output.year %}{{ output.year }},{% endif %}
-                {% if output.journal%}{ output.journal }}{% endif %}
-                <a href="{{ url_for('output', id=output.uuid) }}" class="card-link">View Record</a>
-                <a href="http://doi.org/{{ output.doi }}" class="card-link">View at Publisher</a>
+                <h5 class="card-title">{{ output.output.title }}
+                    {%if output.countries %}
+                    {% for country in output.countries %}
+                    <span class="badge text-bg-danger">{{ country.name }}</span>
+                    {% endfor %}
+                    {% endif %}
+                </h5>
+                {% if output.output.year %}{{ output.output.year }},{% endif %}
+                {% if output.output.journal%}{ output.output.journal }}{% endif %}
+                <a href="{{ url_for('output', id=output.output.uuid) }}" class="card-link">View Record</a>
+                <a href="http://doi.org/{{ output.output.doi }}" class="card-link">View at Publisher</a>
             </div>
         </div>
     {% endfor %}

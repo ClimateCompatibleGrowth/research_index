@@ -3,6 +3,13 @@
 {% block content %}
     <h1>{{ output.title }}</h1>
 
+    {{output.output}}
+
+    {%if output.countries %}
+        {% for country in output.countries %}
+        <span class="badge text-bg-danger">{{ country.name }}</span>
+        {% endfor %}
+    {% endif %}
     <p>
     {% if output.year %}{{ output.year }}, {% endif %}
     {% if output.journal%}{ output.journal }}{% endif %}</p>
