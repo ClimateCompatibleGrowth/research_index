@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>{{ country.name }}</h1>
+    {% for row in outputs %}
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ row.outputs.title }}</h5>
+                <p class="card-text">
+                {% for author in row.authors %}
+                    <l><a href="{{ url_for('author', id=author.uuid) }}">{{ author.first_name}} {{ author.last_name }}</a>
+                        {% if author.orcid %}
+                        <a href="{{ author.orcid }}">
+                        <img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="16" height="16" /></a>
+                    {% endif %}</l>
+                {% endfor %}
+                </p>
+                {% if row.year %}{{ row.year }},{% endif %}
+                {% if row.journal%}{ row.journal }}{% endif %}
+                <p>
+                <a href="{{ url_for('output', id=row.outputs.uuid) }}" role="button" class="btn btn-primary">View Record</a>
+                <a href="http://doi.org/{{ row.outputs.doi }}" role="button" class="btn btn-primary">View at Publisher</a></p>
+            </div>
+        </div>
+    {% endfor %}
+
+
+{% endblock %}

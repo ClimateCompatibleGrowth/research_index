@@ -1,17 +1,35 @@
 from neo4j import GraphDatabase
 import os
+from functools import wraps
 
 MG_HOST = os.environ.get('MG_HOST', '127.0.0.1')
 MG_PORT = int(os.environ.get('MG_PORT', 7687))
 
-db = GraphDatabase.driver(f"bolt://{MG_HOST}:{MG_PORT}")
-db.verify_connectivity()
 print(f"Host is {MG_HOST} and port is {MG_PORT}")
+
+
+def connect_to_db(f):
+    @wraps(f)
+    def with_connection_(*args, **kwargs):
+
+        try:
+            URI = "bolt://localhost:7687"
+            AUTH = ("", "")
+            with GraphDatabase.driver(URI, auth=AUTH) as db:
+                db.verify_connectivity()
+                result = f(*args, db, **kwargs)
+        except Exception as e:
+            raise ValueError(e)
+        finally:
+            db.close()
+        return result
+    return with_connection_
 
 
 class OutputList:
 
-    def get(self):
+    @connect_to_db
+    def get(self, db):
         """
 
         Notes
@@ -33,7 +51,8 @@ class OutputList:
 
 class AuthorList:
 
-    def get(self):
+    @connect_to_db
+    def get(self, db):
         """
 
         Notes
@@ -52,7 +71,8 @@ class AuthorList:
 
 class Author:
 
-    def get(self, id):
+    @connect_to_db
+    def get(self, id, db):
         """
 
         Notes
@@ -75,7 +95,7 @@ class Author:
         author, summary, keys = db.execute_query(author_query, uuid=id)
         results = author[0].data()
 
-        collab_query = """MATCH (a:Author)-[r:author_of]->(p:Article)<-[s:author_of]-(b:Author)
+        collab_query = """MATCH (a:Author)-[r:author_of]->(p:Output)<-[s:author_of]-(b:Author)
                           WHERE a.uuid = $uuid AND b.uuid <> $uuid
                           RETURN DISTINCT b.uuid as uuid, b.first_name as first_name, b.last_name as last_name, b.orcid as orcid
                           LIMIT 5"""
@@ -83,16 +103,20 @@ class Author:
 
         results['collaborators'] = colabs
 
-        publications_query = """MATCH (a:Author)-[r:author_of]->(p:Article) WHERE a.uuid = $uuid RETURN DISTINCT p.uuid as uuid, p.title as title;"""
+        publications_query = """MATCH (a:Author)-[:author_of]->(p:Output)
+                                MATCH (b:Author)-[:author_of]->(p)
+                                WHERE a.uuid = $uuid
+                                RETURN DISTINCT p as outputs, collect(b) as authors;"""
         result, summary, keys = db.execute_query(publications_query, uuid=id)
-        results['outputs'] = result
+        results['outputs'] = [x.data() for x in result]
 
         return results
 
 
 class Output:
 
-    def get(self, id: str):
+    @connect_to_db
+    def get(self, id: str, db):
         """
         """
         query = """MATCH (p:Article)
@@ -117,7 +141,8 @@ class Output:
 
 class Nodes:
 
-    def get(self):
+    @connect_to_db
+    def get(self, db):
 
         query = """MATCH (a:Author)
                 RETURN a.uuid as id, 0 as group, a.first_name + " " + a.last_name as name, a.orcid as url
@@ -131,10 +156,42 @@ class Nodes:
 
 class Edges:
 
-    def get(self):
+    @connect_to_db
+    def get(self, db):
 
         query = """MATCH (p:Article)<-[author_of]-(a:Author)
                 RETURN p.uuid as target, a.uuid as source
                 """
         results, summary, keys = db.execute_query(query)
         return [x.data() for x in results]
+
+
+class CountryList:
+
+    @connect_to_db
+    def get(self, db):
+
+        query = """MATCH (c:Country)<-[:REFERS_TO]-(p:Article)
+                RETURN DISTINCT c
+                """
+        results, summary, keys = db.execute_query(query)
+        return [x.data() for x in results]
+
+
+class Country:
+
+    @connect_to_db
+    def get(self, id: str, db):
+
+        query = """
+                MATCH (o:Output)-[r:REFERS_TO]->(c:Country)
+                MATCH (a:Author)-[:author_of]->(o:Output)
+                WHERE c.id = $id
+                RETURN o as outputs, collect(a) as authors;
+                """
+        results, summary, keys = db.execute_query(query, id=id)
+        outputs = [x.data() for x in results]
+        query = """MATCH (c:Country) WHERE c.id = $id RETURN c as country;"""
+        results, summary, keys = db.execute_query(query, id=id)
+        country = results[0].data()['country']
+        return outputs, country
