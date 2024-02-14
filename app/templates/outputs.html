@@ -5,10 +5,10 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">{{ output.output.title }}
-                    {%if output.countries %}
-                    {% for country in output.countries %}
-                    <span class="badge text-bg-danger">{{ country.name }}</span>
-                    {% endfor %}
+                    {% if output.countries %}
+                        {% for country in output.countries %}
+                        <a href="{{ url_for('country', id=country.id) }}" class="badge text-bg-danger">{{ country.name }}</a>
+                        {% endfor %}
                     {% endif %}
                 </h5>
                 {% if output.output.year %}{{ output.output.year }},{% endif %}
