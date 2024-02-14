@@ -13,7 +13,7 @@ def connect_to_db(f):
     def with_connection_(*args, **kwargs):
 
         try:
-            URI = "bolt://localhost:7687"
+            URI = f"bolt://{MG_HOST}:{MG_PORT}"
             AUTH = ("", "")
             with GraphDatabase.driver(URI, auth=AUTH) as db:
                 db.verify_connectivity()
