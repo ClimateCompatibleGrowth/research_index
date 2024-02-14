@@ -1,7 +1,8 @@
 from gqlalchemy import Memgraph, Node, Relationship, Field
 from typing import Optional
 from csv import DictReader
-from os.path import join, environ
+from os.path import join
+from os import environ
 
 MG_HOST = environ.get('MG_HOST', '127.0.0.1')
 MG_PORT = int(environ.get('MG_PORT', 7687))

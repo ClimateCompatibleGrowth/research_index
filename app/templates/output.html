@@ -1,15 +1,64 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>{{ output.title }}</h1>
 
-    <p>
-    {% if output.year %}{{ output.year }}, {% endif %}
-    {% if output.journal%}{ output.journal }}{% endif %}</p>
-    <p><a href="http://doi.org/{{ output.doi }}">http://doi.org/{{ output.doi }}</a></p>
-    <h2>Authors</h2>
-    {% for author in output.authors %}
-        <l><a href="{{ url_for('author', id=author.uuid) }}">{{ author.first_name}} {{ author.last_name }}</a></l>
-    {% endfor %}
-    <p><h2>Abstract</h2>{{ output.abstract }}</p>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1>{{ output.title }}</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {%if output.countries %}
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                            <h5 class="card-title">Countries</h5>
+                            {% for country in output.countries %}
+                            <a href="{{ url_for('country', id=country.id) }}" class="badge text-bg-danger">{{ country.name }}</a>
+                            {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Metadata</h5>
+                        {% if output.year %}{{ output.year }}, {% endif %}
+                        {% if output.journal%}{ output.journal }}{% endif %}
+                        <a href="http://doi.org/{{ output.doi }}">http://doi.org/{{ output.doi }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Authors</h5>
+                    {% for author in output.authors %}
+                    <l><a href="{{ url_for('author', id=author.uuid) }}">{{ author.first_name}} {{ author.last_name }}</a></l>
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Abstract</h5>
+                    {{ output.abstract }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+</div>
 {% endblock %}
