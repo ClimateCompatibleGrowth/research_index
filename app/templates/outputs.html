@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
+
+<script async src="https://badge.dimensions.ai/badge.js" charset="utf-8"></script>
+
     {% for output in outputs %}
         <div class="card">
             <div class="card-body">
@@ -15,6 +18,7 @@
                 {% if output.output.journal%}{ output.output.journal }}{% endif %}
                 <a href="{{ url_for('output', id=output.output.uuid) }}" class="card-link">View Record</a>
                 <a href="http://doi.org/{{ output.output.doi }}" class="card-link">View at Publisher</a>
+                <span class="__dimensions_badge_embed__" data-doi="{{ output.output.doi }}" data-style="small_rectangle" data-legend="hover-right"	data-hide-zero-citations="true"></span>
             </div>
         </div>
     {% endfor %}

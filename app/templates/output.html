@@ -2,6 +2,8 @@
 
 {% block content %}
 
+<script async src="https://badge.dimensions.ai/badge.js" charset="utf-8"></script>
+
 <div class="container">
     <div class="row">
         <div class="col">
@@ -29,6 +31,7 @@
                         {% if output.year %}{{ output.year }}, {% endif %}
                         {% if output.journal%}{ output.journal }}{% endif %}
                         <a href="http://doi.org/{{ output.doi }}">http://doi.org/{{ output.doi }}</a>
+                        <span class="__dimensions_badge_embed__" data-doi="{{ output.doi }}" data-style="small_rectangle" data-legend="hover-right"	data-hide-zero-citations="true"></span>
                     </div>
                 </div>
             </div>
