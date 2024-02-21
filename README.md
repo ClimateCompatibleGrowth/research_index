@@ -12,8 +12,8 @@ To enter development mode of the website, with the memgraph database running in 
 
 Once the VM is up and running, SSH into the VM, download and install memgraph
 
-    curl -O https://download.memgraph.com/memgraph/v2.13.0/ubuntu-20.04/memgraph_2.13.0-1_amd64.deb
-    dpkg -i /memgraph_2.13.0-1_amd64.deb
+    curl -O https://download.memgraph.com/memgraph/v2.14.1/ubuntu-20.04/memgraph_2.14.1-1_amd64.deb
+    sudo dpkg -i /memgraph_2.14.1-1_amd64.deb
 
 ### 2. Build Docker container
 
