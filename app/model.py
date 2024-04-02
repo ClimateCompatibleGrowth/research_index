@@ -1,4 +1,4 @@
-from neo4j import GraphDatabase
+from neo4j import GraphDatabase, Driver
 import os
 from functools import wraps
 
@@ -31,19 +31,48 @@ class OutputList:
     @connect_to_db
     def get(self, db):
         """
-
-        Notes
-        -----
-        MATCH (o:Article)
-        OPTIONAL MATCH (p)-[:REFERS_TO]->(c:Country)
-        RETURN o, collect(c) as countries;
         """
         query = """
-            MATCH (o:Article)
-            OPTIONAL MATCH (o)-[:REFERS_TO]->(c:Country)
-            RETURN o as output, collect(c) as countries;
+                MATCH (o:Article)
+                OPTIONAL MATCH (o)-[:REFERS_TO]->(c:Country)
+                CALL
+                {
+                WITH o
+                MATCH (a:Author)-[b:author_of]->(o)
+                RETURN a
+                ORDER BY b.rank
+                }
+                RETURN o as output, collect(c) as countries, collect(a) as authors;
         """
         records, summary, keys = db.execute_query(query)
+        articles = [x.data() for x in records]
+
+        return articles
+
+    @connect_to_db
+    def filter_type(self, db: Driver, result_type: str):
+        """Returns all outputs with ordered authors filtering on result type
+
+        Arguments
+        ---------
+        dbL
+        result_type: str
+        """
+        query = """
+                MATCH (o:Article)
+                WHERE o.result_type = $result_type
+                OPTIONAL MATCH (o)-[:REFERS_TO]->(c:Country)
+                CALL
+                {
+                WITH o
+                MATCH (a:Author)-[b:author_of]->(o)
+                RETURN a
+                ORDER BY b.rank
+                }
+                RETURN o as output, collect(c) as countries, collect(a) as authors;
+        """
+        records, summary, keys = db.execute_query(query,
+                                                  result_type=result_type)
         articles = [x.data() for x in records]
 
         return articles
@@ -104,8 +133,13 @@ class Author:
         results['collaborators'] = colabs
 
         publications_query = """MATCH (a:Author)-[:author_of]->(p:Output)
-                                MATCH (b:Author)-[:author_of]->(p)
                                 WHERE a.uuid = $uuid
+                                CALL {
+                                    WITH p
+                                    MATCH (b:Author)-[r:author_of]->(p)
+                                    RETURN b
+                                    ORDER BY r.rank
+                                }
                                 RETURN DISTINCT p as outputs, collect(b) as authors;"""
         result, summary, keys = db.execute_query(publications_query, uuid=id)
         results['outputs'] = [x.data() for x in result]

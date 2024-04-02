@@ -47,7 +47,11 @@
                     <h5 class="card-title">Collaborators</h5>
                     <ul class="list-group list-group-flush">
                         {% for colab in author.collaborators %}
-                        <li class="list-group-item"><a href="{{ url_for('author', id=colab.uuid) }}">{{ colab.first_name}} {{ colab.last_name }}</a></li>
+                        <li class="list-group-item"><a href="{{ url_for('author', id=colab.uuid) }}">{{ colab.first_name}} {{ colab.last_name }}</a>
+                            {% if colab.orcid %}
+                            <a href="{{ colab.orcid }}">
+                            <img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="16" height="16" /></a>
+                        {% endif %}</li>
                         {% endfor %}
                     </ul>
                 </div></div>
@@ -77,7 +81,7 @@
                                 {% endfor %}
                                 </p>
                                 {% if row.outputs.year %}{{ row.outputs.year }},{% endif %}
-                                {% if row.outputs.journal%}{ row.outputs.journal }}{% endif %}
+                                {% if row.outputs.journal%}{{ row.outputs.journal }}{% endif %}
                                 <p>
                                 <a href="{{ url_for('output', id=row.outputs.uuid) }}" role="button" class="btn btn-primary">View Record</a>
                                 <a href="http://doi.org/{{ row.outputs.doi }}" role="button" class="btn btn-primary">View at Publisher</a></p>

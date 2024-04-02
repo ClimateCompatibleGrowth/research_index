@@ -30,7 +30,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Metadata</h5>
                         {% if output.year %}{{ output.year }}, {% endif %}
-                        {% if output.journal%}{ output.journal }}{% endif %}
+                        {% if output.journal%}{{ output.journal }}{% endif %}
                         <a href="http://doi.org/{{ output.doi }}">http://doi.org/{{ output.doi }}</a>
                         <span class="__dimensions_badge_embed__" data-doi="{{ output.doi }}" data-style="small_circle" data-legend="always"></span>
                         <span class='altmetric-embed' data-badge-type='donut' data-badge-details='right' data-doi="{{ output.doi }}"></span>
@@ -43,7 +43,10 @@
                 <div class="card-body">
                     <h5 class="card-title">Authors</h5>
                     {% for author in output.authors %}
-                    <l><a href="{{ url_for('author', id=author.uuid) }}">{{ author.first_name}} {{ author.last_name }}</a></l>
+                        <l><a href="{{ url_for('author', id=author.uuid) }}">{{ author.first_name}} {{ author.last_name }}</a>
+                        {% if author.orcid %}
+                            <a href="{{ author.orcid }}"><img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="16" height="16" /></a>
+                        {% endif %}</l>
                     {% endfor %}
 
                 </div>

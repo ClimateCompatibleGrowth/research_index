@@ -1,9 +1,16 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 from model import (Author, Output, AuthorList, OutputList, Nodes, Edges,
                    CountryList, Country)
 
+from logging import getLogger, basicConfig, DEBUG
+
+logger = getLogger(__name__)
+basicConfig(filename='example.log', filemode='w', encoding='utf-8', level=DEBUG)
+
+
 app = Flask(__name__)
+
 
 
 @app.route('/countries/<id>')
@@ -37,13 +44,20 @@ def author_list():
 @app.route('/outputs')
 def output_list():
     model = OutputList()
-    entity = model.get()
+    result_type = request.args.get('type')
+    logger.debug(f"Obtained filter {result_type}")
+    if result_type:
+        logger.info(f"Filtering outputs on {result_type}")
+        entity = model.filter_type(result_type=result_type)
+    else:
+        entity = model.get()
     return render_template('outputs.html', title='Output List', outputs=entity)
 
 
 @app.route('/outputs/<id>')
 def output(id: str):
     output_model = Output()
+
     entity = output_model.get(id)
     return render_template('output.html', title='Output', output=entity)
 
