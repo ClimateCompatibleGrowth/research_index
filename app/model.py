@@ -42,7 +42,7 @@ class OutputList:
                 RETURN a
                 ORDER BY b.rank
                 }
-                RETURN o as output, collect(c) as countries, collect(a) as authors;
+                RETURN o as outputs, collect(c) as countries, collect(a) as authors;
         """
         records, summary, keys = db.execute_query(query)
         articles = [x.data() for x in records]
@@ -69,7 +69,7 @@ class OutputList:
                 RETURN a
                 ORDER BY b.rank
                 }
-                RETURN o as output, collect(c) as countries, collect(a) as authors;
+                RETURN o as outputs, collect(c) as countries, collect(a) as authors;
         """
         records, summary, keys = db.execute_query(query,
                                                   result_type=result_type)
@@ -101,7 +101,7 @@ class AuthorList:
 class Author:
 
     @connect_to_db
-    def get(self, id, db):
+    def get(self, id, db, type=None):
         """
 
         Notes
@@ -132,16 +132,31 @@ class Author:
 
         results['collaborators'] = colabs
 
-        publications_query = """MATCH (a:Author)-[:author_of]->(p:Output)
-                                WHERE a.uuid = $uuid
-                                CALL {
-                                    WITH p
-                                    MATCH (b:Author)-[r:author_of]->(p)
-                                    RETURN b
-                                    ORDER BY r.rank
-                                }
-                                RETURN DISTINCT p as outputs, collect(b) as authors;"""
-        result, summary, keys = db.execute_query(publications_query, uuid=id)
+        if type and type in ['publication', 'dataset', 'software', 'other']:
+            publications_query = """MATCH (a:Author)-[:author_of]->(p:Output)
+                                    WHERE (a.uuid) = $uuid AND (p.result_type = $type)
+                                    CALL {
+                                        WITH p
+                                        MATCH (b:Author)-[r:author_of]->(p)
+                                        RETURN b
+                                        ORDER BY r.rank
+                                    }
+                                    RETURN DISTINCT p as outputs, collect(b) as authors
+                                    ORDER BY outputs.publication_year DESCENDING;"""
+        else:
+            publications_query = """MATCH (a:Author)-[:author_of]->(p:Output)
+                                    WHERE a.uuid = $uuid
+                                    CALL {
+                                        WITH p
+                                        MATCH (b:Author)-[r:author_of]->(p)
+                                        RETURN b
+                                        ORDER BY r.rank
+                                    }
+                                    RETURN DISTINCT p as outputs, collect(b) as authors
+                                    ORDER BY outputs.publication_year DESCENDING;"""
+        result, summary, keys = db.execute_query(publications_query,
+                                                 uuid=id,
+                                                 type=type)
         results['outputs'] = [x.data() for x in result]
 
         return results

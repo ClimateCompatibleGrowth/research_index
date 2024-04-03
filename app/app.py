@@ -30,7 +30,15 @@ def country_list():
 @app.route('/authors/<id>')
 def author(id: str):
     author_model = Author()
-    entity = author_model.get(id)
+    result_type = request.args.get('type')
+    logger.debug(f"Obtained filter {result_type}")
+    if result_type:
+        logger.info(f"Filtering outputs on {result_type}")
+        entity = author_model.get(id, type=result_type)
+    else:
+        entity = author_model.get(id)
+        logger.debug(entity)
+
     return render_template('author.html', title='Author', author=entity)
 
 

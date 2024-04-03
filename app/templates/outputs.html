@@ -5,49 +5,8 @@
 <script async src="https://badge.dimensions.ai/badge.js" charset="utf-8"></script>
 <script src='https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js'></script>
 
-<div class="container" id="filtering">
-    <h3>Filter by result type: </h3>
-    <div class="btn-group" id="filter_button" role="group" aria-label="Filter research type">
-        <a href="/outputs?type=publication" class="btn btn-primary">publication</a>
-        <a href="/outputs?type=dataset" class="btn btn-primary">dataset</a>
-        <a href="/outputs?type=software" class="btn btn-primary">software</a>
-        <a href="/outputs?type=other" class="btn btn-primary">other</a>
-    </div>
-
-</div>
-
 <div class="container" id="research_products"></div>
 
-    {% for output in outputs %}
-        <div class="card" id="{{output.output.uuid}}">
-            <div class="card-body">
-                <h5 class="card-title">{{ output.output.title }}
-                    {% if output.countries %}
-                        {% for country in output.countries %}
-                        <a href="{{ url_for('country', id=country.id) }}" class="badge text-bg-danger">{{ country.name }}</a>
-                        {% endfor %}
-                    {% endif %}
-                    {% if output.output.result_type %}
-                        <span class="badge text-bg-secondary">{{ output.output.result_type }}</span>
-                    {% endif %}
-                </h5>
-                {% for author in output.authors %}
-                    <l><a href="{{ url_for('author', id=author.uuid) }}">{{ author.first_name}} {{ author.last_name }}</a>
-                    {% if author.orcid %}
-                        <a href="{{ author.orcid }}"><img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="16" height="16" /></a>
-                    {% endif %}</l>
-                {% endfor %}
-                {% if output.output.year %}{{ output.output.year }},{% endif %}
-                {% if output.output.journal %}{{ output.output.journal }}{% endif %}
-                {% if output.output.result_type == 'publication' %}
-                <div class="__dimensions_badge_embed__" data-doi="{{ output.output.doi }}" data-style="small_rectangle" data-legend="hover-right"></div>
-                <div class='altmetric-embed' data-badge-popover="right" data-doi="{{ output.output.doi }}"></div>
-                {% endif %}
-
-                <a href="{{ url_for('output', id=output.output.uuid) }}" class="card-link">View Record</a>
-                <a href="http://doi.org/{{ output.output.doi }}" class="card-link">View at Publisher</a>
-            </div>
-        </div>
-    {% endfor %}
+{% include 'output_list.j2' %}
 
 {% endblock %}
