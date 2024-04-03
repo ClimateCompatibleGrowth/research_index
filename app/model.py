@@ -107,8 +107,8 @@ class Author:
         Notes
         -----
         MATCH (a:Author)
-        RETURN a.first_name as first_name, a.last_name as last_name, p.name as affiliation;
-
+        RETURN a.first_name as first_name, a.last_name as last_name,
+               p.name as affiliation;
         MATCH (a:Author)-[r:author_of]->(p:Article)
         OPTIONAL MATCH (a:Author)-[:member_of]->(p:Partner)
         WHERE a.uuid = $uuid
@@ -118,7 +118,9 @@ class Author:
         author_query = """MATCH (a:Author) WHERE a.uuid = $uuid
                           OPTIONAL MATCH (a)-[:member_of]->(p:Partner)
                           OPTIONAL MATCH (a)-[:member_of]->(u:Workstream)
-                          RETURN a.uuid as uuid, a.orcid as orcid, a.first_name as first_name, a.last_name as last_name, collect(p.id, p.name) as affiliations,
+                          RETURN a.uuid as uuid, a.orcid as orcid,
+                          a.first_name as first_name, a.last_name as last_name,
+                          collect(p.id, p.name) as affiliations,
                           collect(u.id, u.name) as workstreams;
                           """
         author, summary, keys = db.execute_query(author_query, uuid=id)
@@ -239,7 +241,8 @@ class Country:
                 WHERE c.id = $id AND (o.result_type = $result_type)
                 RETURN o as outputs, collect(a) as authors;
                 """
-            results, summary, keys = db.execute_query(query, id=id, result_type=result_type)
+            results, _, _ = db.execute_query(query, id=id,
+                                             result_type=result_type)
         else:
             query = """
                 MATCH (o:Output)-[r:REFERS_TO]->(c:Country)
@@ -247,9 +250,10 @@ class Country:
                 WHERE c.id = $id
                 RETURN o as outputs, collect(a) as authors;
                 """
-            results, summary, keys = db.execute_query(query, id=id, result_type=result_type)
+            results, _, _ = db.execute_query(query, id=id,
+                                             result_type=result_type)
         outputs = [x.data() for x in results]
         query = """MATCH (c:Country) WHERE c.id = $id RETURN c as country;"""
-        results, summary, keys = db.execute_query(query, id=id)
+        results, _, _ = db.execute_query(query, id=id)
         country = results[0].data()['country']
         return outputs, country
