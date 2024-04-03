@@ -21,8 +21,8 @@
                             <a href="{{ url_for('country', id=country.id) }}" class="badge text-bg-danger">{{ country.name }}</a>
                             {% endfor %}
                         {% endif %}
-                        {% if output.result_type %}
-                            <span class="badge text-bg-secondary">{{ output.result_type }}</span>
+                        {% if output.outputs.result_type %}
+                            <span class="badge text-bg-secondary">{{ output.outputs.result_type }}</span>
                         {% endif %}
                     </h5>
                     {% for author in output.authors %}
