@@ -218,7 +218,7 @@ class Edges:
 class CountryList:
 
     @connect_to_db
-    def get(self, db):
+    def get(self, db: Driver):
 
         query = """MATCH (c:Country)<-[:REFERS_TO]-(p:Article)
                 RETURN DISTINCT c
@@ -230,15 +230,24 @@ class CountryList:
 class Country:
 
     @connect_to_db
-    def get(self, id: str, db):
+    def get(self, id: str, db: Driver, result_type=None):
 
-        query = """
+        if result_type:
+            query = """
+                MATCH (o:Output)-[r:REFERS_TO]->(c:Country)
+                MATCH (a:Author)-[:author_of]->(o:Output)
+                WHERE c.id = $id AND (o.result_type = $result_type)
+                RETURN o as outputs, collect(a) as authors;
+                """
+            results, summary, keys = db.execute_query(query, id=id, result_type=result_type)
+        else:
+            query = """
                 MATCH (o:Output)-[r:REFERS_TO]->(c:Country)
                 MATCH (a:Author)-[:author_of]->(o:Output)
                 WHERE c.id = $id
                 RETURN o as outputs, collect(a) as authors;
                 """
-        results, summary, keys = db.execute_query(query, id=id)
+            results, summary, keys = db.execute_query(query, id=id, result_type=result_type)
         outputs = [x.data() for x in results]
         query = """MATCH (c:Country) WHERE c.id = $id RETURN c as country;"""
         results, summary, keys = db.execute_query(query, id=id)

@@ -17,7 +17,17 @@ app = Flask(__name__)
 def country(id: str):
     country_model = Country()
     outputs, country = country_model.get(id)
-    return render_template('country.html', title='Country', outputs=outputs, country=country)
+
+    result_type = request.args.get('type')
+    logger.debug(f"Obtained filter {result_type}")
+    if result_type:
+        logger.info(f"Filtering outputs on {result_type}")
+        outputs, country = country_model.get(id, result_type=result_type)
+    else:
+        outputs, country = country_model.get(id)
+
+    return render_template('country.html', title='Country', outputs=outputs,
+                           country=country)
 
 
 @app.route('/countries')

@@ -13,7 +13,7 @@
 <div class="row">
     {% if outputs %}
         {% for output in outputs %}
-            <div class="card" id="{{output.uuid}}">
+            <div class="card" id="{{output.outputs.uuid}}">
                 <div class="card-body">
                     <h5 class="card-title">{{ output.outputs.title }}
                         {% if output.countries %}
