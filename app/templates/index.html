@@ -32,8 +32,7 @@
  <div class="container">
     <div class="row">
         <div class="col">
-          <!-- Load d3.js -->
-          <!-- Create an element where the map will take place -->
+          <h4>CCG works in the following countries</h4>
           <svg id="my_dataviz" width="800 " height="600"></svg>
           <script>
             let country_data = {{countries|tojson}};
@@ -53,7 +52,7 @@
           </script>
         </div> -->
     </div>
-    <div class="row">
+    <!-- <div class="row">
       <div class="col">
         <h4>CCG works in the following countries</h4>
       </div>
@@ -77,6 +76,6 @@
             country_data.forEach(draw_map);
           </script>
       </div>
-</div>
+    </div> -->
 
 {% endblock %}

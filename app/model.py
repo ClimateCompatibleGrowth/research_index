@@ -42,7 +42,7 @@ class OutputList:
                 RETURN a
                 ORDER BY b.rank
                 }
-                RETURN o as outputs, collect(c) as countries, collect(a) as authors;
+                RETURN o as outputs, collect(DISTINCT c) as countries, collect(a) as authors;
         """
         records, summary, keys = db.execute_query(query)
         articles = [x.data() for x in records]
@@ -69,7 +69,9 @@ class OutputList:
                 RETURN a
                 ORDER BY b.rank
                 }
-                RETURN o as outputs, collect(c) as countries, collect(a) as authors;
+                RETURN o as outputs,
+                       collect(DISTINCT c) as countries,
+                       collect(a) as authors;
         """
         records, summary, keys = db.execute_query(query,
                                                   result_type=result_type)
@@ -143,7 +145,10 @@ class Author:
                                         RETURN b
                                         ORDER BY r.rank
                                     }
-                                    RETURN DISTINCT p as outputs, collect(b) as authors
+                                    OPTIONAL MATCH (p)-[:REFERS_TO]->(c:Country)
+                                    RETURN p as outputs,
+                                           collect(DISTINCT c) as countries,
+                                           collect(b) as authors
                                     ORDER BY outputs.publication_year DESCENDING;"""
         else:
             publications_query = """MATCH (a:Author)-[:author_of]->(p:Output)
@@ -154,7 +159,10 @@ class Author:
                                         RETURN b
                                         ORDER BY r.rank
                                     }
-                                    RETURN DISTINCT p as outputs, collect(b) as authors
+                                    OPTIONAL MATCH (p)-[:REFERS_TO]->(c:Country)
+                                    RETURN p as outputs,
+                                        collect(DISTINCT c) as countries,
+                                        collect(b) as authors
                                     ORDER BY outputs.publication_year DESCENDING;"""
         result, summary, keys = db.execute_query(publications_query,
                                                  uuid=id,
