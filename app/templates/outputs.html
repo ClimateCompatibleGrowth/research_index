@@ -5,24 +5,8 @@
 <script async src="https://badge.dimensions.ai/badge.js" charset="utf-8"></script>
 <script src='https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js'></script>
 
-    {% for output in outputs %}
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">{{ output.output.title }}
-                    {% if output.countries %}
-                        {% for country in output.countries %}
-                        <a href="{{ url_for('country', id=country.id) }}" class="badge text-bg-danger">{{ country.name }}</a>
-                        {% endfor %}
-                    {% endif %}
-                </h5>
-                {% if output.output.year %}{{ output.output.year }},{% endif %}
-                {% if output.output.journal%}{ output.output.journal }}{% endif %}
-                <a href="{{ url_for('output', id=output.output.uuid) }}" class="card-link">View Record</a>
-                <a href="http://doi.org/{{ output.output.doi }}" class="card-link">View at Publisher</a>
-                <div class="__dimensions_badge_embed__" data-doi="{{ output.output.doi }}" data-style="small_rectangle" data-legend="hover-right"></div>
-                <div class='altmetric-embed' data-badge-popover="right" data-doi="{{ output.output.doi }}"></div>
-            </div>
-        </div>
-    {% endfor %}
+<div class="container" id="research_products"></div>
+
+{% include 'output_list.j2' %}
 
 {% endblock %}

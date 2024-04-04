@@ -1,4 +1,4 @@
-from neo4j import GraphDatabase
+from neo4j import GraphDatabase, Driver
 import os
 from functools import wraps
 
@@ -31,19 +31,50 @@ class OutputList:
     @connect_to_db
     def get(self, db):
         """
-
-        Notes
-        -----
-        MATCH (o:Article)
-        OPTIONAL MATCH (p)-[:REFERS_TO]->(c:Country)
-        RETURN o, collect(c) as countries;
         """
         query = """
-            MATCH (o:Article)
-            OPTIONAL MATCH (o)-[:REFERS_TO]->(c:Country)
-            RETURN o as output, collect(c) as countries;
+                MATCH (o:Article)
+                OPTIONAL MATCH (o)-[:REFERS_TO]->(c:Country)
+                CALL
+                {
+                WITH o
+                MATCH (a:Author)-[b:author_of]->(o)
+                RETURN a
+                ORDER BY b.rank
+                }
+                RETURN o as outputs, collect(DISTINCT c) as countries, collect(a) as authors;
         """
         records, summary, keys = db.execute_query(query)
+        articles = [x.data() for x in records]
+
+        return articles
+
+    @connect_to_db
+    def filter_type(self, db: Driver, result_type: str):
+        """Returns all outputs with ordered authors filtering on result type
+
+        Arguments
+        ---------
+        dbL
+        result_type: str
+        """
+        query = """
+                MATCH (o:Article)
+                WHERE o.result_type = $result_type
+                OPTIONAL MATCH (o)-[:REFERS_TO]->(c:Country)
+                CALL
+                {
+                WITH o
+                MATCH (a:Author)-[b:author_of]->(o)
+                RETURN a
+                ORDER BY b.rank
+                }
+                RETURN o as outputs,
+                       collect(DISTINCT c) as countries,
+                       collect(a) as authors;
+        """
+        records, summary, keys = db.execute_query(query,
+                                                  result_type=result_type)
         articles = [x.data() for x in records]
 
         return articles
@@ -72,14 +103,14 @@ class AuthorList:
 class Author:
 
     @connect_to_db
-    def get(self, id, db):
+    def get(self, id, db, type=None):
         """
 
         Notes
         -----
         MATCH (a:Author)
-        RETURN a.first_name as first_name, a.last_name as last_name, p.name as affiliation;
-
+        RETURN a.first_name as first_name, a.last_name as last_name,
+               p.name as affiliation;
         MATCH (a:Author)-[r:author_of]->(p:Article)
         OPTIONAL MATCH (a:Author)-[:member_of]->(p:Partner)
         WHERE a.uuid = $uuid
@@ -89,7 +120,9 @@ class Author:
         author_query = """MATCH (a:Author) WHERE a.uuid = $uuid
                           OPTIONAL MATCH (a)-[:member_of]->(p:Partner)
                           OPTIONAL MATCH (a)-[:member_of]->(u:Workstream)
-                          RETURN a.uuid as uuid, a.orcid as orcid, a.first_name as first_name, a.last_name as last_name, collect(p.id, p.name) as affiliations,
+                          RETURN a.uuid as uuid, a.orcid as orcid,
+                          a.first_name as first_name, a.last_name as last_name,
+                          collect(p.id, p.name) as affiliations,
                           collect(u.id, u.name) as workstreams;
                           """
         author, summary, keys = db.execute_query(author_query, uuid=id)
@@ -103,11 +136,37 @@ class Author:
 
         results['collaborators'] = colabs
 
-        publications_query = """MATCH (a:Author)-[:author_of]->(p:Output)
-                                MATCH (b:Author)-[:author_of]->(p)
-                                WHERE a.uuid = $uuid
-                                RETURN DISTINCT p as outputs, collect(b) as authors;"""
-        result, summary, keys = db.execute_query(publications_query, uuid=id)
+        if type and type in ['publication', 'dataset', 'software', 'other']:
+            publications_query = """MATCH (a:Author)-[:author_of]->(p:Output)
+                                    WHERE (a.uuid) = $uuid AND (p.result_type = $type)
+                                    CALL {
+                                        WITH p
+                                        MATCH (b:Author)-[r:author_of]->(p)
+                                        RETURN b
+                                        ORDER BY r.rank
+                                    }
+                                    OPTIONAL MATCH (p)-[:REFERS_TO]->(c:Country)
+                                    RETURN p as outputs,
+                                           collect(DISTINCT c) as countries,
+                                           collect(b) as authors
+                                    ORDER BY outputs.publication_year DESCENDING;"""
+        else:
+            publications_query = """MATCH (a:Author)-[:author_of]->(p:Output)
+                                    WHERE a.uuid = $uuid
+                                    CALL {
+                                        WITH p
+                                        MATCH (b:Author)-[r:author_of]->(p)
+                                        RETURN b
+                                        ORDER BY r.rank
+                                    }
+                                    OPTIONAL MATCH (p)-[:REFERS_TO]->(c:Country)
+                                    RETURN p as outputs,
+                                        collect(DISTINCT c) as countries,
+                                        collect(b) as authors
+                                    ORDER BY outputs.publication_year DESCENDING;"""
+        result, summary, keys = db.execute_query(publications_query,
+                                                 uuid=id,
+                                                 type=type)
         results['outputs'] = [x.data() for x in result]
 
         return results
@@ -169,7 +228,7 @@ class Edges:
 class CountryList:
 
     @connect_to_db
-    def get(self, db):
+    def get(self, db: Driver):
 
         query = """MATCH (c:Country)<-[:REFERS_TO]-(p:Article)
                 RETURN DISTINCT c
@@ -181,17 +240,28 @@ class CountryList:
 class Country:
 
     @connect_to_db
-    def get(self, id: str, db):
+    def get(self, id: str, db: Driver, result_type=None):
 
-        query = """
+        if result_type:
+            query = """
+                MATCH (o:Output)-[r:REFERS_TO]->(c:Country)
+                MATCH (a:Author)-[:author_of]->(o:Output)
+                WHERE c.id = $id AND (o.result_type = $result_type)
+                RETURN o as outputs, collect(a) as authors;
+                """
+            results, _, _ = db.execute_query(query, id=id,
+                                             result_type=result_type)
+        else:
+            query = """
                 MATCH (o:Output)-[r:REFERS_TO]->(c:Country)
                 MATCH (a:Author)-[:author_of]->(o:Output)
                 WHERE c.id = $id
                 RETURN o as outputs, collect(a) as authors;
                 """
-        results, summary, keys = db.execute_query(query, id=id)
+            results, _, _ = db.execute_query(query, id=id,
+                                             result_type=result_type)
         outputs = [x.data() for x in results]
         query = """MATCH (c:Country) WHERE c.id = $id RETURN c as country;"""
-        results, summary, keys = db.execute_query(query, id=id)
+        results, _, _ = db.execute_query(query, id=id)
         country = results[0].data()['country']
         return outputs, country

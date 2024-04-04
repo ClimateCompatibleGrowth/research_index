@@ -75,6 +75,7 @@ node.call(d3.drag()
       .on("end", dragended));
 
 function dblclick(event, a){
+  const url = ""
  switch(a.group) {
   case 0:
       url = "/authors/" + a.id

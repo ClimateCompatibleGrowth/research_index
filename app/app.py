@@ -1,16 +1,33 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 from model import (Author, Output, AuthorList, OutputList, Nodes, Edges,
                    CountryList, Country)
 
+from logging import getLogger, basicConfig, DEBUG
+
+logger = getLogger(__name__)
+basicConfig(filename='example.log', filemode='w', encoding='utf-8', level=DEBUG)
+
+
 app = Flask(__name__)
+
 
 
 @app.route('/countries/<id>')
 def country(id: str):
     country_model = Country()
     outputs, country = country_model.get(id)
-    return render_template('country.html', title='Country', outputs=outputs, country=country)
+
+    result_type = request.args.get('type')
+    logger.debug(f"Obtained filter {result_type}")
+    if result_type:
+        logger.info(f"Filtering outputs on {result_type}")
+        outputs, country = country_model.get(id, result_type=result_type)
+    else:
+        outputs, country = country_model.get(id)
+
+    return render_template('country.html', title='Country', outputs=outputs,
+                           country=country)
 
 
 @app.route('/countries')
@@ -23,7 +40,15 @@ def country_list():
 @app.route('/authors/<id>')
 def author(id: str):
     author_model = Author()
-    entity = author_model.get(id)
+    result_type = request.args.get('type')
+    logger.debug(f"Obtained filter {result_type}")
+    if result_type:
+        logger.info(f"Filtering outputs on {result_type}")
+        entity = author_model.get(id, type=result_type)
+    else:
+        entity = author_model.get(id)
+        logger.debug(entity)
+
     return render_template('author.html', title='Author', author=entity)
 
 
@@ -37,13 +62,20 @@ def author_list():
 @app.route('/outputs')
 def output_list():
     model = OutputList()
-    entity = model.get()
+    result_type = request.args.get('type')
+    logger.debug(f"Obtained filter {result_type}")
+    if result_type:
+        logger.info(f"Filtering outputs on {result_type}")
+        entity = model.filter_type(result_type=result_type)
+    else:
+        entity = model.get()
     return render_template('outputs.html', title='Output List', outputs=entity)
 
 
 @app.route('/outputs/<id>')
 def output(id: str):
     output_model = Output()
+
     entity = output_model.get(id)
     return render_template('output.html', title='Output', output=entity)
 
