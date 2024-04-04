@@ -42,7 +42,7 @@ class OutputList:
                 RETURN a
                 ORDER BY b.rank
                 }
-                RETURN o as outputs, collect(DISTINCT c) as countries, collect(a) as authors;
+                RETURN o as outputs, collect(DISTINCT c) as countries, collect(DISTINCT a) as authors;
         """
         records, summary, keys = db.execute_query(query)
         articles = [x.data() for x in records]
@@ -71,7 +71,7 @@ class OutputList:
                 }
                 RETURN o as outputs,
                        collect(DISTINCT c) as countries,
-                       collect(a) as authors;
+                       collect(DISTINCT a) as authors;
         """
         records, summary, keys = db.execute_query(query,
                                                   result_type=result_type)
@@ -148,7 +148,7 @@ class Author:
                                     OPTIONAL MATCH (p)-[:REFERS_TO]->(c:Country)
                                     RETURN p as outputs,
                                            collect(DISTINCT c) as countries,
-                                           collect(b) as authors
+                                           collect(DISTINCT b) as authors
                                     ORDER BY outputs.publication_year DESCENDING;"""
         else:
             publications_query = """MATCH (a:Author)-[:author_of]->(p:Output)
@@ -162,7 +162,7 @@ class Author:
                                     OPTIONAL MATCH (p)-[:REFERS_TO]->(c:Country)
                                     RETURN p as outputs,
                                         collect(DISTINCT c) as countries,
-                                        collect(b) as authors
+                                        collect(DISTINCT b) as authors
                                     ORDER BY outputs.publication_year DESCENDING;"""
         result, summary, keys = db.execute_query(publications_query,
                                                  uuid=id,
@@ -181,7 +181,7 @@ class Output:
         query = """MATCH (p:Article)
                    WHERE p.uuid = $uuid
                    OPTIONAL MATCH (p)-[:REFERS_TO]->(c:Country)
-                   RETURN DISTINCT p as output, collect(c) as countries;"""
+                   RETURN DISTINCT p as output, collect(DISTINCT c) as countries;"""
         records, summary, keys = db.execute_query(query, uuid=id)
         print(records[0].data())
         results = dict()
@@ -244,19 +244,29 @@ class Country:
 
         if result_type:
             query = """
-                MATCH (o:Output)-[r:REFERS_TO]->(c:Country)
-                MATCH (a:Author)-[:author_of]->(o:Output)
+                MATCH (o:Output)-[:REFERS_TO]->(c:Country)
                 WHERE c.id = $id AND (o.result_type = $result_type)
-                RETURN o as outputs, collect(a) as authors;
+                CALL {
+                    WITH o
+                    MATCH (a:Author)-[r:author_of]->(o)
+                    RETURN a
+                    ORDER BY r.rank
+                }
+                RETURN o as outputs, collect(DISTINCT a) as authors;
                 """
             results, _, _ = db.execute_query(query, id=id,
                                              result_type=result_type)
         else:
             query = """
-                MATCH (o:Output)-[r:REFERS_TO]->(c:Country)
-                MATCH (a:Author)-[:author_of]->(o:Output)
+                MATCH (o:Output)-[:REFERS_TO]->(c:Country)
                 WHERE c.id = $id
-                RETURN o as outputs, collect(a) as authors;
+                CALL {
+                    WITH o
+                    MATCH (a:Author)-[r:author_of]->(o)
+                    RETURN a
+                    ORDER BY r.rank
+                }
+                RETURN o as outputs, collect(DISTINCT a) as authors;
                 """
             results, _, _ = db.execute_query(query, id=id,
                                              result_type=result_type)
