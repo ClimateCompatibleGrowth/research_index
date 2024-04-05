@@ -94,6 +94,7 @@ class AuthorList:
                    OPTIONAL MATCH (a)-[:member_of]->(p:Partner)
                    OPTIONAL MATCH (a)-[:member_of]->(u:Workstream)
                    RETURN a.first_name as first_name, a.last_name as last_name, a.uuid as uuid, a.orcid as orcid, collect(p.id, p.name) as affiliation, collect(u.id, u.name) as workstreams
+                   ORDER BY last_name;
                    """
         records, summary, keys = db.execute_query(query)
 
