@@ -253,7 +253,10 @@ class Country:
                     RETURN a
                     ORDER BY r.rank
                 }
-                RETURN o as outputs, collect(DISTINCT a) as authors;
+                OPTIONAL MATCH (o)-[:REFERS_TO]->(d:Country)
+                RETURN o as outputs,
+                       collect(DISTINCT a) as authors,
+                       collect(DISTINCT d) as countries;
                 """
             results, _, _ = db.execute_query(query, id=id,
                                              result_type=result_type)
@@ -267,7 +270,10 @@ class Country:
                     RETURN a
                     ORDER BY r.rank
                 }
-                RETURN o as outputs, collect(DISTINCT a) as authors;
+                OPTIONAL MATCH (o)-[:REFERS_TO]->(d:Country)
+                RETURN o as outputs,
+                       collect(DISTINCT a) as authors,
+                       collect(DISTINCT d) as countries;
                 """
             results, _, _ = db.execute_query(query, id=id,
                                              result_type=result_type)
