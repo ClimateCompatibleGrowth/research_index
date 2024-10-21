@@ -1,12 +1,12 @@
-const HOVER_COLOUR = "#FFC300"
-const HIGHLIGHT_COLOUR = "#FF5733"
-const BACKGROUND_COLOUR = "#DAF7A6"
+const HOVER_COLOUR = "#f03b20"
+const HIGHLIGHT_COLOUR = "#feb24c"
+const BACKGROUND_COLOUR = "#ffeda0"
 
 function mouseOverHandler(d, i) {
     d3.select(this).attr("fill", HOVER_COLOUR)
   }
   function mouseOutHandler(d, i) {
-    d3.select(this).attr("fill", HOVER_COLOUR)
+    d3.select(this).attr("fill", HIGHLIGHT_COLOUR)
   }
   function clickHandler(d, i) {
     const url = "/countries/" + i.id

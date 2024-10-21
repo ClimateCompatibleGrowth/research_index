@@ -33,49 +33,13 @@
     <div class="row">
         <div class="col">
           <h4>CCG works in the following countries</h4>
-          <svg id="my_dataviz" width="800 " height="600"></svg>
+          <svg id="my_dataviz" width="800" height="600"></svg>
           <script>
             let country_data = {{countries|tojson}};
           </script>
           <script src="{{url_for('static', filename='js/world.js')}}" type="module">
           </script>
         </div>
-
-        <!-- <div class="col">
-          <h4>CCG collaborates to produce outputs</h4>
-          <svg id="network" width="928" height="680"></svg>
-          <script>
-            let data_links = {{links|tojson}}.map(d => ({...d}));
-            let data_nodes = {{nodes|tojson}}.map(d => ({...d}));
-          </script>
-          <script src="{{url_for('static', filename='js/network.js')}}" type="module">
-          </script>
-        </div> -->
     </div>
-    <!-- <div class="row">
-      <div class="col">
-        <h4>CCG works in the following countries</h4>
-      </div>
-        <div class="row row-cols-5">
-        {% for country in countries %}
-          <div class="col">
-            <div id="card-{{country.c.id}}" class="card">
-              <svg id="{{country.c.id}}" width="320" height="240"></svg>
-              <div class="card-body">
-                <h5 class="card-title">{{country.c.name}}</h5>
-              </div>
-              <a href="{{ url_for('country', id=country.c.id) }}" role="button" class="btn btn-primary">View Outputs</a>
-            </div>
-          </div>
-          <script>
-
-          </script>
-          {% endfor %}
-          <script src="{{url_for('static', filename='js/map.js')}}"></script>
-          <script>
-            country_data.forEach(draw_map);
-          </script>
-      </div>
-    </div> -->
 
 {% endblock %}
