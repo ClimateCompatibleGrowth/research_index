@@ -30,43 +30,30 @@ const countries = country_data;
 // Load external data and draw base map
 d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson").then( function(data) {
 
-    // Draw the map
-    svg.append("g")
-        .selectAll("path")
-        .data(data.features)
-        .join("path")
-            .attr("fill", BACKGROUND_COLOUR)
-            .attr("d", d3.geoPath()
-            .projection(projection)
-            )
-            .style("stroke", "#fff")
-})
+     // create initial features selection based on data
+     let features = d3.select("svg").selectAll("path").data(data.features);
 
-  // Load external data and highlight countries
-  d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson").then( function(data){
+     // add new features to the selection using the enter selection,
+     // and merge back into the original update selection
+     features = features.enter().append("path")
+         .attr("fill", BACKGROUND_COLOUR)
+         .attr("d", d3.geoPath()
+         .projection(projection)
+         )
+         .style("stroke", "#fff")
+         .merge(features);
 
-      // Filter data
+    // Get a list of country ids
+    let flat_countries = d3.map(countries, d => d.c.id)
 
-      countries.forEach(country => {
+    // Filter the existing features that match the countries
+    let filtered = features.filter(function(d,i){ return flat_countries.indexOf(d.id) >= 0 })
 
-          const filtered_data = data.features.filter(d => {return d.properties.name==country.c.name})
-
-          // Draw the map
-          svg.append("g")
-              .selectAll("path")
-              .data(filtered_data)
-              .join("path")
-                .attr("fill", HIGHLIGHT_COLOUR)
-                .attr("d", d3.geoPath()
-                    .projection(projection)
-                )
-              .style("stroke", "#fff")
-              .on("mouseover", mouseOverHandler)
+    // Add the interactive elements for the filtered countries
+    filtered.on("mouseover", mouseOverHandler)
               .on("mouseout", mouseOutHandler)
               .on("click", clickHandler)
-
-      }
-      );
+              .attr("fill", HIGHLIGHT_COLOUR);
 
   })
 
