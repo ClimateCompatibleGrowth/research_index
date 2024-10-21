@@ -26,8 +26,10 @@ def country(id: str):
     else:
         outputs, country = country_model.get(id)
 
+    count = country_model.count(id)
+
     return render_template('country.html', title='Country', outputs=outputs,
-                           country=country)
+                           country=country, count=count)
 
 
 @app.route('/countries')
@@ -49,7 +51,12 @@ def author(id: str):
         entity = author_model.get(id)
         logger.debug(entity)
 
-    return render_template('author.html', title='Author', author=entity)
+    count = author_model.count(id)
+
+    return render_template('author.html',
+                           title='Author',
+                           author=entity,
+                           count=count)
 
 
 @app.route('/authors')
@@ -69,7 +76,13 @@ def output_list():
         entity = model.filter_type(result_type=result_type)
     else:
         entity = model.get()
-    return render_template('outputs.html', title='Output List', outputs=entity)
+
+    count = model.count()
+
+    return render_template('outputs.html',
+                           title='Output List',
+                           outputs=entity,
+                           count=count)
 
 
 @app.route('/outputs/<id>')

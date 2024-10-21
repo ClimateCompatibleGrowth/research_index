@@ -3,10 +3,22 @@
 <div class="row">
     <h5>Filter by result type: </h5>
     <div class="btn-group" id="filter_button" role="group" aria-label="Filter research type">
-        <a href="?type=publication" class="btn btn-primary">publication</a>
-        <a href="?type=dataset" class="btn btn-primary">dataset</a>
-        <a href="?type=software" class="btn btn-primary">tools</a>
-        <a href="?type=other" class="btn btn-primary">other</a>
+        <a href="?type=publication" class="btn btn-primary">
+            publication
+            <span class="badge text-bg-secondary">{{count.publication}}</span>
+            </a>
+        <a href="?type=dataset" class="btn btn-primary">
+            dataset
+            <span class="badge text-bg-secondary">{{count.dataset}}</span>
+            </a>
+        <a href="?type=software" class="btn btn-primary">
+            tools
+            <span class="badge text-bg-secondary">{{count.software}}</span>
+            </a>
+        <a href="?type=other" class="btn btn-primary">
+            other
+            <span class="badge text-bg-secondary">{{count.other}}</span>
+            </a>
     </div>
 </div>
 
