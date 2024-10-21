@@ -1,11 +1,12 @@
-const HOVER_COLOR = "#d36f80"
-
+const HOVER_COLOUR = "#FFC300"
+const HIGHLIGHT_COLOUR = "#FF5733"
+const BACKGROUND_COLOUR = "#DAF7A6"
 
 function mouseOverHandler(d, i) {
-    d3.select(this).attr("fill", HOVER_COLOR)
+    d3.select(this).attr("fill", HOVER_COLOUR)
   }
   function mouseOutHandler(d, i) {
-    d3.select(this).attr("fill", "red")
+    d3.select(this).attr("fill", HOVER_COLOUR)
   }
   function clickHandler(d, i) {
     const url = "/countries/" + i.id
@@ -34,7 +35,7 @@ d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/w
         .selectAll("path")
         .data(data.features)
         .join("path")
-            .attr("fill", "#CBD3EA")
+            .attr("fill", BACKGROUND_COLOUR)
             .attr("d", d3.geoPath()
             .projection(projection)
             )
@@ -55,7 +56,7 @@ d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/w
               .selectAll("path")
               .data(filtered_data)
               .join("path")
-                .attr("fill", "#012169")
+                .attr("fill", HIGHLIGHT_COLOUR)
                 .attr("d", d3.geoPath()
                     .projection(projection)
                 )
