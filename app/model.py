@@ -45,9 +45,22 @@ class OutputList:
                 RETURN o as outputs, collect(DISTINCT c) as countries, collect(DISTINCT a) as authors;
         """
         records, summary, keys = db.execute_query(query)
-        articles = [x.data() for x in records]
+        return [x.data() for x in records]
 
-        return articles
+    @connect_to_db
+    def count(self, db: Driver):
+        """Returns counts of the result types
+
+        Arguments
+        ---------
+        db : Driver
+        """
+        query = """
+                MATCH (a:Author)-[b:author_of]->(o:Article)
+                RETURN o.result_type as result_type, count(o) as count
+                """
+        records, summary, keys = db.execute_query(query)
+        return {x.data()['result_type']: x.data()['count'] for x in records}
 
     @connect_to_db
     def filter_type(self, db: Driver, result_type: str):
@@ -55,7 +68,7 @@ class OutputList:
 
         Arguments
         ---------
-        dbL
+        db
         result_type: str
         """
         query = """
@@ -172,6 +185,22 @@ class Author:
 
         return results
 
+    @connect_to_db
+    def count(self, id: str, db: Driver):
+        """Returns counts of the result types
+
+        Arguments
+        ---------
+        db : Driver
+        """
+        query = """
+                MATCH (a:Author)-[b:author_of]->(o:Article)
+                WHERE (a.uuid) = $uuid
+                RETURN o.result_type as result_type, count(o) as count
+                """
+        records, summary, keys = db.execute_query(query, uuid=id)
+        return {x.data()['result_type']: x.data()['count'] for x in records}
+
 
 class Output:
 
@@ -282,3 +311,19 @@ class Country:
         results, _, _ = db.execute_query(query, id=id)
         country = results[0].data()['country']
         return outputs, country
+
+    @connect_to_db
+    def count(self, id: str, db: Driver):
+        """Returns counts of the result types
+
+        Arguments
+        ---------
+        db : Driver
+        """
+        query = """
+                MATCH (o:Article)-[:REFERS_TO]->(c:Country)
+                WHERE c.id = $id
+                RETURN o.result_type as result_type, count(o) as count
+                """
+        records, _, _ = db.execute_query(query, id=id)
+        return {x.data()['result_type']: x.data()['count'] for x in records}
