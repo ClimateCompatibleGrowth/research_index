@@ -1,9 +1,10 @@
-const colours = ['#d7191c','#fdae61','#ffffbf','#abd9e9','#2c7bb6']
+const colours = ['#d7191c','#fdae61','#d3d3d3','#abd9e9','#2c7bb6']
 
-const BACKGROUND_COLOUR = colours[3]
+const BACKGROUND_COLOUR = colours[2]
 const HIGHLIGHT_COLOUR = colours[1]
 const PARTNER_COLOUR = colours[0]
-const ASSOCIATED_COLOUR = colours[4]
+const AFFILIATE_COLOUR = colours[4]
+const DEMONSTRATOR_COLOUR = colours[3]
 
 function mouseOverHandler(d, i) {
     d3.select(this).transition().duration('50').attr('opacity', '.85');
@@ -63,16 +64,21 @@ d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/w
 
     // Add interactions for associated countries
     let associated_countries = ['ZAF', 'CRI', 'SLE'];
-    addCountryInteractions(associated_countries, ASSOCIATED_COLOUR);
+    addCountryInteractions(associated_countries, AFFILIATE_COLOUR);
+
+    // Add interactions for associated countries
+    let demonstrator_countries = ['CYP'];
+    addCountryInteractions(demonstrator_countries, DEMONSTRATOR_COLOUR);
 
 
   // Handmade legend
   const legend_x = 400
   const legend_y = 500
   const legendData = [
-    { color: HIGHLIGHT_COLOUR, text: "CCG outputs available" },
-    { color: PARTNER_COLOUR, text: "CCG partner country" },
-    { color: ASSOCIATED_COLOUR, text: "CCG associated country" }
+    { colour: HIGHLIGHT_COLOUR, text: "CCG Outputs available" },
+    { colour: PARTNER_COLOUR, text: "CCG Partner country" },
+    { colour: AFFILIATE_COLOUR, text: "CCG Affiliate country" },
+    { colour: DEMONSTRATOR_COLOUR, text: "CCG Demonstrator country "}
   ];
 
   legendData.forEach((item, index) => {
@@ -80,7 +86,7 @@ d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/w
       .attr("cx", legend_x)
       .attr("cy", legend_y + index * 20)
       .attr("r", 6)
-      .style("fill", item.color);
+      .style("fill", item.colour);
 
     svg.append("text")
       .attr("x", legend_x + 20)
