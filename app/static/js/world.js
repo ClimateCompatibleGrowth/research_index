@@ -62,11 +62,11 @@ d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/w
     let partner_countries = ['KEN', 'ZMB', 'LAO', 'GHA', 'VNM', 'IND', 'NPL', 'MWI'];
     addCountryInteractions(partner_countries, PARTNER_COLOUR);
 
-    // Add interactions for associated countries
-    let associated_countries = ['ZAF', 'CRI', 'SLE'];
-    addCountryInteractions(associated_countries, AFFILIATE_COLOUR);
+    // Add interactions for affiliated countries
+    let affiliated_countries = ['ZAF', 'CRI', 'SLE'];
+    addCountryInteractions(affiliated_countries, AFFILIATE_COLOUR);
 
-    // Add interactions for associated countries
+    // Add interactions for demonstrator countries
     let demonstrator_countries = ['CYP'];
     addCountryInteractions(demonstrator_countries, DEMONSTRATOR_COLOUR);
 
