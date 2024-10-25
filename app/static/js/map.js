@@ -1,6 +1,33 @@
+const colours = ['#d7191c','#fdae61','#d3d3d3','#abd9e9','#2c7bb6']
+
+const BACKGROUND_COLOUR = colours[2]
+const HIGHLIGHT_COLOUR = colours[1]
+const PARTNER_COLOUR = colours[0]
+const AFFILIATE_COLOUR = colours[4]
+const DEMONSTRATOR_COLOUR = colours[3]
+
+
 // Purpose: To create a map of Kenya using D3.js
 
 function draw_map(country) {
+
+  // This should be replaced with information drawn from the backend database (ccg_status tag)
+  let partner_countries = ['KEN', 'ZMB', 'LAO', 'GHA', 'VNM', 'IND', 'NPL', 'MWI'];
+  let affiliated_countries = ['ZAF', 'CRI', 'SLE'];
+  let demonstrator_countries = ['CYP'];
+
+  var fill
+
+  if (partner_countries.indexOf(country.c.id) >= 0) {
+    fill = PARTNER_COLOUR
+  } else if (affiliated_countries.indexOf(country.c.id) >= 0) {
+    fill = AFFILIATE_COLOUR
+  } else if ((demonstrator_countries.indexOf(country.c.id) >= 0)) {
+    fill = DEMONSTRATOR_COLOUR
+  } else {
+    fill = HIGHLIGHT_COLOUR
+  }
+  // Above should be replaced with information drawn from the backend database
 
   const id = "#" + country.c.id;
   const svg_map = d3.select(id),
@@ -21,7 +48,6 @@ function draw_map(country) {
     .center([lon, lat])                // GPS of location to zoom on
     .scale(400)                       // This is like the zoom
     .translate([ map_width/2, map_height/2 ])
-
 
     var box = d3.geoBounds(country[0])
     var box_width = box[1][0] - box[0][0]
@@ -46,7 +72,7 @@ function draw_map(country) {
           .selectAll("path")
           .data(country)
           .join("path")
-            .attr("fill", "grey")
+            .attr("fill", fill)
             .attr("d", d3.geoPath()
                 .projection(scaled_projection)
             )
