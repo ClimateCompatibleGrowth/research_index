@@ -37,9 +37,9 @@ function draw_map(country) {
 
     // Map and projection
     const scaled_projection = d3.geoMercator()
-    .center([zoomX, zoomY])                // GPS of location to zoom on
-    .scale(zoomScaleFactor * 40)                       // This is like the zoom
-    .translate([ map_width/2, map_height/2 ])
+    .center(centroid)                // GPS of location to zoom on
+    .scale(zoomScaleFactor * 40)     // This is like the zoom
+    .translate([ map_width / 2, map_height / 2 ])
 
       // Draw the map
       svg_map.append("g")
