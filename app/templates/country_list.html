@@ -19,7 +19,7 @@
                 </div>
             </div>
         {% endfor %}
-        <script src="{{url_for('static', filename='js/map.js')}}"></script>
+        <script src="{{url_for('static', path='js/map.js')}}"></script>
         <script>
           let countries = {{countries|tojson}};
           countries.forEach(draw_map);
