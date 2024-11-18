@@ -2,16 +2,10 @@ from fastapi import FastAPI, Request, Depends
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
-from .model import (
-    Author,
-    Output,
-    AuthorList,
-    OutputList,
-    Nodes,
-    Edges,
-    CountryList,
-    Country,
-)
+from app.crud.author import Author, AuthorList
+from app.crud.output import Output, OutputList
+from app.crud.country import Country, CountryList
+from app.crud.graph import Nodes, Edges
 
 app = FastAPI()
 
