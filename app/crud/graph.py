@@ -1,10 +1,38 @@
+from typing import List, Dict, Any
+from neo4j import Driver
 from app.db.session import connect_to_db
 
 
 class Nodes:
-    @connect_to_db
-    def get(self, db):
+    """Class for retrieving graph nodes representing authors and articles."""
 
+    @connect_to_db
+    def get(self, db: Driver) -> List[Dict[str, Any]]:
+        """Retrieve all author and article nodes from the database.
+
+        Parameters
+        ----------
+        db : Driver
+            Neo4j database driver
+
+        Returns
+        -------
+        List[Dict[str, Any]]
+            List of node dictionaries containing:
+            - id : str
+                Node UUID
+            - group : int
+                Node type (0=Author, 1=Article)
+            - name : str
+                Display name (full name for authors, title for articles)
+            - url : str
+                Associated URL (ORCID for authors, DOI for articles)
+
+        Raises
+        ------
+        Neo4jError
+            If database query fails
+        """
         query = """MATCH (a:Author)
                 RETURN a.uuid as id, 0 as group, a.first_name + " " + a.last_name as name, a.orcid as url
                 UNION ALL
@@ -16,9 +44,31 @@ class Nodes:
 
 
 class Edges:
-    @connect_to_db
-    def get(self, db):
+    """Class for retrieving graph edges representing author-article relationships."""
 
+    @connect_to_db
+    def get(self, db: Driver) -> List[Dict[str, str]]:
+        """Retrieve all author-article relationships from the database.
+
+        Parameters
+        ----------
+        db : Driver
+            Neo4j database driver
+
+        Returns
+        -------
+        List[Dict[str, str]]
+            List of edge dictionaries containing:
+            - source : str
+                Author node UUID
+            - target : str
+                Article node UUID
+
+        Raises
+        ------
+        Neo4jError
+            If database query fails
+        """
         query = """MATCH (p:Article)<-[author_of]-(a:Author)
                 RETURN p.uuid as target, a.uuid as source
                 """
