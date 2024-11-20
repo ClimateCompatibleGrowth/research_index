@@ -9,9 +9,12 @@ from app.crud.author import Author, AuthorList
 from app.crud.country import Country, CountryList
 from app.crud.graph import Edges, Nodes
 from app.crud.output import Output, OutputList
+from app.crud.workstream import Workstream
+
 from app.schemas.author import AuthorModel
 from app.schemas.country import CountryModel, CountryNodeModel
 from app.schemas.output import OutputModel
+from app.schemas.workstream import WorkstreamModel
 
 app = FastAPI()
 
@@ -150,3 +153,13 @@ async def output_list(type: str = None) -> List[OutputModel]:
 async def output(id: str) -> OutputModel:
     output_model = Output()
     return output_model.get(id)
+
+@app.get("/api/workstreams")
+async def workstream_list() -> List[WorkstreamModel]:
+    model = Workstream()
+    return model.get_all()
+
+@app.get("/api/workstreams/{id}")
+async def workstream(id: str) -> WorkstreamModel:
+    model = Workstream()
+    return model.get(id)
