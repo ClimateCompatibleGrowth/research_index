@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Any, Dict, List, Optional
 
 from neo4j import Driver
@@ -115,7 +116,11 @@ class Author:
             result, summary, keys = db.execute_query(publications_query, uuid=id)
 
         results["outputs"] = [x.data() for x in result]
-
+        for result in results["outputs"]:
+            neo4j_datetime = result["outputs"]["cited_by_count_date"]
+            result["outputs"]["cited_by_count_date"] = datetime.fromtimestamp(
+                neo4j_datetime.to_native().timestamp()
+            )
         return results
 
     @connect_to_db
@@ -174,4 +179,4 @@ class AuthorList:
                    """
         records, summary, keys = db.execute_query(query)
 
-        return records
+        return [record.data() for record in records]

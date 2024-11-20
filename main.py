@@ -1,3 +1,5 @@
+from typing import List
+
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
@@ -7,6 +9,7 @@ from app.crud.author import Author, AuthorList
 from app.crud.country import Country, CountryList
 from app.crud.graph import Edges, Nodes
 from app.crud.output import Output, OutputList
+from app.schemas.author import AuthorModel
 
 app = FastAPI()
 
@@ -106,3 +109,15 @@ async def output_popup(request: Request, id: str):
     return templates.TemplateResponse(
         "output_popup.html", {"request": request, "title": "Output", "output": entity}
     )
+
+
+@app.get("/api/authors/{id}")
+async def author(id: str, type: str = None) -> AuthorModel:
+    author_model = Author()
+    return author_model.get(id, result_type=type)
+
+
+@app.get("/api/authors")
+async def author_list() -> List[AuthorModel]:
+    model = AuthorList()
+    return model.get()

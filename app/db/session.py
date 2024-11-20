@@ -1,9 +1,10 @@
-from neo4j import GraphDatabase
 import os
 from functools import wraps
 
-MG_HOST = os.environ.get('MG_HOST', '127.0.0.1')
-MG_PORT = int(os.environ.get('MG_PORT', 7687))
+from neo4j import GraphDatabase
+
+MG_HOST = os.environ.get("MG_HOST", "127.0.0.1")
+MG_PORT = int(os.environ.get("MG_PORT", 7687))
 
 print(f"Host is {MG_HOST} and port is {MG_PORT}")
 
@@ -23,4 +24,5 @@ def connect_to_db(f):
         finally:
             db.close()
         return result
+
     return with_connection_

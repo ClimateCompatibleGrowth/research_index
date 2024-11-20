@@ -1,5 +1,7 @@
-from typing import List, Dict, Any
+from typing import Any, Dict, List
+
 from neo4j import Driver
+
 from app.db.session import connect_to_db
 
 
