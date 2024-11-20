@@ -4,7 +4,7 @@
 
 To enter development mode of the website, with the memgraph database running in the background, run
 
-    python app/app.py
+    fastapi dev main.py
 
 ## Deployment
 
