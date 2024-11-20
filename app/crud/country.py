@@ -1,6 +1,7 @@
 from typing import Any, Dict, List, Optional, Tuple
 
 from neo4j import Driver
+from datetime import datetime
 
 from app.db.session import connect_to_db
 
@@ -67,6 +68,12 @@ class Country:
             results, summary, keys = db.execute_query(query, id=id)
 
         outputs = [x.data() for x in results]
+        for output in outputs:
+            neo4j_datetime = output["outputs"]["cited_by_count_date"]
+            output["outputs"]["cited_by_count_date"] = datetime.fromtimestamp(
+                neo4j_datetime.to_native().timestamp()
+            )        
+        
         query = """MATCH (c:Country) WHERE c.id = $id RETURN c as country;"""
         results, summary, keys = db.execute_query(query, id=id)
         country = results[0].data()["country"]
@@ -107,7 +114,7 @@ class CountryList:
         Parameters
         ----------
         db : Driver
-            Neo4j database driver instance
+            Neo4j database driver instances
 
         Returns
         -------

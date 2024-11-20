@@ -13,15 +13,7 @@ class AuthorModel(BaseModel):
     orcid: Optional[str] = Field(None, description="Author's ORCID identifier")
     first_name: str = Field(..., min_length=1)
     last_name: str = Field(..., min_length=1)
-    affiliations: Optional[Dict[str, str]] = Field(
-        default=None, description="Author's institutional affiliations"
-    )
-    workstreams: Optional[Dict[str, str]] = Field(
-        default=None, description="Research workstreams the author is involved in"
-    )
-    collaborators: Optional[List[str]] = Field(
-        default=None, description="List of collaborator UUIDs"
-    )
-    outputs: Optional[List[str]] = Field(
-        default=None, description="List of research output UUIDs"
-    )
+    affiliations: Optional[Dict[str, str]] = None
+    workstreams: Optional[Dict[str, str]] = None
+    collaborators: Optional[List[str]] = None
+    outputs: Optional[List[str]] = None
