@@ -1,4 +1,4 @@
-from typing import List, Dict
+from typing import List, Dict, Any
 
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
@@ -11,6 +11,7 @@ from app.crud.graph import Edges, Nodes
 from app.crud.output import Output, OutputList
 from app.schemas.author import AuthorModel
 from app.schemas.country import CountryModel, CountryNodeModel
+from app.schemas.output import OutputModel
 
 app = FastAPI()
 
@@ -137,3 +138,15 @@ async def country_list()-> List[CountryNodeModel]:
     results = country_model.get()
     return [result['c'] for result in results] # The queries should return a list of dictionaries, each containing a 'c' key with the country information
                                                # This is a temporary workaround but the queries should be updated to return the correct data structure
+                                                                                         
+@app.get("/api/outputs")
+async def output_list(type: str = None) -> List[OutputModel]:
+    model = OutputList()
+    results = model.filter_type(result_type=type) if type else model.get()
+    return [result['outputs'] for result in results]
+        
+
+@app.get("/api/outputs/{id}")
+async def output(id: str) -> OutputModel:
+    output_model = Output()
+    return output_model.get(id)
