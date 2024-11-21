@@ -105,10 +105,8 @@ class Country:
         records, summary, keys = db.execute_query(query, id=id)
         return {x.data()["result_type"]: x.data()["count"] for x in records}
 
-
-class CountryList:
     @connect_to_db
-    def get(self, db: Driver) -> List[Dict[str, Any]]:
+    def get_all(self, db: Driver) -> List[Dict[str, Any]]:
         """Retrieve all countries that have associated articles.
 
         Parameters

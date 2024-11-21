@@ -5,10 +5,10 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-from app.crud.author import Author, AuthorList
-from app.crud.country import Country, CountryList
+from app.crud.author import Author
+from app.crud.country import Country
 from app.crud.graph import Edges, Nodes
-from app.crud.output import Output, OutputList
+from app.crud.output import Output
 from app.crud.workstream import Workstream
 
 from app.schemas.author import AuthorModel
@@ -27,7 +27,7 @@ app.mount("/static", StaticFiles(directory="app/static"), name="static")
 async def index(request: Request):
     nodes = Nodes().get()
     edges = Edges().get()
-    countries = CountryList().get()
+    countries = Country().get_all()
     return templates.TemplateResponse(
         "index.html",
         {
@@ -59,8 +59,8 @@ async def country(request: Request, id: str, type: str = None):
 
 @app.get("/countries", response_class=HTMLResponse)
 async def country_list(request: Request):
-    country_model = CountryList()
-    entity = country_model.get()
+    country_model = Country()
+    entity = country_model.get_all()
     return templates.TemplateResponse(
         "country_list.html",
         {"request": request, "title": "Countries", "countries": entity},
@@ -80,8 +80,8 @@ async def author(request: Request, id: str, type: str = None):
 
 @app.get("/authors", response_class=HTMLResponse)
 async def author_list(request: Request):
-    model = AuthorList()
-    entity = model.get()
+    model = Author()
+    entity = model.get_all()
     return templates.TemplateResponse(
         "authors.html", {"request": request, "title": "Author List", "authors": entity}
     )
@@ -89,8 +89,8 @@ async def author_list(request: Request):
 
 @app.get("/outputs", response_class=HTMLResponse)
 async def output_list(request: Request, type: str = None):
-    model = OutputList()
-    entity = model.filter_type(result_type=type) if type else model.get()
+    model = Output()
+    entity = model.filter_type(result_type=type) if type else model.get_all()
     count = model.count()
     return templates.TemplateResponse(
         "outputs.html",
@@ -123,9 +123,9 @@ async def author(id: str, type: str = None) -> AuthorModel:
 
 
 @app.get("/api/authors")
-async def author_list() -> List[AuthorModel]:
-    model = AuthorList()
-    return model.get()
+async def author_list()-> List[AuthorModel]:
+    model = Author()
+    return model.get_all()
 
 @app.get("/api/countries/{id}")
 async def country(id: str, type: str = None)-> CountryModel:
@@ -137,15 +137,15 @@ async def country(id: str, type: str = None)-> CountryModel:
 
 @app.get("/api/countries")
 async def country_list()-> List[CountryNodeModel]:
-    country_model = CountryList()
-    results = country_model.get()
+    country_model = Country()
+    results = country_model.get_all()
     return [result['c'] for result in results] # The queries should return a list of dictionaries, each containing a 'c' key with the country information
                                                # This is a temporary workaround but the queries should be updated to return the correct data structure
                                                                                          
 @app.get("/api/outputs")
 async def output_list(type: str = None) -> List[OutputModel]:
-    model = OutputList()
-    results = model.filter_type(result_type=type) if type else model.get()
+    model = Output()
+    results = model.filter_type(result_type=type) if type else model.get_all()
     return [result['outputs'] for result in results]
         
 

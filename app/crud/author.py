@@ -146,35 +146,15 @@ class Author:
                 """
         records, summary, keys = db.execute_query(query, uuid=id)
         return {x.data()["result_type"]: x.data()["count"] for x in records}
-
-
-class AuthorList:
-    """Retrieve list of authors from the database.
-
-    Parameters
-    ----------
-    db : Driver
-        Neo4j database driver
-
-    Returns
-    -------
-    List[Dict[str, Any]]
-        List of author dictionaries containing:
-        - first_name : str
-        - last_name : str
-        - uuid : str
-        - orcid : str
-        - affiliations : List[Dict[str, str]]
-        - workstreams : List[Dict[str, str]]
-    """
-
+    
     @connect_to_db
-    def get(self, db: Driver) -> List[Dict[str, Any]]:
+    def get_all(self, db: Driver) -> List[Dict[str, Any]]:
         """Retrieve list of authors from the database."""
         query = """MATCH (a:Author)
                    OPTIONAL MATCH (a)-[:member_of]->(p:Partner)
                    OPTIONAL MATCH (a)-[:member_of]->(u:Workstream)
-                   RETURN a.first_name as first_name, a.last_name as last_name, a.uuid as uuid, a.orcid as orcid, collect(p.id, p.name) as affiliation, collect(u.id, u.name) as workstreams
+                   optional MATCH (a)-[:author_of]->(o:PUBLICATION)
+                   RETURN a.first_name as first_name, a.last_name as last_name, a.uuid as uuid, a.orcid as orcid, collect(p.id, p.name) as affiliations, collect(u.id, u.name) as workstreams
                    ORDER BY last_name;
                    """
         records, summary, keys = db.execute_query(query)

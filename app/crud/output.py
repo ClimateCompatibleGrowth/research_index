@@ -54,11 +54,8 @@ class Output:
         results["authors"] = [x.data() for x in records]
 
         return results
-
-
-class OutputList:
     @connect_to_db
-    def get(self, db: Driver) -> List[Dict[str, Any]]:
+    def get_all(self, db: Driver) -> List[Dict[str, Any]]:
         """Retrieve all article outputs with their associated countries and authors.
 
         Parameters
