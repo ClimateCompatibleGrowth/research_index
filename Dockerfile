@@ -1,21 +1,13 @@
-# Use an official Python runtime as a parent image
 FROM python:3.11.7-bookworm
 
-# Set the working directory in the container to /app
-WORKDIR /app
+WORKDIR /research-index
 
-# Add the current directory contents into the container at /app
-ADD ./app /app
-ADD requirements.txt /app/requirements.txt
+ADD requirements.txt /research-index/requirements.txt
 
-# Install packages for the memgraph client
-RUN apt update -y
-RUN apt install -y python3-dev cmake make gcc g++ libssl-dev
-
-# Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Make port 80 available to the world outside this container
-EXPOSE 80
+ADD . /research-index
 
-CMD ["gunicorn", "--bind", "0.0.0.0:80", "app:app"]
+EXPOSE 8000
+
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
