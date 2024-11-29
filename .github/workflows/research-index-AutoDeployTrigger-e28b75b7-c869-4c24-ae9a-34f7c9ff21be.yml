@@ -4,19 +4,19 @@ name: Trigger auto deployment for research-index
 on:
   # Automatically trigger it when detected changes in repo
   push:
-    branches: 
+    branches:
       [ development ]
     paths:
     - '**'
     - '.github/workflows/research-index-AutoDeployTrigger-e28b75b7-c869-4c24-ae9a-34f7c9ff21be.yml'
 
-  # Allow manual trigger 
-  workflow_dispatch:      
+  # Allow manual trigger
+  workflow_dispatch:
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
-    permissions: 
+    permissions:
       id-token: write #This is required for requesting the OIDC JWT Token
       contents: read #Required when GH token is used to authenticate with private repo
 
@@ -24,25 +24,46 @@ jobs:
       - name: Checkout to the branch
         uses: actions/checkout@v2
 
-      - name: Azure Login
-        uses: azure/login@v1
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Log in to registry
+        uses: docker/login-action@v2
         with:
-          client-id: ${{ secrets.RESEARCHINDEX_AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.RESEARCHINDEX_AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.RESEARCHINDEX_AZURE_SUBSCRIPTION_ID }}
+          registry: https://index.docker.io/v1/
+          username: ${{ secrets.AzureAppService_ContainerUsername_dce678b65c414723a5c407473fe6c430 }}
+          password: ${{ secrets.AzureAppService_ContainerPassword_544e6645f7274c9b831a7039667967d5 }}
 
       - name: Build and push container image to registry
-        uses: azure/container-apps-deploy-action@v2
+        uses: docker/build-push-action@v3
         with:
-          appSourcePath: ${{ github.workspace }}
-          _dockerfilePathKey_: _dockerfilePath_
-          registryUrl: hub.docker.com
-          registryUsername: ${{ secrets.RESEARCHINDEX_REGISTRY_USERNAME }}
-          registryPassword: ${{ secrets.RESEARCHINDEX_REGISTRY_PASSWORD }}
-          containerAppName: research-index
-          resourceGroup: ccg_research_index
-          imageToBuild: hub.docker.com/research-index:${{ github.sha }}
-          _buildArgumentsKey_: |
-            _buildArgumentsValues_
+          push: true
+          tags: index.docker.io/${{ secrets.AzureAppService_ContainerUsername_dce678b65c414723a5c407473fe6c430 }}/ccg-research-index:${{ github.sha }}
+          file: ./Dockerfile
 
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write #This is required for requesting the OIDC JWT Token
+      contents: read #Required when GH token is used to authenticate with private repo
 
+    steps:
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        client-id: ${{ secrets.RESEARCHINDEX_AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.RESEARCHINDEX_AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.RESEARCHINDEX_AZURE_SUBSCRIPTION_ID }}
+
+    - name: Push container image to registry
+      uses: azure/container-apps-deploy-action@v2
+      with:
+        appSourcePath: ${{ github.workspace }}
+        _dockerfilePathKey_: _dockerfilePath_
+        registryUrl: index.docker.io
+        registryUsername: ${{ secrets.RESEARCHINDEX_REGISTRY_USERNAME }}
+        registryPassword: ${{ secrets.RESEARCHINDEX_REGISTRY_PASSWORD }}
+        containerAppName: research-index
+        resourceGroup: ccg_research_index
+        imageToBuild: index.docker.io/research-index:${{ github.sha }}
+        _buildArgumentsKey_: _buildArgumentsValues_
