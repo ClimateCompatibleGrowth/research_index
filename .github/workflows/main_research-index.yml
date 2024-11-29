@@ -32,26 +32,7 @@ jobs:
       with:
         push: true
         tags: index.docker.io/${{ secrets.AzureAppService_ContainerUsername_dce678b65c414723a5c407473fe6c430 }}/ccg-research-index:${{ github.sha }}
-        file: ./Dockerfile
-
-  development:
-      runs-on: ubuntu-latest
-      on:
-        branch: development
-      needs: build
-      environment:
-        name: 'production'
-        url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-
-      steps:
-      - name: Deploy to Azure Web App
-        id: deploy-to-webapp
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: 'research-index'
-          slot-name: 'production'
-          publish-profile: ${{ secrets.AzureAppService_PublishProfile_4b15095a06cc4e57aa33f534f4e54311 }}
-          images: 'index.docker.io/${{ secrets.AzureAppService_ContainerUsername_dce678b65c414723a5c407473fe6c430 }}/ccg-research-index:${{ github.sha }}'
+        file: Dockerfile
 
   deploy:
     runs-on: ubuntu-latest
