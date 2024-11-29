@@ -30,7 +30,7 @@ jobs:
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: index.docker.io/${{ secrets.AzureAppService_ContainerUsername_9310ce663981441ab232b6b875b913e2 }}/willu47docker/ccg-research-index:${{ github.sha }}
+        tags: index.docker.io/${{ secrets.AzureAppService_ContainerUsername_9310ce663981441ab232b6b875b913e2 }}/ccg-research-index:${{ github.sha }}
         file: ./Dockerfile
 
   deploy:
@@ -48,4 +48,4 @@ jobs:
         app-name: 'dev-research-index'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_a74f0a22a9c3465a91fa629137af0f81 }}
-        images: 'index.docker.io/${{ secrets.AzureAppService_ContainerUsername_9310ce663981441ab232b6b875b913e2 }}/willu47docker/ccg-research-index:${{ github.sha }}'
+        images: 'index.docker.io/${{ secrets.AzureAppService_ContainerUsername_9310ce663981441ab232b6b875b913e2 }}/ccg-research-index:${{ github.sha }}'
