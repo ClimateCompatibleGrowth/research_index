@@ -2,9 +2,9 @@ from pydantic import BaseModel, Field, HttpUrl
 from datetime import datetime
 from typing import List, Optional
 from uuid import UUID
-from author import AuthorBase
-from country import CountryNodeModel
-from meta import Meta
+from .author import AuthorBase
+from .country import CountryBaseModel
+from .meta import Meta
 
 
 class DateTimeComponents(BaseModel):
@@ -56,7 +56,6 @@ class OutputModel(BaseModel):
                     ] # required
         }
     ```
-
     """
     uuid: UUID
     doi: HttpUrl
@@ -66,12 +65,13 @@ class OutputModel(BaseModel):
     abstract: Optional[str] = None
     journal: Optional[str] = None # Only academic publications have a journal
     cited_by_count_date: Optional[CitedByDateTime] = None
-    cited_by_count: Optional[int]
+    cited_by_count: Optional[int] = None
     publication_day: Optional[int] = None
     publication_month: Optional[int] = None
     publication_year: Optional[int] = None
     publisher: Optional[str] = None
-    countries: Optional[List[CountryNodeModel]] = Field(default_factory=list)
+    countries: Optional[List[CountryBaseModel]] = Field(default_factory=list)
+
 
 class OutputListModel(BaseModel):
     """Represents a list of outputs including metadata
