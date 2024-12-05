@@ -1,4 +1,4 @@
-from typing import List, Dict, Any
+from typing import List
 
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
@@ -12,9 +12,9 @@ from app.crud.output import Output
 from app.crud.workstream import Workstream
 
 from app.schemas.author import AuthorModel
-from app.schemas.country import CountryModel, CountryNodeModel
-from app.schemas.output import OutputModel
-from app.schemas.workstream import WorkstreamModel
+from app.schemas.country import CountryNodeModel
+from app.schemas.output import OutputModel, OutputListModel
+from app.schemas.workstream import WorkstreamBase, WorkstreamModel
 
 app = FastAPI()
 
@@ -128,7 +128,21 @@ async def author_list()-> List[AuthorModel]:
     return model.get_all()
 
 @app.get("/api/countries/{id}")
-async def country(id: str, type: str = None)-> CountryModel:
+async def country(id: str, type: str = None)-> OutputListModel:
+    """Return a list of outputs filtered by the country id provided
+
+    Arguments
+    ---------
+    id: str
+        The 3-letter ISO country code
+    type: str
+        One of "dataset", "publication", "tools", "other"
+
+    Returns
+    -------
+    OutputListModel schema
+
+    """
     country_model = Country()
     outputs, country = country_model.get(id, result_type=type)
     count = country_model.count(id)
@@ -141,13 +155,13 @@ async def country_list()-> List[CountryNodeModel]:
     results = country_model.get_all()
     return [result['c'] for result in results] # The queries should return a list of dictionaries, each containing a 'c' key with the country information
                                                # This is a temporary workaround but the queries should be updated to return the correct data structure
-                                                                                         
+
 @app.get("/api/outputs")
-async def output_list(type: str = None) -> List[OutputModel]:
+async def output_list(type: str = None) -> OutputListModel:
     model = Output()
     results = model.filter_type(result_type=type) if type else model.get_all()
     return [result['outputs'] for result in results]
-        
+
 
 @app.get("/api/outputs/{id}")
 async def output(id: str) -> OutputModel:
@@ -155,7 +169,7 @@ async def output(id: str) -> OutputModel:
     return output_model.get(id)
 
 @app.get("/api/workstreams")
-async def workstream_list() -> List[WorkstreamModel]:
+async def workstream_list() -> List[WorkstreamBase]:
     model = Workstream()
     return model.get_all()
 
