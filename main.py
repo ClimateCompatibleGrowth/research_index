@@ -15,6 +15,7 @@ from app.schemas.author import AuthorModel
 from app.schemas.country import CountryNodeModel
 from app.schemas.output import OutputModel, OutputListModel
 from app.schemas.workstream import WorkstreamBase, WorkstreamModel
+from app.schemas.topic import TopicBaseModel
 
 app = FastAPI()
 
@@ -117,7 +118,7 @@ async def output_popup(request: Request, id: str):
 
 
 @app.get("/api/authors/{id}")
-async def author(id: str, type: str = None) -> AuthorModel:
+async def api_author(id: str, type: str = None) -> AuthorModel:
     author_model = Author()
     return author_model.get(id, result_type=type)
 
@@ -126,6 +127,7 @@ async def author(id: str, type: str = None) -> AuthorModel:
 async def api_author_list()-> List[AuthorModel]:
     model = Author()
     return model.get_all()
+
 
 @app.get("/api/countries/{id}")
 async def api_country(id: str, type: str = None)-> OutputListModel:
@@ -156,6 +158,7 @@ async def api_country_list()-> List[CountryNodeModel]:
     return [result['c'] for result in results] # The queries should return a list of dictionaries, each containing a 'c' key with the country information
                                                # This is a temporary workaround but the queries should be updated to return the correct data structure
 
+
 @app.get("/api/outputs")
 async def api_output_list(type: str = None) -> OutputListModel:
     model = Output()
@@ -168,12 +171,24 @@ async def api_output(id: str) -> OutputModel:
     output_model = Output()
     return output_model.get(id)
 
+
 @app.get("/api/workstreams")
 async def api_workstream_list() -> List[WorkstreamBase]:
     model = Workstream()
     return model.get_all()
 
+
 @app.get("/api/workstreams/{id}")
 async def api_workstream(id: str) -> WorkstreamModel:
     model = Workstream()
     return model.get(id)
+
+
+@app.get("api/topics")
+async def api_topics_list() -> List[TopicBaseModel]:
+    raise NotImplementedError("Have not yet implemented topics in the database")
+
+
+@app.get("api/topics/{id}")
+async def api_topics_list(id: str) -> TopicBaseModel:
+    raise NotImplementedError("Have not yet implemented topics in the database")
