@@ -1,10 +1,10 @@
 from pydantic import BaseModel, Field, HttpUrl
-from datetime import datetime
 from typing import List, Optional
 from uuid import UUID
 from .author import AuthorBase
 from .country import CountryBaseModel
 from .meta import Meta
+from .topic import TopicBaseModel
 
 
 class DateTimeComponents(BaseModel):
@@ -12,6 +12,7 @@ class DateTimeComponents(BaseModel):
     _Date__year: Optional[int] = None
     _Date__month: Optional[int] = None
     _Date__day: Optional[int] = None
+
 
 class TimeComponents(BaseModel):
     _Time__ticks: Optional[int] = None
@@ -21,9 +22,11 @@ class TimeComponents(BaseModel):
     _Time__nanosecond: Optional[int] = None
     _Time__tzinfo: Optional[str] = None
 
+
 class CitedByDateTime(BaseModel):
     _DateTime__date: Optional[DateTimeComponents] = None
     _DateTime__time: Optional[TimeComponents] = None
+
 
 class OutputModel(BaseModel):
     """Schema for an Output
@@ -63,7 +66,7 @@ class OutputModel(BaseModel):
     result_type: str
     authors: List[AuthorBase]
     abstract: Optional[str] = None
-    journal: Optional[str] = None # Only academic publications have a journal
+    journal: Optional[str] = None  # Only academic publications have a journal
     cited_by_count_date: Optional[CitedByDateTime] = None
     cited_by_count: Optional[int] = None
     publication_day: Optional[int] = None
@@ -71,6 +74,7 @@ class OutputModel(BaseModel):
     publication_year: Optional[int] = None
     publisher: Optional[str] = None
     countries: Optional[List[CountryBaseModel]] = Field(default_factory=list)
+    topics: Optional[List[TopicBaseModel]] = Field(default_factory=List)
 
 
 class OutputListModel(BaseModel):
@@ -78,4 +82,4 @@ class OutputListModel(BaseModel):
 
     """
     meta: Meta
-    outputs: List[OutputModel]
+    results: List[OutputModel]
