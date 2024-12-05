@@ -75,7 +75,9 @@ async def author(request: Request, id: str, type: str = None):
     count = author_model.count(id)
     return templates.TemplateResponse(
         "author.html",
-        {"request": request, "title": "Author", "author": entity, "count": count},
+        {"request": request, "title": "Author",
+         "author": entity,
+         "count": count},
     )
 
 
@@ -84,7 +86,9 @@ async def author_list(request: Request):
     model = Author()
     entity = model.get_all()
     return templates.TemplateResponse(
-        "authors.html", {"request": request, "title": "Author List", "authors": entity}
+        "authors.html", {"request": request,
+                         "title": "Author List",
+                         "authors": entity}
     )
 
 
