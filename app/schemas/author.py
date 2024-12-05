@@ -1,26 +1,20 @@
 from typing import Dict, List, Optional
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, HttpUrl
+from uuid import UUID
+
+from . import AuthorBase
+from .workstream import WorkstreamBase
+from .affiliation import AffiliationModel
+from .output import OutputListModel
 
 
-class AuthorBase(BaseModel):
-    """
-    Base data model representing an academic author or contributor
-    with their associated metadata.
-    """
-
-    uuid: str = Field(..., description="Unique identifier for the author")
-    first_name: str = Field(..., min_length=1)
-    last_name: str = Field(..., min_length=1)
-    orcid: Optional[str] = Field(None, description="Author's ORCID identifier")
-
-    
 class AuthorModel(AuthorBase):
     """
     Data model representing an academic author or contributor
     with their associated metadata and relationships.
     """
-    affiliations: Optional[Dict] = None
-    workstreams: Optional[Dict[str, str]] = None
-    collaborators: Optional[List] = None
-    outputs: Optional[List] = None
+    affiliations: Optional[List[AffiliationModel]] = None
+    workstreams: Optional[List[WorkstreamBase]] = None
+    collaborators: List = None
+    outputs: OutputListModel
