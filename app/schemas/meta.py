@@ -13,11 +13,11 @@ class Count(BaseModel):
      ```
     """
 
-    total: int
-    publication: int
-    software: int
-    dataset: int
-    other: int
+    total: int = 0
+    publication: int = 0
+    software: int = 0
+    dataset: int = 0
+    other: int = 0
 
 
 class Meta(BaseModel):

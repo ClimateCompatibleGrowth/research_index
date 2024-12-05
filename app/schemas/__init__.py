@@ -9,7 +9,9 @@ class AuthorBase(BaseModel):
     with their associated metadata.
     """
 
-    uuid: UUID = Field(..., description="Unique identifier for the author")
+    uuid: UUID = Field(...,
+                       description="Unique identifier for the author")
     first_name: str = Field(..., min_length=1)
     last_name: str = Field(..., min_length=1)
-    orcid: Optional[HttpUrl] = Field(None, description="Author's ORCID identifier")
+    orcid: Optional[HttpUrl] = \
+        Field(None, description="Author's ORCID identifier")

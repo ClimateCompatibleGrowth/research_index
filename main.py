@@ -11,7 +11,7 @@ from app.crud.graph import Edges, Nodes
 from app.crud.output import Output
 from app.crud.workstream import Workstream
 
-from app.schemas.author import AuthorModel
+from app.schemas.author import AuthorModel, AuthorListModel
 from app.schemas.country import CountryNodeModel
 from app.schemas.output import OutputModel, OutputListModel
 from app.schemas.workstream import WorkstreamBase, WorkstreamModel
@@ -25,7 +25,7 @@ app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
 @app.get("/", response_class=HTMLResponse)
 @app.get("/index", response_class=HTMLResponse)
-async def index(request: Request):
+def index(request: Request):
     nodes = Nodes().get()
     edges = Edges().get()
     countries = Country().get_all()
@@ -42,7 +42,7 @@ async def index(request: Request):
 
 
 @app.get("/countries/{id}", response_class=HTMLResponse)
-async def country(request: Request, id: str, type: str = None):
+def country(request: Request, id: str, type: str = None):
     country_model = Country()
     outputs, country = country_model.get(id, result_type=type)
     count = country_model.count(id)
@@ -59,7 +59,7 @@ async def country(request: Request, id: str, type: str = None):
 
 
 @app.get("/countries", response_class=HTMLResponse)
-async def country_list(request: Request):
+def country_list(request: Request):
     country_model = Country()
     entity = country_model.get_all()
     return templates.TemplateResponse(
@@ -69,7 +69,7 @@ async def country_list(request: Request):
 
 
 @app.get("/authors/{id}", response_class=HTMLResponse)
-async def author(request: Request, id: str, type: str = None):
+def author(request: Request, id: str, type: str = None):
     author_model = Author()
     entity = author_model.get(id, result_type=type)
     count = author_model.count(id)
@@ -82,7 +82,7 @@ async def author(request: Request, id: str, type: str = None):
 
 
 @app.get("/authors", response_class=HTMLResponse)
-async def author_list(request: Request):
+def author_list(request: Request):
     model = Author()
     entity = model.get_all()
     return templates.TemplateResponse(
@@ -93,7 +93,7 @@ async def author_list(request: Request):
 
 
 @app.get("/outputs", response_class=HTMLResponse)
-async def output_list(request: Request, type: str = None):
+def output_list(request: Request, type: str = None):
     model = Output()
     entity = model.filter_type(result_type=type) if type else model.get_all()
     count = model.count()
@@ -104,7 +104,7 @@ async def output_list(request: Request, type: str = None):
 
 
 @app.get("/outputs/{id}", response_class=HTMLResponse)
-async def output(request: Request, id: str):
+def output(request: Request, id: str):
     output_model = Output()
     entity = output_model.get(id)
     return templates.TemplateResponse(
@@ -113,19 +113,26 @@ async def output(request: Request, id: str):
 
 
 @app.get("/api/authors/{id}")
-async def api_author(id: str, type: str = None) -> AuthorModel:
+def api_author(id: str, type: str = None) -> AuthorModel:
     author_model = Author()
-    return author_model.get(id, result_type=type)
+    results = author_model.get(id, result_type=type)
+    count = author_model.count(id)
+    results['outputs']['meta'] = {"count": count,
+                                  "db_response_time_ms": 0,
+                                  "page": 0,
+                                  "per_page": 0}
+
+    return results
 
 
 @app.get("/api/authors")
-async def api_author_list()-> List[AuthorModel]:
+def api_author_list(skip: int = 0, limit: int = 20) -> List[AuthorListModel]:
     model = Author()
-    return model.get_all()
+    return model.get_all(skip=skip, limit=limit)
 
 
 @app.get("/api/countries/{id}")
-async def api_country(id: str, type: str = None)-> OutputListModel:
+def api_country(id: str, type: str = None)-> OutputListModel:
     """Return a list of outputs filtered by the country id provided
 
     Arguments
@@ -147,7 +154,7 @@ async def api_country(id: str, type: str = None)-> OutputListModel:
 
 
 @app.get("/api/countries")
-async def api_country_list()-> List[CountryNodeModel]:
+def api_country_list()-> List[CountryNodeModel]:
     country_model = Country()
     results = country_model.get_all()
     return [result['c'] for result in results] # The queries should return a list of dictionaries, each containing a 'c' key with the country information
@@ -175,29 +182,29 @@ def api_output_list(skip: int = 0, limit: int = 20,
 
 
 @app.get("/api/outputs/{id}")
-async def api_output(id: str) -> OutputModel:
+def api_output(id: str) -> OutputModel:
     output_model = Output()
     results = output_model.get(id)
     return results
 
 
 @app.get("/api/workstreams")
-async def api_workstream_list() -> List[WorkstreamBase]:
+def api_workstream_list() -> List[WorkstreamBase]:
     model = Workstream()
     return model.get_all()
 
 
 @app.get("/api/workstreams/{id}")
-async def api_workstream(id: str) -> WorkstreamModel:
+def api_workstream(id: str) -> WorkstreamModel:
     model = Workstream()
     return model.get(id)
 
 
 @app.get("api/topics")
-async def api_topics_list() -> List[TopicBaseModel]:
+def api_topics_list() -> List[TopicBaseModel]:
     raise NotImplementedError("Have not yet implemented topics in the database")
 
 
 @app.get("api/topics/{id}")
-async def api_topics_list(id: str) -> TopicBaseModel:
+def api_topics_list(id: str) -> TopicBaseModel:
     raise NotImplementedError("Have not yet implemented topics in the database")

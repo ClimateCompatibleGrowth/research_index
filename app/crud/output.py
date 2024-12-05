@@ -51,7 +51,7 @@ class Output:
 
                 """
         records, summary, keys = db.execute_query(query,
-                                                  uuid=id)
+                                                        uuid=id)
         data = [x.data() for x in records][0]
         package = data['outputs']
         package['authors'] = data['authors']
@@ -95,8 +95,8 @@ class Output:
                 LIMIT $limit;
         """
         records, summary, keys = db.execute_query(query,
-                                                  skip=skip,
-                                                  limit=limit)
+                                                        skip=skip,
+                                                        limit=limit)
 
         outputs = []
         for x in records:
@@ -184,8 +184,8 @@ class Output:
                 SKIP $skip
                 LIMIT $limit;
         """
-        records, summary, keys = db.execute_query(query,
-                                                  result_type=result_type,
-                                                  skip=skip,
-                                                  limit=limit)
+        records, _, _ = db.execute_query(query,
+                                               result_type=result_type,
+                                               skip=skip,
+                                               limit=limit)
         return [x.data() for x in records]

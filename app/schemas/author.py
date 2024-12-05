@@ -7,9 +7,10 @@ from . import AuthorBase
 from .workstream import WorkstreamBase
 from .affiliation import AffiliationModel
 from .output import OutputListModel
+from .meta import Meta
 
 
-class AuthorModel(AuthorBase):
+class AuthorListModel(AuthorBase):
     """
     Data model representing an academic author or contributor
     with their associated metadata and relationships.
@@ -17,4 +18,7 @@ class AuthorModel(AuthorBase):
     affiliations: Optional[List[AffiliationModel]] = None
     workstreams: Optional[List[WorkstreamBase]] = None
     collaborators: List[AuthorBase] = None
+
+
+class AuthorModel(AuthorListModel):
     outputs: OutputListModel
