@@ -15,7 +15,7 @@ class Count(BaseModel):
 
     total: int
     publications: int
-    tool: int
+    tools: int
     dataset: int
     other: int
 
