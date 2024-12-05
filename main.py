@@ -112,15 +112,6 @@ async def output(request: Request, id: str):
     )
 
 
-@app.get("/outputs/{id}/popup", response_class=HTMLResponse)
-async def output_popup(request: Request, id: str):
-    output_model = Output()
-    entity = output_model.get(id)
-    return templates.TemplateResponse(
-        "output_popup.html", {"request": request, "title": "Output", "output": entity}
-    )
-
-
 @app.get("/api/authors/{id}")
 async def api_author(id: str, type: str = None) -> AuthorModel:
     author_model = Author()
