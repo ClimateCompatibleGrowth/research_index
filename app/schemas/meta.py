@@ -6,16 +6,16 @@ class Count(BaseModel):
     """Represents count of the outputs
     ```json
         {'total': 245684392,
-        'publications': 1234,
-        'tools': 5678,
+        'publication': 1234,
+        'software': 5678,
         'dataset': 1234,
         'other': 39494},
      ```
     """
 
     total: int
-    publications: int
-    tools: int
+    publication: int
+    software: int
     dataset: int
     other: int
 
@@ -33,7 +33,7 @@ class Meta(BaseModel):
     ```
 
     """
-    count: Count
+    count: Count | None
     db_response_time_ms: int
     page: int
     per_page: int

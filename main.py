@@ -155,16 +155,30 @@ async def api_country_list()-> List[CountryNodeModel]:
 
 
 @app.get("/api/outputs")
-async def api_output_list(type: str = None) -> OutputListModel:
+def api_output_list(skip: int = 0, limit: int = 20,
+                    type: str = None) -> OutputListModel:
     model = Output()
-    results = model.filter_type(result_type=type) if type else model.get_all()
-    return [result['outputs'] for result in results]
+    if type:
+        results = model.filter_type(skip, limit, result_type=type)
+    else:
+        results = model.get_all(skip, limit)
+
+    count = model.count()
+
+    return {
+        "meta": {"count": count,
+                 "db_response_time_ms": 0,
+                 "page": 0,
+                 "per_page": 0},
+        "results": results
+    }
 
 
 @app.get("/api/outputs/{id}")
 async def api_output(id: str) -> OutputModel:
     output_model = Output()
-    return output_model.get(id)
+    results = output_model.get(id)
+    return results
 
 
 @app.get("/api/workstreams")

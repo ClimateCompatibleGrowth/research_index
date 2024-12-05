@@ -61,7 +61,7 @@ class OutputModel(BaseModel):
     ```
     """
     uuid: UUID
-    doi: HttpUrl
+    doi: str = Field(pattern=r"^10\.\d{4,9}/[-._;()/:a-zA-Z0-9]+$")
     title: str
     result_type: str
     authors: List[AuthorBase]
@@ -74,7 +74,7 @@ class OutputModel(BaseModel):
     publication_year: Optional[int] = None
     publisher: Optional[str] = None
     countries: Optional[List[CountryBaseModel]] = Field(default_factory=list)
-    topics: Optional[List[TopicBaseModel]] = Field(default_factory=List)
+    topics: Optional[List[TopicBaseModel]] = Field(default_factory=list)
 
 
 class OutputListModel(BaseModel):
