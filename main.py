@@ -123,12 +123,12 @@ async def author(id: str, type: str = None) -> AuthorModel:
 
 
 @app.get("/api/authors")
-async def author_list()-> List[AuthorModel]:
+async def api_author_list()-> List[AuthorModel]:
     model = Author()
     return model.get_all()
 
 @app.get("/api/countries/{id}")
-async def country(id: str, type: str = None)-> OutputListModel:
+async def api_country(id: str, type: str = None)-> OutputListModel:
     """Return a list of outputs filtered by the country id provided
 
     Arguments
@@ -150,30 +150,30 @@ async def country(id: str, type: str = None)-> OutputListModel:
 
 
 @app.get("/api/countries")
-async def country_list()-> List[CountryNodeModel]:
+async def api_country_list()-> List[CountryNodeModel]:
     country_model = Country()
     results = country_model.get_all()
     return [result['c'] for result in results] # The queries should return a list of dictionaries, each containing a 'c' key with the country information
                                                # This is a temporary workaround but the queries should be updated to return the correct data structure
 
 @app.get("/api/outputs")
-async def output_list(type: str = None) -> OutputListModel:
+async def api_output_list(type: str = None) -> OutputListModel:
     model = Output()
     results = model.filter_type(result_type=type) if type else model.get_all()
     return [result['outputs'] for result in results]
 
 
 @app.get("/api/outputs/{id}")
-async def output(id: str) -> OutputModel:
+async def api_output(id: str) -> OutputModel:
     output_model = Output()
     return output_model.get(id)
 
 @app.get("/api/workstreams")
-async def workstream_list() -> List[WorkstreamBase]:
+async def api_workstream_list() -> List[WorkstreamBase]:
     model = Workstream()
     return model.get_all()
 
 @app.get("/api/workstreams/{id}")
-async def workstream(id: str) -> WorkstreamModel:
+async def api_workstream(id: str) -> WorkstreamModel:
     model = Workstream()
     return model.get(id)
