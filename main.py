@@ -162,13 +162,29 @@ def api_country_list()-> List[CountryNodeModel]:
 
 
 @app.get("/api/outputs")
-def api_output_list(skip: int = 0, limit: int = 20,
-                    type: str = None) -> OutputListModel:
+def api_output_list(skip: int = 0,
+                    limit: int = 20,
+                    type: str = 'publication',
+                    country: str = None) -> OutputListModel:
+    """Return a list of outputs
+
+    Arguments
+    ---------
+    skip: int, default = 0
+    limit: int, default = 20
+    type: enum, default = None
+    country: str, default = None
+    """
     model = Output()
-    if type:
-        results = model.filter_type(skip, limit, result_type=type)
+    if country:
+        results = model.filter_country(result_type=type,
+                                       skip=skip,
+                                       limit=limit,
+                                       country=country)
     else:
-        results = model.get_all(skip, limit)
+        results = model.filter_type(result_type=type,
+                                    skip=skip,
+                                    limit=limit)
 
     count = model.count()
 
