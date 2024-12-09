@@ -48,7 +48,6 @@ class Output:
                 ORDER BY b.rank
                 }
                 RETURN o as outputs, collect(DISTINCT c) as countries, collect(DISTINCT a) as authors
-
                 """
         records, summary, keys = db.execute_query(query,
                                                         uuid=id)
@@ -128,6 +127,7 @@ class Output:
                 RETURN a
                 ORDER BY b.rank
                 }
+
                 RETURN o as outputs,
                        collect(DISTINCT c) as countries,
                        collect(DISTINCT a) as authors
@@ -155,7 +155,7 @@ class Output:
                        skip: int,
                        limit: int,
                        country: str) -> List[Dict[str, Any]]:
-        """Filter articles by result type and return with ordered authors.
+        """Filter articles by country and result type and return with ordered authors.
 
         Parameters
         ----------
@@ -164,8 +164,11 @@ class Output:
         result_type : str
             Type of result to filter by (e.g. 'journal_article')
         skip: int
+            Number of rows in the output to skip
         limit: int
+            Number of rows to return
         country: str
+            Three letter ISO country code
 
         Returns
         -------
