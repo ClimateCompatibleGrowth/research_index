@@ -17,8 +17,8 @@ class AuthorListModel(AuthorBase):
     """
     affiliations: Optional[List[AffiliationModel]] = None
     workstreams: Optional[List[WorkstreamBase]] = None
-    collaborators: List[AuthorBase] = None
 
 
 class AuthorModel(AuthorListModel):
+    collaborators: List[AuthorBase] = None
     outputs: OutputListModel
