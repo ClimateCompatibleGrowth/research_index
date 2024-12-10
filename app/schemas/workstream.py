@@ -1,8 +1,12 @@
 from pydantic import BaseModel
 from typing import List, Optional
-from .author import AuthorBase
+from . import AuthorBase
+from .output import OutputListModel
 
-class WorkstreamModel(BaseModel):
+class WorkstreamBase(BaseModel):
     id: Optional[str] = None
     name: Optional[str] = None
-    members: Optional[List[AuthorBase]] = None
+
+class WorkstreamModel(WorkstreamBase):
+    members: List[AuthorBase]
+    outputs: OutputListModel

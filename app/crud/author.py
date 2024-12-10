@@ -57,8 +57,8 @@ class Author:
             OPTIONAL MATCH (a)-[:member_of]->(u:Workstream)
             RETURN a.uuid as uuid, a.orcid as orcid,
                     a.first_name as first_name, a.last_name as last_name,
-                    collect(p.id, p.name) as affiliations,
-                    collect(u.id, u.name) as workstreams;"""
+                    collect(p) as affiliations,
+                    collect(u) as workstreams;"""
 
         author, _, _ = db.execute_query(author_query, uuid=id)
         results = author[0].data()
@@ -70,7 +70,7 @@ class Author:
             LIMIT 5"""
         colabs, summary, keys = db.execute_query(collab_query, uuid=id)
 
-        results["collaborators"] = colabs
+        results["collaborators"] = [x.data() for x in colabs]
 
         if result_type and result_type in [
             "publication",
@@ -88,10 +88,10 @@ class Author:
                     ORDER BY r.rank
                 }
                 OPTIONAL MATCH (p)-[:REFERS_TO]->(c:Country)
-                RETURN p as outputs,
+                RETURN p as results,
                        collect(DISTINCT c) as countries,
                        collect(DISTINCT b) as authors
-                ORDER BY outputs.publication_year DESCENDING;"""
+                ORDER BY results.publication_year DESCENDING;"""
 
             result, _, _ = db.execute_query(
                 publications_query, uuid=id, result_type=result_type
@@ -108,19 +108,22 @@ class Author:
                     ORDER BY r.rank
                 }
                 OPTIONAL MATCH (p)-[:REFERS_TO]->(c:Country)
-                RETURN p as outputs,
+                RETURN p as results,
                     collect(DISTINCT c) as countries,
                     collect(DISTINCT b) as authors
-                ORDER BY outputs.publication_year DESCENDING;"""
+                ORDER BY results.publication_year DESCENDING;"""
 
-            result, summary, keys = db.execute_query(publications_query, uuid=id)
+            records, _, _ = db.execute_query(publications_query, uuid=id)
+            outputs = []
+            for x in records:
+                data = x.data()
+                package = data['results']
+                package['authors'] = data['authors']
+                package['countries'] = data['countries']
+                outputs.append(package)
 
-        results["outputs"] = [x.data() for x in result]
-        for result in results["outputs"]:
-            neo4j_datetime = result["outputs"]["cited_by_count_date"]
-            result["outputs"]["cited_by_count_date"] = datetime.fromtimestamp(
-                neo4j_datetime.to_native().timestamp()
-            )
+        results['outputs'] = {}
+        results['outputs']['results'] = outputs
         return results
 
     @connect_to_db
@@ -145,18 +148,28 @@ class Author:
                 RETURN o.result_type as result_type, count(o) as count
                 """
         records, summary, keys = db.execute_query(query, uuid=id)
-        return {x.data()["result_type"]: x.data()["count"] for x in records}
-    
+        if len(records) > 0:
+            counts = {x.data()["result_type"]: x.data()["count"] for x in records}
+            counts['total'] = sum(counts.values())
+            return counts
+        else:
+            return {'total': 0,
+                    'publications': 0,
+                    'datasets': 0,
+                    'other': 0,
+                    'software': 0}
+
     @connect_to_db
-    def get_all(self, db: Driver) -> List[Dict[str, Any]]:
+    def get_all(self, db: Driver, skip: int, limit: int) -> List[Dict[str, Any]]:
         """Retrieve list of authors from the database."""
         query = """MATCH (a:Author)
                    OPTIONAL MATCH (a)-[:member_of]->(p:Partner)
                    OPTIONAL MATCH (a)-[:member_of]->(u:Workstream)
-                   optional MATCH (a)-[:author_of]->(o:PUBLICATION)
-                   RETURN a.first_name as first_name, a.last_name as last_name, a.uuid as uuid, a.orcid as orcid, collect(p.id, p.name) as affiliations, collect(u.id, u.name) as workstreams
-                   ORDER BY last_name;
+                   RETURN a.first_name as first_name, a.last_name as last_name, a.uuid as uuid, a.orcid as orcid, collect(p) as affiliations, collect(u) as workstreams
+                   ORDER BY last_name
+                   SKIP $skip
+                   LIMIT $limit;
                    """
-        records, summary, keys = db.execute_query(query)
+        records, _, _ = db.execute_query(query, skip=skip, limit=limit)
 
         return [record.data() for record in records]

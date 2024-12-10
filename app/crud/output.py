@@ -35,47 +35,10 @@ class Output:
                 - orcid : str
                     Author's ORCID identifier
         """
-        query = """MATCH (p:Article)
-                   WHERE p.uuid = $uuid
-                   OPTIONAL MATCH (p)-[:REFERS_TO]->(c:Country)
-                   RETURN DISTINCT p as output, collect(DISTINCT c) as countries;"""
-        records, summary, keys = db.execute_query(query, uuid=id)
-        print(records[0].data())
-        results = {}
-        results = records[0].data()["output"]
-        results["countries"] = records[0].data()["countries"]
 
-        authors_query = """MATCH (a:Author)-[r:author_of]->(p:Article)
-                            WHERE p.uuid = $uuid
-                            RETURN a.uuid as uuid, a.first_name as first_name, a.last_name as last_name, a.orcid as orcid;"""
-
-        records, summary, keys = db.execute_query(authors_query, uuid=id)
-
-        results["authors"] = [x.data() for x in records]
-
-        return results
-    @connect_to_db
-    def get_all(self, db: Driver) -> List[Dict[str, Any]]:
-        """Retrieve all article outputs with their associated countries and authors.
-
-        Parameters
-        ----------
-        db : Driver
-            Neo4j database driver
-
-        Returns
-        -------
-        List[Dict[str, Any]]
-            List of dictionaries containing:
-            - outputs : Dict
-                Article properties
-            - countries : List[Dict]
-                List of referenced countries
-            - authors : List[Dict]
-                List of authors ordered by rank
-        """
         query = """
                 MATCH (o:Article)
+                WHERE o.uuid = $uuid
                 OPTIONAL MATCH (o)-[:REFERS_TO]->(c:Country)
                 CALL
                 {
@@ -84,10 +47,16 @@ class Output:
                 RETURN a
                 ORDER BY b.rank
                 }
-                RETURN o as outputs, collect(DISTINCT c) as countries, collect(DISTINCT a) as authors;
-        """
-        records, summary, keys = db.execute_query(query)
-        return [x.data() for x in records]
+                RETURN o as outputs, collect(DISTINCT c) as countries, collect(DISTINCT a) as authors
+                """
+        records, summary, keys = db.execute_query(query,
+                                                        uuid=id)
+        data = [x.data() for x in records][0]
+        package = data['outputs']
+        package['authors'] = data['authors']
+        package['countries'] = data['countries']
+
+        return package
 
     @connect_to_db
     def count(self, db: Driver) -> Dict[str, int]:
@@ -109,10 +78,19 @@ class Output:
                 RETURN o.result_type as result_type, count(o) as count
                 """
         records, summary, keys = db.execute_query(query)
-        return {x.data()["result_type"]: x.data()["count"] for x in records}
+        if len(records) > 0:
+            counts = {x.data()["result_type"]: x.data()["count"] for x in records}
+            counts['total'] = sum(counts.values())
+            return counts
+        else:
+            return {'total': 0,
+                    'publications': 0,
+                    'datasets': 0,
+                    'other': 0,
+                    'software': 0}
 
     @connect_to_db
-    def filter_type(self, db: Driver, result_type: str) -> List[Dict[str, Any]]:
+    def filter_type(self, db: Driver, result_type: str, skip: int, limit: int) -> List[Dict[str, Any]]:
         """Filter articles by result type and return with ordered authors.
 
         Parameters
@@ -149,9 +127,93 @@ class Output:
                 RETURN a
                 ORDER BY b.rank
                 }
+
                 RETURN o as outputs,
                        collect(DISTINCT c) as countries,
-                       collect(DISTINCT a) as authors;
+                       collect(DISTINCT a) as authors
+                SKIP $skip
+                LIMIT $limit;
         """
-        records, summary, keys = db.execute_query(query, result_type=result_type)
-        return [x.data() for x in records]
+        records, _, _ = db.execute_query(query,
+                                         result_type=result_type,
+                                         skip=skip,
+                                         limit=limit)
+        outputs = []
+        for x in records:
+            data = x.data()
+            package = data['outputs']
+            package['authors'] = data['authors']
+            package['countries'] = data['countries']
+            outputs.append(package)
+
+        return outputs
+
+    @connect_to_db
+    def filter_country(self,
+                       db: Driver,
+                       result_type: str,
+                       skip: int,
+                       limit: int,
+                       country: str) -> List[Dict[str, Any]]:
+        """Filter articles by country and result type and return with ordered authors.
+
+        Parameters
+        ----------
+        db : Driver
+            Neo4j database driver
+        result_type : str
+            Type of result to filter by (e.g. 'journal_article')
+        skip: int
+            Number of rows in the output to skip
+        limit: int
+            Number of rows to return
+        country: str
+            Three letter ISO country code
+
+        Returns
+        -------
+        List[Dict[str, Any]]
+            Filtered list of articles containing:
+            - outputs : Dict
+                Article properties
+            - countries : List[Dict]
+                List of referenced countries
+            - authors : List[Dict]
+                List of authors ordered by rank
+
+        Raises
+        ------
+        ValueError
+            If result_type is invalid
+        """
+        query = """
+                MATCH (o:Article)-[:REFERS_TO]->(c:Country)
+                WHERE o.result_type = $result_type
+                AND c.id = $country_id
+                CALL
+                {
+                WITH o
+                MATCH (a:Author)-[b:author_of]->(o)
+                RETURN a
+                ORDER BY b.rank
+                }
+                RETURN o as outputs,
+                       collect(DISTINCT c) as countries,
+                       collect(DISTINCT a) as authors
+                SKIP $skip
+                LIMIT $limit;
+        """
+        records, _, _ = db.execute_query(query,
+                                         result_type=result_type,
+                                         country_id=country,
+                                         skip=skip,
+                                         limit=limit)
+        outputs = []
+        for x in records:
+            data = x.data()
+            package = data['outputs']
+            package['authors'] = data['authors']
+            package['countries'] = data['countries']
+            outputs.append(package)
+
+        return outputs
