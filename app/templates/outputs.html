@@ -7,6 +7,43 @@
 
 <div class="container" id="research_products"></div>
 
+{{request.query_string|pprint}}
+
+<div class="row">
+    <h5>Filter by result type: </h5>
+    <div class="btn-group" id="filter_button" role="group" aria-label="Filter research type">
+    {% for type in ['publication', 'dataset', 'software', 'other'] %}
+        <a href="{{ url_for('output_list') }}?type={{ type }}&limit={{limit}}&skip=0" class="btn btn-primary">
+            {{type}}
+            <span class="badge text-bg-secondary">{{count[type]}}</span>
+            </a>
+    {% endfor %}
+    </div>
+</div>
+
 {% include 'output_list.j2' %}
+
+<div class="row">
+    <nav aria-label="Page navigation example">
+    <ul class="pagination">
+        {% if not skip == 0%}
+        <li class="page-item"><a class="page-link" href="?type={{ type }}&limit={{limit}}&skip={{skip - limit}}">Previous</a></li>
+        {% endif %}
+
+        {% for page in range((count[type] // limit) + 1) %}
+            {% set skipper = (page) * limit %}
+            {% if skipper == skip %}
+                <li class="page-item"><a class="page-link active" href="?type={{ type }}&limit={{limit}}&skip={{skipper}}">{{ page + 1 }}</a></li>
+            {% else %}
+                <li class="page-item"><a class="page-link" href="?type={{ type }}&limit={{limit}}&skip={{skipper}}">{{ page + 1 }}</a></li>
+            {% endif%}
+        {% endfor %}
+
+        {% if not skip >= count[type] - limit %}
+        <li class="page-item"><a class="page-link" href="?type={{ type }}&limit={{limit}}&skip={{skip + limit}}">Next</a></li>
+        {% endif %}
+    </ul>
+    </nav>
+</div>
 
 {% endblock %}

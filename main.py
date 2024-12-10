@@ -93,13 +93,42 @@ def author_list(request: Request):
 
 
 @app.get("/outputs", response_class=HTMLResponse)
-def output_list(request: Request, type: str = None):
+def output_list(request: Request,
+                type: str = 'publication',
+                skip: int = 0,
+                limit: int = 20,
+                country: str = None):
+
     model = Output()
-    entity = model.filter_type(result_type=type) if type else model.get_all()
+    if country:
+        results = model.filter_country(result_type=type,
+                                       skip=skip,
+                                       limit=limit,
+                                       country=country)
+    else:
+        results = model.filter_type(result_type=type,
+                                    skip=skip,
+                                    limit=limit)
+
     count = model.count()
+
+    package = {
+        "meta": {"count": count,
+                 "db_response_time_ms": 0,
+                 "page": 0,
+                 "per_page": 0},
+        "results": results
+    }
+
     return templates.TemplateResponse(
         "outputs.html",
-        {"request": request, "title": "Output List", "outputs": entity, "count": count},
+        {"request": request,
+         "title": "Output List",
+         "outputs": package['results'],
+         "count": package['meta']['count'],
+         "type": type,
+         "skip": skip,
+         "limit": limit}
     )
 
 

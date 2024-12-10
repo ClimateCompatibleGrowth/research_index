@@ -1,40 +1,16 @@
-
-
-<div class="row">
-    <h5>Filter by result type: </h5>
-    <div class="btn-group" id="filter_button" role="group" aria-label="Filter research type">
-        <a href="?type=publication" class="btn btn-primary">
-            publication
-            <span class="badge text-bg-secondary">{{count.publication}}</span>
-            </a>
-        <a href="?type=dataset" class="btn btn-primary">
-            dataset
-            <span class="badge text-bg-secondary">{{count.dataset}}</span>
-            </a>
-        <a href="?type=software" class="btn btn-primary">
-            tools
-            <span class="badge text-bg-secondary">{{count.software}}</span>
-            </a>
-        <a href="?type=other" class="btn btn-primary">
-            other
-            <span class="badge text-bg-secondary">{{count.other}}</span>
-            </a>
-    </div>
-</div>
-
 <div class="row">
     {% if outputs %}
         {% for output in outputs %}
-            <div class="card" id="{{output.outputs.uuid}}">
+            <div class="card" id="{{output.uuid}}">
                 <div class="card-body">
-                    <h5 class="card-title">{{ output.outputs.title }}
+                    <h5 class="card-title">{{ output.title }}
                         {% if output.countries %}
                             {% for country in output.countries %}
                             <a href="{{ url_for('country', id=country.id) }}" class="badge text-bg-danger">{{ country.name }}</a>
                             {% endfor %}
                         {% endif %}
-                        {% if output.outputs.result_type %}
-                            <span class="badge text-bg-secondary">{{ output.outputs.result_type }}</span>
+                        {% if output.result_type %}
+                            <span class="badge text-bg-secondary">{{ output.result_type }}</span>
                         {% endif %}
                     </h5>
                     {% for author in output.authors %}
@@ -43,11 +19,11 @@
                             <a href="{{ author.orcid }}"><img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="16" height="16" /></a>
                         {% endif %}</l>
                     {% endfor %}
-                    {% if output.outputs.publication_year %}({{ output.outputs.publication_year }}){% endif %}
-                    {% if output.outputs.journal %}{{ output.outputs.journal }}{% endif %}
+                    {% if output.publication_year %}({{ output.publication_year }}){% endif %}
+                    {% if output.journal %}{{ output.journal }}{% endif %}
                     <br>
-                    <a href="{{ url_for('output', id=output.outputs.uuid) }}" class="card-link">View Record</a>
-                    <a href="http://doi.org/{{ output.outputs.doi }}" class="card-link" target="_blank">View at Publisher</a>
+                    <a href="{{ url_for('output', id=output.uuid) }}" class="card-link">View Record</a>
+                    <a href="http://doi.org/{{ output.doi }}" class="card-link" target="_blank">View at Publisher</a>
                     </br>
                 </div>
             </div>
@@ -60,3 +36,4 @@
         </div>
     {% endif %}
 </div>
+

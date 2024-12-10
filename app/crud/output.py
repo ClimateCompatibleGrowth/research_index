@@ -75,7 +75,7 @@ class Output:
         """
         query = """
                 MATCH (a:Author)-[b:author_of]->(o:Article)
-                RETURN o.result_type as result_type, count(o) as count
+                RETURN o.result_type as result_type, count(DISTINCT o) as count
                 """
         records, summary, keys = db.execute_query(query)
         if len(records) > 0:
@@ -117,7 +117,7 @@ class Output:
             If result_type is invalid
         """
         query = """
-                MATCH (o:Article)
+                MATCH (o:Output)
                 WHERE o.result_type = $result_type
                 OPTIONAL MATCH (o)-[:REFERS_TO]->(c:Country)
                 CALL
