@@ -187,6 +187,18 @@ class Author:
                    SKIP $skip
                    LIMIT $limit;
                    """
-        records, _, _ = db.execute_query(query, skip=skip, limit=limit)
+        records, summary, keys = db.execute_query(query,
+                                                  skip=skip,
+                                                  limit=limit)
 
         return [record.data() for record in records]
+
+    @connect_to_db
+    def count_authors(self, db: Driver) -> int:
+        """Count the number of authors"""
+        query = """MATCH (a:Author)
+                RETURN COUNT(a) as count
+                """
+        records, _, _ = db.execute_query(query)
+
+        return [record.data() for record in records][0]['count']

@@ -93,12 +93,14 @@ def author(request: Request,
 def author_list(request: Request, skip: int = 0, limit: int = 20):
     model = Author()
     entity = model.get_all(skip=skip, limit=limit)
+    count = model.count_authors()
     return templates.TemplateResponse(
         "authors.html", {"request": request,
                          "title": "Author List",
                          "authors": entity,
                          "skip": skip,
-                         "limit": limit}
+                         "limit": limit,
+                         "count": count}
     )
 
 
