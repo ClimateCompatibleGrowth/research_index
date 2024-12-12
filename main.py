@@ -9,17 +9,8 @@ from app.crud.graph import Edges, Nodes
 from app.crud.output import Output
 
 from app.api import author, output, country, workstream
-from app.schemas.author import AuthorListModel, AuthorOutputModel
-from app.schemas.country import CountryNodeModel
-from app.schemas.output import OutputModel, OutputListModel
-from app.schemas.workstream import WorkstreamBase, WorkstreamModel
-from app.schemas.topic import TopicBaseModel
 
 app = FastAPI()
-
-app.mount("/static", StaticFiles(directory="app/static"), name="static")
-
-templates = Jinja2Templates(directory="app/templates")
 
 app.include_router(author.router)
 app.include_router(output.router)
