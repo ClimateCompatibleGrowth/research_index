@@ -62,8 +62,8 @@ class Author:
             OPTIONAL MATCH (a)-[:member_of]->(u:Workstream)
             RETURN a.uuid as uuid, a.orcid as orcid,
                     a.first_name as first_name, a.last_name as last_name,
-                    collect(p) as affiliations,
-                    collect(u) as workstreams;"""
+                    collect(DISTINCT p) as affiliations,
+                    collect(DISTINCT u) as workstreams;"""
 
         author, _, _ = db.execute_query(author_query, uuid=id)
         results = author[0].data()
