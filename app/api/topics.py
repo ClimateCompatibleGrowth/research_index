@@ -1,12 +1,11 @@
 from typing import List
+
 from fastapi import APIRouter
+
 from app.schemas.topic import TopicBaseModel
 
+router = APIRouter(prefix="/api/topics", tags=["countries"])
 
-router = APIRouter(
-    prefix="/api/topics",
-    tags=["countries"]
-)
 
 @router.get("")
 def api_topics_list() -> List[TopicBaseModel]:
