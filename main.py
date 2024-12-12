@@ -11,7 +11,7 @@ from app.crud.graph import Edges, Nodes
 from app.crud.output import Output
 from app.crud.workstream import Workstream
 
-from app.schemas.author import AuthorModel, AuthorListModel
+from app.schemas.author import AuthorListModel, AuthorOutputModel
 from app.schemas.country import CountryNodeModel
 from app.schemas.output import OutputModel, OutputListModel
 from app.schemas.workstream import WorkstreamBase, WorkstreamModel
@@ -154,7 +154,7 @@ def output(request: Request, id: str):
 
 
 @app.get("/api/authors/{id}")
-def api_author(id: str, type: str = None) -> AuthorModel:
+def api_author(id: str, type: str = None) -> AuthorOutputModel:
     author_model = Author()
     results = author_model.get(id, result_type=type)
     count = author_model.count(id)
@@ -167,9 +167,12 @@ def api_author(id: str, type: str = None) -> AuthorModel:
 
 
 @app.get("/api/authors")
-def api_author_list(skip: int = 0, limit: int = 20) -> List[AuthorListModel]:
+def api_author_list(skip: int = 0, limit: int = 20) -> AuthorListModel:
     model = Author()
-    return model.get_all(skip=skip, limit=limit)
+    authors = model.get_all(skip=skip, limit=limit)
+    count = model.count_authors()
+    return {'meta': {'count': {'total': count}},
+            'authors': authors}
 
 
 @app.get("/api/countries/{id}")
