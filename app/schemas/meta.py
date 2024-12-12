@@ -2,7 +2,7 @@ from typing import Dict, List, Optional
 
 from pydantic import BaseModel, Field
 
-class Count(BaseModel):
+class CountPublication(BaseModel):
     """Represents count of the outputs
     ```json
         {'total': 245684392,
@@ -20,6 +20,11 @@ class Count(BaseModel):
     other: int = 0
 
 
+class CountAuthor(BaseModel):
+    """Represents a count of the authors"""
+    total: int = 0
+
+
 class Meta(BaseModel):
     """
     Base data model representing an academic author or contributor
@@ -27,13 +32,7 @@ class Meta(BaseModel):
 
     ```json
     "count": {}
-    "db_response_time_ms": 929,
-    "page": 1,
-    "per_page": 25
     ```
 
     """
-    count: Count | None
-    db_response_time_ms: int
-    page: int
-    per_page: int
+    count: CountPublication | CountAuthor | None
