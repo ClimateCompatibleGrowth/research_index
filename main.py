@@ -188,7 +188,7 @@ def api_author_list(skip: int = 0, limit: int = 20) -> AuthorListModel:
 
 
 @app.get("/api/countries/{id}")
-def api_country(id: str, type: str = None)-> OutputListModel:
+def api_country(id: str)-> CountryNodeModel:
     """Return a list of outputs filtered by the country id provided
 
     Arguments
@@ -204,9 +204,8 @@ def api_country(id: str, type: str = None)-> OutputListModel:
 
     """
     country_model = Country()
-    outputs, country = country_model.get(id, result_type=type)
-    count = country_model.count(id)
-    return {"outputs": outputs, "country": country, "count": count}
+    country = country_model.get(id)
+    return country
 
 
 @app.get("/api/countries")
