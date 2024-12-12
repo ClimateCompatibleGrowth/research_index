@@ -1,7 +1,6 @@
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List
 
 from neo4j import Driver
-from datetime import datetime
 
 from app.db.session import connect_to_db
 
