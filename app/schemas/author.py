@@ -10,15 +10,24 @@ from .output import OutputListModel
 from .meta import Meta
 
 
-class AuthorListModel(AuthorBase):
+class AuthorColabModel(AuthorBase):
     """
-    Data model representing an academic author or contributor
-    with their associated metadata and relationships.
+    An academic author or contributor
+    with their collaborators, workstreams and affiliations
     """
-    affiliations: Optional[List[AffiliationModel]] = None
-    workstreams: Optional[List[WorkstreamBase]] = None
+    workstreams: List[WorkstreamBase] = None
+    affiliations: List[AffiliationModel] = None
 
 
-class AuthorModel(AuthorListModel):
+class AuthorListModel(BaseModel):
+    """
+    A list of authors
+    """
+    authors: List[AuthorColabModel]
+    meta: Meta
+
+
+class AuthorOutputModel(AuthorColabModel):
+    """An author with collaborators, workstreams, affiliations and outputs"""
     collaborators: List[AuthorBase] = None
     outputs: OutputListModel

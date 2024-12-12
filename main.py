@@ -11,7 +11,7 @@ from app.crud.graph import Edges, Nodes
 from app.crud.output import Output
 from app.crud.workstream import Workstream
 
-from app.schemas.author import AuthorModel, AuthorListModel
+from app.schemas.author import AuthorListModel, AuthorOutputModel
 from app.schemas.country import CountryNodeModel
 from app.schemas.output import OutputModel, OutputListModel
 from app.schemas.workstream import WorkstreamBase, WorkstreamModel
@@ -42,9 +42,18 @@ def index(request: Request):
 
 
 @app.get("/countries/{id}", response_class=HTMLResponse)
-def country(request: Request, id: str, type: str = None):
+def country(request: Request,
+            id: str,
+            type: str = 'publication',
+            skip: int = 0,
+            limit: int = 20):
     country_model = Country()
-    outputs, country = country_model.get(id, result_type=type)
+    outputs_model = Output()
+    outputs = outputs_model.filter_country(result_type=type,
+                                           country=id,
+                                           skip=skip,
+                                           limit=limit)
+    country = country_model.get(id)
     count = country_model.count(id)
     return templates.TemplateResponse(
         "country.html",
@@ -54,6 +63,9 @@ def country(request: Request, id: str, type: str = None):
             "outputs": outputs,
             "country": country,
             "count": count,
+            "skip": skip,
+            "limit": limit,
+            "type": type
         },
     )
 
@@ -69,37 +81,78 @@ def country_list(request: Request):
 
 
 @app.get("/authors/{id}", response_class=HTMLResponse)
-def author(request: Request, id: str, type: str = None):
+def author(request: Request,
+           id: str,
+           type: str = 'publication',
+           skip: int = 0,
+           limit: int = 20):
     author_model = Author()
-    entity = author_model.get(id, result_type=type)
+    entity = author_model.get(id, result_type=type, skip=skip, limit=limit)
     count = author_model.count(id)
     return templates.TemplateResponse(
         "author.html",
-        {"request": request, "title": "Author",
+        {"request": request,
+         "title": "Author",
          "author": entity,
-         "count": count},
+         "count": count,
+         "skip": skip,
+         "limit": limit,
+         'type': type},
     )
 
 
 @app.get("/authors", response_class=HTMLResponse)
-def author_list(request: Request):
+def author_list(request: Request, skip: int = 0, limit: int = 20):
     model = Author()
-    entity = model.get_all()
+    entity = model.get_all(skip=skip, limit=limit)
+    count = model.count_authors()
     return templates.TemplateResponse(
         "authors.html", {"request": request,
                          "title": "Author List",
-                         "authors": entity}
+                         "authors": entity,
+                         "skip": skip,
+                         "limit": limit,
+                         "count": count}
     )
 
 
 @app.get("/outputs", response_class=HTMLResponse)
-def output_list(request: Request, type: str = None):
+def output_list(request: Request,
+                type: str = 'publication',
+                skip: int = 0,
+                limit: int = 20,
+                country: str = None):
+
     model = Output()
-    entity = model.filter_type(result_type=type) if type else model.get_all()
+    if country:
+        results = model.filter_country(result_type=type,
+                                       skip=skip,
+                                       limit=limit,
+                                       country=country)
+    else:
+        results = model.filter_type(result_type=type,
+                                    skip=skip,
+                                    limit=limit)
+
     count = model.count()
+
+    package = {
+        "meta": {"count": count,
+                 "db_response_time_ms": 0,
+                 "page": 0,
+                 "per_page": 0},
+        "results": results
+    }
+
     return templates.TemplateResponse(
         "outputs.html",
-        {"request": request, "title": "Output List", "outputs": entity, "count": count},
+        {"request": request,
+         "title": "Output List",
+         "outputs": package['results'],
+         "count": package['meta']['count'],
+         "type": type,
+         "skip": skip,
+         "limit": limit}
     )
 
 
@@ -113,7 +166,7 @@ def output(request: Request, id: str):
 
 
 @app.get("/api/authors/{id}")
-def api_author(id: str, type: str = None) -> AuthorModel:
+def api_author(id: str, type: str = None) -> AuthorOutputModel:
     author_model = Author()
     results = author_model.get(id, result_type=type)
     count = author_model.count(id)
@@ -126,13 +179,16 @@ def api_author(id: str, type: str = None) -> AuthorModel:
 
 
 @app.get("/api/authors")
-def api_author_list(skip: int = 0, limit: int = 20) -> List[AuthorListModel]:
+def api_author_list(skip: int = 0, limit: int = 20) -> AuthorListModel:
     model = Author()
-    return model.get_all(skip=skip, limit=limit)
+    authors = model.get_all(skip=skip, limit=limit)
+    count = model.count_authors()
+    return {'meta': {'count': {'total': count}},
+            'authors': authors}
 
 
 @app.get("/api/countries/{id}")
-def api_country(id: str, type: str = None)-> OutputListModel:
+def api_country(id: str)-> CountryNodeModel:
     """Return a list of outputs filtered by the country id provided
 
     Arguments
@@ -148,9 +204,8 @@ def api_country(id: str, type: str = None)-> OutputListModel:
 
     """
     country_model = Country()
-    outputs, country = country_model.get(id, result_type=type)
-    count = country_model.count(id)
-    return {"outputs": outputs, "country": country, "count": count}
+    country = country_model.get(id)
+    return country
 
 
 @app.get("/api/countries")
@@ -216,11 +271,11 @@ def api_workstream(id: str) -> WorkstreamModel:
     return model.get(id)
 
 
-@app.get("api/topics")
+@app.get("/api/topics")
 def api_topics_list() -> List[TopicBaseModel]:
     raise NotImplementedError("Have not yet implemented topics in the database")
 
 
-@app.get("api/topics/{id}")
-def api_topics_list(id: str) -> TopicBaseModel:
+@app.get("/api/topics/{id}")
+def api_topic(id: str) -> TopicBaseModel:
     raise NotImplementedError("Have not yet implemented topics in the database")
