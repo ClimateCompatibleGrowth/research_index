@@ -23,16 +23,16 @@
                     <!-- Affiliation -->
                     {% if author.affiliations %}
                         <h5 class="card-title">Affiliations</h5>
-                        {% for id, value in author.affiliations|dictsort %}
-                            <span class="badge bg-primary">{{ value }}</span>
+                        {% for affiliation in author.affiliations %}
+                            <span class="badge bg-primary">{{ affiliation.name }}</span>
                         {% endfor %}
                     {% endif %}
                 </div>
                 <div class="card-body">
                     {% if author.workstreams %}
                         <h5 class="card-title">Workstreams</h5>
-                        {% for id, value in author.workstreams|dictsort %}
-                            <span class="badge bg-secondary">{{ value }}</span>
+                        {% for workstream in author.workstreams %}
+                            <span class="badge bg-secondary">{{ workstream.name }}</span>
                         {% endfor %}
                     {% endif %}
                 </div>
@@ -60,8 +60,9 @@
         </div>
 
         <div class="row">
-                {% set outputs = author.outputs %}
-                {% include "output_list.j2" %}
+                {% set outputs = author.outputs.results %}
+                {% include 'output_list.j2' %}
+
         </div>
     </div>
 

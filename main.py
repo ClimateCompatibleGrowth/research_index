@@ -69,26 +69,36 @@ def country_list(request: Request):
 
 
 @app.get("/authors/{id}", response_class=HTMLResponse)
-def author(request: Request, id: str, type: str = None):
+def author(request: Request,
+           id: str,
+           type: str = 'publication',
+           skip: int = 0,
+           limit: int = 20):
     author_model = Author()
-    entity = author_model.get(id, result_type=type)
+    entity = author_model.get(id, result_type=type, skip=skip, limit=limit)
     count = author_model.count(id)
     return templates.TemplateResponse(
         "author.html",
-        {"request": request, "title": "Author",
+        {"request": request,
+         "title": "Author",
          "author": entity,
-         "count": count},
+         "count": count,
+         "skip": skip,
+         "limit": limit,
+         'type': type},
     )
 
 
 @app.get("/authors", response_class=HTMLResponse)
-def author_list(request: Request):
+def author_list(request: Request, skip: int = 0, limit: int = 20):
     model = Author()
-    entity = model.get_all()
+    entity = model.get_all(skip=skip, limit=limit)
     return templates.TemplateResponse(
         "authors.html", {"request": request,
                          "title": "Author List",
-                         "authors": entity}
+                         "authors": entity,
+                         "skip": skip,
+                         "limit": limit}
     )
 
 
@@ -245,11 +255,11 @@ def api_workstream(id: str) -> WorkstreamModel:
     return model.get(id)
 
 
-@app.get("api/topics")
+@app.get("/api/topics")
 def api_topics_list() -> List[TopicBaseModel]:
     raise NotImplementedError("Have not yet implemented topics in the database")
 
 
-@app.get("api/topics/{id}")
-def api_topics_list(id: str) -> TopicBaseModel:
+@app.get("/api/topics/{id}")
+def api_topic(id: str) -> TopicBaseModel:
     raise NotImplementedError("Have not yet implemented topics in the database")

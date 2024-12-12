@@ -9,7 +9,10 @@ from app.db.session import connect_to_db
 class Author:
     @connect_to_db
     def get(
-        self, id: str, db: Driver, result_type: Optional[str] = None
+        self, id: str, db: Driver,
+        result_type: Optional[str] = None,
+        limit: int = 20,
+        skip: int = 0
     ) -> Dict[str, Any]:
         """Retrieve author information from the database.
 
@@ -51,8 +54,10 @@ class Author:
         WHERE a.uuid = $uuid
         RETURN *;
         """
+        outputs = []
         author_query = """
-            MATCH (a:Author) WHERE a.uuid = $uuid
+            MATCH (a:Author)
+            WHERE a.uuid = $uuid
             OPTIONAL MATCH (a)-[:member_of]->(p:Partner)
             OPTIONAL MATCH (a)-[:member_of]->(u:Workstream)
             RETURN a.uuid as uuid, a.orcid as orcid,
@@ -68,9 +73,9 @@ class Author:
             WHERE a.uuid = $uuid AND b.uuid <> $uuid
             RETURN DISTINCT b.uuid as uuid, b.first_name as first_name, b.last_name as last_name, b.orcid as orcid
             LIMIT 5"""
-        colabs, summary, keys = db.execute_query(collab_query, uuid=id)
+        collab, _, _ = db.execute_query(collab_query, uuid=id)
 
-        results["collaborators"] = [x.data() for x in colabs]
+        results["collaborators"] = [x.data() for x in collab]
 
         if result_type and result_type in [
             "publication",
@@ -91,10 +96,17 @@ class Author:
                 RETURN p as results,
                        collect(DISTINCT c) as countries,
                        collect(DISTINCT b) as authors
-                ORDER BY results.publication_year DESCENDING;"""
+                ORDER BY results.publication_year DESCENDING
+                SKIP $skip
+                LIMIT $limit
+                ;"""
 
-            result, _, _ = db.execute_query(
-                publications_query, uuid=id, result_type=result_type
+            records, _, _ = db.execute_query(
+                publications_query,
+                uuid=id,
+                result_type=result_type,
+                skip=skip,
+                limit=limit
             )
 
         else:
@@ -111,16 +123,21 @@ class Author:
                 RETURN p as results,
                     collect(DISTINCT c) as countries,
                     collect(DISTINCT b) as authors
-                ORDER BY results.publication_year DESCENDING;"""
+                ORDER BY results.publication_year DESCENDING
+                SKIP $skip
+                LIMIT $limit
+                ;"""
 
-            records, _, _ = db.execute_query(publications_query, uuid=id)
-            outputs = []
-            for x in records:
-                data = x.data()
-                package = data['results']
-                package['authors'] = data['authors']
-                package['countries'] = data['countries']
-                outputs.append(package)
+            records, _, _ = db.execute_query(publications_query,
+                                             uuid=id,
+                                             limit=limit,
+                                             skip=skip)
+        for x in records:
+            data = x.data()
+            package = data['results']
+            package['authors'] = data['authors']
+            package['countries'] = data['countries']
+            outputs.append(package)
 
         results['outputs'] = {}
         results['outputs']['results'] = outputs
@@ -145,7 +162,7 @@ class Author:
         query = """
                 MATCH (a:Author)-[b:author_of]->(o:Article)
                 WHERE (a.uuid) = $uuid
-                RETURN o.result_type as result_type, count(o) as count
+                RETURN o.result_type as result_type, count(DISTINCT o) as count
                 """
         records, summary, keys = db.execute_query(query, uuid=id)
         if len(records) > 0:
