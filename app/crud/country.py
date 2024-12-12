@@ -9,9 +9,11 @@ from app.db.session import connect_to_db
 class Country:
     @connect_to_db
     def get(
-        self, id: str, db: Driver, result_type: Optional[str] = None
-    ) -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
-        """Retrieve country information and its related research outputs.
+        self,
+        id: str,
+        db: Driver
+    ) ->Dict[str, Any]:
+        """Retrieve country information
 
         Parameters
         ----------
@@ -19,65 +21,17 @@ class Country:
             The unique identifier of the country
         db : Driver
             Neo4j database driver instance
-        result_type : Optional[str], default=None
-            Filter outputs by specific result type if provided
+
 
         Returns
         -------
-        Tuple[List[Dict[str, Any]], Dict[str, Any]]
-            A tuple containing:
-            - List[Dict[str, Any]]: List of output dictionaries, each containing:
-                * output details
-                * associated authors
-                * related countries
-            - Dict[str, Any]: Country information dictionary
+        Dict[str, Any]
+            Country information dictionary
         """
-        if result_type:
-            query = """
-                MATCH (o:Output)-[:REFERS_TO]->(c:Country)
-                WHERE c.id = $id AND (o.result_type = $result_type)
-                CALL {
-                    WITH o
-                    MATCH (a:Author)-[r:author_of]->(o)
-                    RETURN a
-                    ORDER BY r.rank
-                }
-                OPTIONAL MATCH (o)-[:REFERS_TO]->(d:Country)
-                RETURN o as outputs,
-                       collect(DISTINCT a) as authors,
-                       collect(DISTINCT d) as countries;
-                """
-            results, summary, keys = db.execute_query(
-                query, id=id, result_type=result_type
-            )
-        else:
-            query = """
-                MATCH (o:Output)-[:REFERS_TO]->(c:Country)
-                WHERE c.id = $id
-                CALL {
-                    WITH o
-                    MATCH (a:Author)-[r:author_of]->(o)
-                    RETURN a
-                    ORDER BY r.rank
-                }
-                OPTIONAL MATCH (o)-[:REFERS_TO]->(d:Country)
-                RETURN o as outputs,
-                       collect(DISTINCT a) as authors,
-                       collect(DISTINCT d) as countries;
-                """
-            results, summary, keys = db.execute_query(query, id=id)
-
-        outputs = [x.data() for x in results]
-        for output in outputs:
-            neo4j_datetime = output["outputs"]["cited_by_count_date"]
-            output["outputs"]["cited_by_count_date"] = datetime.fromtimestamp(
-                neo4j_datetime.to_native().timestamp()
-            )        
-        
         query = """MATCH (c:Country) WHERE c.id = $id RETURN c as country;"""
         results, summary, keys = db.execute_query(query, id=id)
         country = results[0].data()["country"]
-        return outputs, country
+        return country
 
     @connect_to_db
     def count(self, id: str, db: Driver) -> Dict[str, int]:

@@ -42,9 +42,18 @@ def index(request: Request):
 
 
 @app.get("/countries/{id}", response_class=HTMLResponse)
-def country(request: Request, id: str, type: str = None):
+def country(request: Request,
+            id: str,
+            type: str = 'publication',
+            skip: int = 0,
+            limit: int = 20):
     country_model = Country()
-    outputs, country = country_model.get(id, result_type=type)
+    outputs_model = Output()
+    outputs = outputs_model.filter_country(result_type=type,
+                                           country=id,
+                                           skip=skip,
+                                           limit=limit)
+    country = country_model.get(id)
     count = country_model.count(id)
     return templates.TemplateResponse(
         "country.html",
@@ -54,6 +63,9 @@ def country(request: Request, id: str, type: str = None):
             "outputs": outputs,
             "country": country,
             "count": count,
+            "skip": skip,
+            "limit": limit,
+            "type": type
         },
     )
 
