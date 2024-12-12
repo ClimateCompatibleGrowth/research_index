@@ -69,11 +69,18 @@ class Author:
         results = author[0].data()
 
         collab_query = """
-            MATCH (a:Author)-[r:author_of]->(p:Output)<-[s:author_of]-(b:Author)
-            WHERE a.uuid = $uuid AND b.uuid <> $uuid
-            RETURN DISTINCT b.uuid as uuid, b.first_name as first_name, b.last_name as last_name, b.orcid as orcid
+            MATCH (a:Author)-[:author_of]->(z:Output)<-[:author_of]-(b:Author)
+            WHERE a.uuid = $uuid AND b.uuid <> $uuid AND z.result_type = $type
+            RETURN DISTINCT b.uuid as uuid,
+                   b.first_name as first_name,
+                   b.last_name as last_name,
+                   b.orcid as orcid,
+                   count(z) as num_colabs
+            ORDER BY num_colabs DESCENDING
             LIMIT 5"""
-        collab, _, _ = db.execute_query(collab_query, uuid=id)
+        collab, _, _ = db.execute_query(collab_query,
+                                        uuid=id,
+                                        type=result_type)
 
         results["collaborators"] = [x.data() for x in collab]
 
