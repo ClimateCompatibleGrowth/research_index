@@ -182,7 +182,7 @@ class Author:
         query = """MATCH (a:Author)
                    OPTIONAL MATCH (a)-[:member_of]->(p:Partner)
                    OPTIONAL MATCH (a)-[:member_of]->(u:Workstream)
-                   RETURN a.first_name as first_name, a.last_name as last_name, a.uuid as uuid, a.orcid as orcid, collect(p) as affiliations, collect(u) as workstreams
+                   RETURN a.first_name as first_name, a.last_name as last_name, a.uuid as uuid, a.orcid as orcid, collect(DISTINCT p) as affiliations, collect(DISTINCT u) as workstreams
                    ORDER BY last_name
                    SKIP $skip
                    LIMIT $limit;
