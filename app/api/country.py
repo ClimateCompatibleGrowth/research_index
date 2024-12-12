@@ -2,27 +2,19 @@ from typing import List
 from fastapi import APIRouter, HTTPException
 from app.crud.country import Country
 from app.schemas.country import CountryNodeModel
-from app.schemas.output import OutputListModel
 
 router = APIRouter(
     prefix="/api/countries",
     tags=["countries"]
 )
 
-@router.get("", response_model=List[CountryNodeModel])
-def list_countries():
-    model = Country()
-    return model.get_all()
-
-# @router.get("/{id}", response_model=OutputListModel)
-# def get_country(id: str, type: str = None):
-#     model = Country()
-#     outputs, country = model.get(id, result_type=type)
-    
-#     if not country:
-#         raise HTTPException(
-#             status_code=404,
-#             detail=f"Country with id {id} not found"
-#         )
-        
-#     return {"items": outputs}
+@router.get("")
+def api_country_list() -> List[CountryNodeModel]:
+    try:
+        country_model = Country()
+        if results := country_model.get_all():
+            return [result['c'] for result in results]
+        else:
+            raise HTTPException(status_code=404, detail="No countries found")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}") from e
