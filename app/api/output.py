@@ -18,35 +18,18 @@ def api_output_list(
     if limit < 1:
         raise HTTPException(status_code=400, detail="Limit parameter must be positive")
 
-    model = Output()
+    outputs = Output()
     try:
-        if country:
-            results = model.filter_country(
-                result_type=type, skip=skip, limit=limit, country=country
-            )
-        else:
-            results = model.filter_type(result_type=type, skip=skip, limit=limit)
-
-        count = model.count()
-
-        return {
-            "meta": {
-                "count": count,
-                "db_response_time_ms": 0,
-                "page": 0,
-                "per_page": 0,
-            },
-            "results": results,
-        }
+        return outputs.get_outputs(skip, limit, type, country)
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e)) from e
 
 
 @router.get("/{id}")
 def api_output(id: str) -> OutputModel:
-    output_model = Output()
+    output = Output()
     try:
-        result = output_model.get(id)
+        result = output.get_output(id)
         if result is None:
             raise HTTPException(
                 status_code=404, detail=f"Output with id {id} not found"

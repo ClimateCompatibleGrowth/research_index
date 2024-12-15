@@ -7,7 +7,7 @@ from app.db.session import connect_to_db
 
 class Output:
     @connect_to_db
-    def get(self, id: str, db: Driver) -> Dict[str, Any]:
+    def get_output(self, id: str, db: Driver) -> Dict[str, Any]:
         """Retrieve article output information from the database.
 
         Parameters
@@ -78,16 +78,15 @@ class Output:
                 RETURN o.result_type as result_type, count(DISTINCT o) as count
                 """
         records, summary, keys = db.execute_query(query)
-        if len(records) > 0:
-            counts = {x.data()["result_type"]: x.data()["count"] for x in records}
-            counts['total'] = sum(counts.values())
-            return counts
-        else:
+        if len(records) <= 0:
             return {'total': 0,
                     'publications': 0,
                     'datasets': 0,
                     'other': 0,
                     'software': 0}
+        counts = {x.data()["result_type"]: x.data()["count"] for x in records}
+        counts['total'] = sum(counts.values())
+        return counts
 
     @connect_to_db
     def filter_type(self, db: Driver, result_type: str, skip: int, limit: int) -> List[Dict[str, Any]]:
@@ -134,7 +133,7 @@ class Output:
                 SKIP $skip
                 LIMIT $limit;
         """
-        records, _, _ = db.execute_query(query,
+        records, summary, keys = db.execute_query(query,
                                          result_type=result_type,
                                          skip=skip,
                                          limit=limit)
@@ -203,7 +202,7 @@ class Output:
                 SKIP $skip
                 LIMIT $limit;
         """
-        records, _, _ = db.execute_query(query,
+        records, summary, keys = db.execute_query(query,
                                          result_type=result_type,
                                          country_id=country,
                                          skip=skip,
@@ -217,3 +216,27 @@ class Output:
             outputs.append(package)
 
         return outputs
+
+    def get_outputs(self, skip, limit, type, country):
+        """Return a list of outputs"""
+        try:
+            if country:
+                results = self.filter_country(
+                    result_type=type, skip=skip, limit=limit, country=country
+                )
+            else:
+                results = self.filter_type(result_type=type, skip=skip, limit=limit)
+
+            count = self.count()
+
+            return {
+                "meta": {
+                    "count": count,
+                    "db_response_time_ms": 0,
+                    "page": 0,
+                    "per_page": 0,
+                },
+                "results": results,
+            }
+        except ValueError as e:
+            raise ValueError(str(e)) from e
