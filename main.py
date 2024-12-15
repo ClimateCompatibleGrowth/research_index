@@ -84,15 +84,14 @@ def author(request: Request,
            type: str = 'publication',
            skip: int = 0,
            limit: int = 20):
-    author_model = Author()
-    entity = author_model.get(id, result_type=type, skip=skip, limit=limit)
-    count = author_model.count(id)
+    author = Author()
+    entity = author.get_author(id, type=type, skip=skip, limit=limit)
     return templates.TemplateResponse(
         "author.html",
         {"request": request,
          "title": "Author",
          "author": entity,
-         "count": count,
+         "count":  entity['outputs']['meta']['count']['total'],
          "skip": skip,
          "limit": limit,
          'type': type},
@@ -101,16 +100,15 @@ def author(request: Request,
 
 @app.get("/authors", response_class=HTMLResponse)
 def author_list(request: Request, skip: int = 0, limit: int = 20):
-    model = Author()
-    entity = model.get_all(skip=skip, limit=limit)
-    count = model.count_authors()
+    authors = Author()
+    entity= authors.get_authors(skip=skip, limit=limit)
     return templates.TemplateResponse(
         "authors.html", {"request": request,
                          "title": "Author List",
-                         "authors": entity,
+                         "authors": entity['authors'],
                          "skip": skip,
                          "limit": limit,
-                         "count": count}
+                         "count": entity['meta']['count']['total']}
     )
 
 
