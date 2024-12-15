@@ -6,4 +6,4 @@ class AffiliationModel(BaseModel):
     id: Optional[str] = None
     name: Optional[str] = None
     ror: Optional[str] = None
-    ccg_partner: bool
+    ccg_partner: Optional[bool] = None
