@@ -120,26 +120,7 @@ def output_list(request: Request,
                 country: str = None):
 
     model = Output()
-    if country:
-        results = model.filter_country(result_type=type,
-                                       skip=skip,
-                                       limit=limit,
-                                       country=country)
-    else:
-        results = model.filter_type(result_type=type,
-                                    skip=skip,
-                                    limit=limit)
-
-    count = model.count()
-
-    package = {
-        "meta": {"count": count,
-                 "db_response_time_ms": 0,
-                 "page": 0,
-                 "per_page": 0},
-        "results": results
-    }
-
+    package = model.get_outputs(skip=skip, limit=limit, type=type, country=country)
     return templates.TemplateResponse(
         "outputs.html",
         {"request": request,
@@ -155,6 +136,6 @@ def output_list(request: Request,
 @app.get("/outputs/{id}", response_class=HTMLResponse)
 def output(request: Request, id: str):
     output_model = Output()
-    entity = output_model.get(id)
+    entity = output_model.get_output(id)
     return templates.TemplateResponse(
         "output.html", {"request": request, "title": "Output", "output": entity})
