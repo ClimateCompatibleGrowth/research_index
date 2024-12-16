@@ -3,15 +3,12 @@ from typing import Any, Dict, List
 from neo4j import Driver
 
 from app.db.session import connect_to_db
+from .output import Output
 
 
 class Country:
     @connect_to_db
-    def get(
-        self,
-        id: str,
-        db: Driver
-    ) ->Dict[str, Any]:
+    def fetch_country_node(self, id: str, db: Driver) -> Dict[str, Any]:
         """Retrieve country information
 
         Parameters
@@ -29,11 +26,10 @@ class Country:
         """
         query = """MATCH (c:Country) WHERE c.id = $id RETURN c as country;"""
         results, summary, keys = db.execute_query(query, id=id)
-        country = results[0].data()["country"]
-        return country
+        return results[0].data()["country"]
 
     @connect_to_db
-    def count(self, id: str, db: Driver) -> Dict[str, int]:
+    def count_country_outputs(self, id: str, db: Driver) -> Dict[str, int]:
         """Count articles by result type for a specific country.
 
         Parameters
@@ -59,7 +55,7 @@ class Country:
         return {x.data()["result_type"]: x.data()["count"] for x in records}
 
     @connect_to_db
-    def get_all(self, db: Driver) -> List[Dict[str, Any]]:
+    def get_countries(self, db: Driver) -> List[Dict[str, Any]]:
         """Retrieve all countries that have associated articles.
 
         Parameters
@@ -77,4 +73,11 @@ class Country:
                 RETURN DISTINCT c
                 """
         results, summary, keys = db.execute_query(query)
-        return [x.data() for x in results]
+        return [result.data()["c"] for result in results]
+
+    def get_country(self, id, skip, limit, type) -> Dict[str, Any]:
+        entity = self.fetch_country_node(id)
+        outputs = Output()
+        package = outputs.get_outputs(skip=skip, limit=limit, type=type, country=id)
+        package["country"] = entity
+        return package
