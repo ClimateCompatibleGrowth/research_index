@@ -5,6 +5,9 @@ from neo4j import Driver
 from app.db.session import connect_to_db
 from .output import Output
 
+from app.schemas.country import CountryNodeModel
+
+
 
 class Country:
     @connect_to_db
@@ -55,7 +58,7 @@ class Country:
         return {x.data()["result_type"]: x.data()["count"] for x in records}
 
     @connect_to_db
-    def get_countries(self, db: Driver) -> List[Dict[str, Any]]:
+    def get_countries(self, db: Driver) -> List[CountryNodeModel]:
         """Retrieve all countries that have associated articles.
 
         Parameters

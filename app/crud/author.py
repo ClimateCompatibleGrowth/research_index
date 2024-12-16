@@ -3,6 +3,8 @@ from typing import Any, Dict, List, Optional, Tuple
 from neo4j import Driver
 
 from app.db.session import connect_to_db
+from app.schemas.author import AuthorListModel, AuthorOutputModel
+
 
 class Author:
     @connect_to_db
@@ -30,7 +32,7 @@ class Author:
 
         return [record.data() for record in records][0]["count"]
 
-    def get_authors(self, skip: int, limit: int) -> List[Dict[str, Any]]:
+    def get_authors(self, skip: int, limit: int) -> AuthorListModel:
         records, summary, keys = self.fetch_author_nodes(skip=skip, limit=limit)
         authors = [record.data() for record in records]
         count = self.count_authors()
@@ -160,7 +162,7 @@ class Author:
 
         return publications
 
-    def get_author(self, id: str, type: str = 'publication', skip: int = 0, limit: int = 20):
+    def get_author(self, id: str, type: str = 'publication', skip: int = 0, limit: int = 20) -> AuthorOutputModel:
         author = self.fetch_author_node(id)
         collaborators = self.fetch_collaborator_nodes(id, type)[0]
         collaborators = [collaborator.data() for collaborator in collaborators]

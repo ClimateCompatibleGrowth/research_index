@@ -3,11 +3,12 @@ from typing import Any, Dict, List
 from neo4j import Driver
 
 from app.db.session import connect_to_db
+from app.schemas.output import OutputListModel, OutputModel
 
 
 class Output:
     @connect_to_db
-    def get_output(self, id: str, db: Driver) -> Dict[str, Any]:
+    def get_output(self, id: str, db: Driver) -> OutputModel:
         """Retrieve article output information from the database.
 
         Parameters
@@ -217,7 +218,7 @@ class Output:
 
         return outputs
 
-    def get_outputs(self, skip, limit, type, country):
+    def get_outputs(self, skip:int , limit:int, type: str, country:str) -> OutputListModel:
         """Return a list of outputs"""
         try:
             if country:

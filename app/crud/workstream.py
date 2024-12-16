@@ -1,13 +1,14 @@
-from typing import Any, Dict
+from typing import Any, Dict, List
 
 from neo4j import Driver
 
 from app.db.session import connect_to_db
+from app.schemas.workstream import WorkstreamBase, WorkstreamModel
 
 
 class Workstream:
     @connect_to_db
-    def get_all(self, db: Driver) -> Dict[str, Any]:
+    def get_all(self, db: Driver) -> List[WorkstreamBase]:
         query = """MATCH (p:Workstream)
                 OPTIONAL MATCH (a:Author)-[:member_of]->(p)
                 RETURN p.id as id, p.name as name, collect(a) as members"""
