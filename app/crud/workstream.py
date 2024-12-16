@@ -15,10 +15,5 @@ class Workstream:
         return [x.data() for x in records]
 
     @connect_to_db
-    def get(self, id: str, db: Driver) -> Dict[str, Any]:
-        query = """MATCH (p:Workstream)
-                WHERE p.id = $id
-                OPTIONAL MATCH (a:Author)-[:member_of]->(p)
-                RETURN p.id as id, p.name as name, collect(a) as members"""
-        records, summary, keys = db.execute_query(query, id=id)
-        return records[0].data()
+    def get(self, db: Driver, id: str, type) -> Dict[str, Any]:
+        pass

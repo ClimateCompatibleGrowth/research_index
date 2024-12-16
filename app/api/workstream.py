@@ -16,10 +16,4 @@ def list_workstreams() -> List[WorkstreamBase]:
 
 @router.get("/{id}")
 def get_workstream(id: str) -> WorkstreamModel:
-    model = Workstream()
-    result = model.get(id)
-    if result is None:
-        raise HTTPException(
-            status_code=404, detail=f"Workstream with id {id} not found"
-        )
-    return result
+    raise NotImplementedError("Implementation of workstream and author relationships is not yet complete")
