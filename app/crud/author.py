@@ -168,8 +168,7 @@ class Author:
         publications = self.fetch_publications(id, result_type=type, skip=skip, limit=limit)
         author['collaborators'] = collaborators
         author['outputs'] = {'results': publications}
-        author['outputs']['meta'] = {"count":
-                                            {"total": count},
+        author['outputs']['meta'] = {"count":count,
                                     "db_response_time_ms": 0,
                                     "page": 0,
                                     "per_page": 0}
