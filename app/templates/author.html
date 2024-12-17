@@ -70,7 +70,8 @@
         </div>
 
         <div class="row">
-
+            {% set results = outputs.results %}
+            {% set meta = outputs.meta %}
             {% include 'output_list.j2' %}
 
         </div>

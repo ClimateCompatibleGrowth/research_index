@@ -2,17 +2,17 @@
     <h5>Filter by result type: </h5>
     <div class="btn-group" id="filter_button" role="group" aria-label="Filter research type">
     {% for result_type in ['publication', 'dataset', 'software', 'other'] %}
-        <a href="?result_type={{ result_type }}&limit={{outputs.meta.limit|default(20)}}&skip=0" class="btn btn-primary">
+        <a href="?result_type={{ result_type }}&limit={{meta.limit|default(20)}}&skip=0" class="btn btn-primary">
             {{result_type}}
-            <span class="badge text-bg-secondary">{{outputs.meta.count[result_type]|default(0)}}</span>
+            <span class="badge text-bg-secondary">{{meta.count[result_type]|default(0)}}</span>
             </a>
     {% endfor %}
     </div>
 </div>
 
 <div class="row">
-    {% if outputs.results %}
-        {% for output in outputs.results %}
+    {% if results %}
+        {% for output in results %}
             <div class="card" id="{{output.uuid}}">
                 <div class="card-body">
                     <h5 class="card-title">{{ output.title }}
@@ -49,10 +49,10 @@
     {% endif %}
 </div>
 
-{% set result_type = outputs.meta.result_type|default(publication) %}
-{% set limit = outputs.meta.limit %}
-{% set skip = outputs.meta.skip %}
-{% set count = outputs.meta.count %}
+{% set result_type = meta.result_type|default(publication) %}
+{% set limit = meta.limit %}
+{% set skip = meta.skip %}
+{% set count = meta.count %}
 
 <div class="row">
     <nav aria-label="Page navigation">

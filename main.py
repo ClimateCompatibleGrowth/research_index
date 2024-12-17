@@ -127,4 +127,4 @@ def output(request: Request, id: str):
     output_model = Output()
     entity = output_model.get_output(id)
     return templates.TemplateResponse(
-        "output.html", {"request": request, "title": "Output", "output": entity})
+        "output.html", {"request": request, "title": "Output"} | entity )
