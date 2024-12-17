@@ -21,8 +21,16 @@ class CountPublication(BaseModel):
 
 
 class CountAuthor(BaseModel):
-    """Represents a count of the authors"""
+    """Represents a count of the authors or countries"""
     total: int = 0
+
+
+class Pagination(BaseModel):
+    """Used for lists"""
+
+    count: CountAuthor
+    skip: int
+    limit: int
 
 
 class MetaPublication(BaseModel):

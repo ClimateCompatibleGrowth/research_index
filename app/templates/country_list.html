@@ -9,7 +9,7 @@
 </div>
 <div class="row">
     <div class="row">
-        {% for country in countries %}
+        {% for country in results %}
             <div class="col-sm">
                 <div id="card-{{country.id}}" class="card">
                     <svg id="{{country.id}}" width="320" height="240"></svg>
@@ -22,9 +22,12 @@
         {% endfor %}
         <script src="{{url_for('static', path='js/map.js')}}"></script>
         <script>
-          let countries = {{countries|tojson}};
+          let countries = {{results|tojson}};
           countries.forEach(draw_map);
         </script>
     </div>
 </div>
+
+{% include 'pagination.html' %}
+
 {% endblock %}

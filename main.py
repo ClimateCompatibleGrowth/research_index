@@ -24,20 +24,12 @@ app.mount("/static", StaticFiles(directory="app/static"), name="static")
 @app.get("/", response_class=HTMLResponse)
 @app.get("/index", response_class=HTMLResponse)
 def index(request: Request):
-    nodes = Nodes().get()
-    edges = Edges().get()
-    countries = Country().get_countries()
+    countries = Country().get_countries(skip=0, limit=200)
     return templates.TemplateResponse(
         "index.html",
-        {
-            "request": request,
-            "title": "Home",
-            "nodes": nodes,
-            "links": edges,
-            "countries": countries,
-        },
+        {"request": request,
+         "title": "Home"} | countries
     )
-
 
 @app.get("/countries/{id}", response_class=HTMLResponse)
 def country(request: Request,
@@ -46,35 +38,24 @@ def country(request: Request,
             skip: int = 0,
             limit: int = 20):
     country_model = Country()
-    outputs_model = Output()
-    outputs = outputs_model.filter_country(result_type=result_type,
-                                           country=id,
-                                           skip=skip,
-                                           limit=limit)
-    country = country_model.fetch_country_node(id)
-    count = country_model.count_country_outputs(id)
+    country = country_model.get_country(id, skip, limit, result_type)
     return templates.TemplateResponse(
         "country.html",
         {
             "request": request,
-            "title": "Country",
-            "outputs": outputs,
-            "country": country,
-            "count": count,
-            "skip": skip,
-            "limit": limit,
-            "result_type": result_type
-        },
+            "title": "Country"} | country
     )
 
 
 @app.get("/countries", response_class=HTMLResponse)
-def country_list(request: Request):
+def country_list(request: Request,
+                 skip: int = 0,
+                 limit: int = 20):
     country_model = Country()
-    entity = country_model.get_countries()
+    entity = country_model.get_countries(skip, limit)
     return templates.TemplateResponse(
         "country_list.html",
-        {"request": request, "title": "Countries", "countries": entity},
+        {"request": request, "title": "Countries"} | entity
     )
 
 
@@ -114,7 +95,10 @@ def output_list(request: Request,
                 country: str = None):
 
     model = Output()
-    package = model.get_outputs(skip=skip, limit=limit, result_type=result_type, country=country)
+    package = model.get_outputs(skip=skip,
+                                limit=limit,
+                                result_type=result_type,
+                                country=country)
     return templates.TemplateResponse(
         "outputs.html",
         {"request": request,
@@ -127,4 +111,5 @@ def output(request: Request, id: str):
     output_model = Output()
     entity = output_model.get_output(id)
     return templates.TemplateResponse(
-        "output.html", {"request": request, "title": "Output"} | entity )
+        "output.html",
+        {"request": request, "title": "Output"} | entity )

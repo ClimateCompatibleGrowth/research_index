@@ -15,3 +15,8 @@ class AuthorBase(BaseModel):
     last_name: str = Field(..., min_length=1)
     orcid: Optional[HttpUrl] = \
         Field(None, description="Author's ORCID identifier")
+
+
+class CountryBaseModel(BaseModel):
+    id: str
+    name: str
