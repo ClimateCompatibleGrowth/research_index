@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 
 {% block content %}
-
 <style>
 
 .links line {
@@ -34,7 +33,7 @@
           <h4>CCG works in the following countries</h4>
           <svg id="my_dataviz" class="figure-img img-fluid" width="800" height="600"></svg>
           <script>
-            let country_data = {{countries|tojson}};
+            let countries = {{ results|tojson }};
           </script>
             <script src="{{url_for('static', path='js/world.js')}}" type="module">
           </script>

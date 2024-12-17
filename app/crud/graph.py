@@ -38,7 +38,7 @@ class Nodes:
         query = """MATCH (a:Author)
                 RETURN a.uuid as id, 0 as group, a.first_name + " " + a.last_name as name, a.orcid as url
                 UNION ALL
-                MATCH (b:Article)
+                MATCH (b:Output)
                 RETURN b.uuid as id, 1 as group, b.title as name, "https://doi.org/" + b.doi as url
                 """
         results, summary, keys = db.execute_query(query)
@@ -71,7 +71,7 @@ class Edges:
         Neo4jError
             If database query fails
         """
-        query = """MATCH (p:Article)<-[author_of]-(a:Author)
+        query = """MATCH (p:Output)<-[author_of]-(a:Author)
                 RETURN p.uuid as target, a.uuid as source
                 """
         results, summary, keys = db.execute_query(query)

@@ -23,29 +23,6 @@
     </div>
     {% endfor %}
 
-    <div class="row">
-        <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
-            {% if not skip == 0%}
-            <li class="page-item"><a class="page-link" href="?limit={{limit}}&skip={{skip - limit}}">Previous</a></li>
-            {% endif %}
-
-            {% if count %}
-            {% for page in range((count // limit) + 1) %}
-                {% set skipper = (page) * limit %}
-                {% if skipper == skip %}
-                    <li class="page-item"><a class="page-link active" href="?limit={{limit}}&skip={{skipper}}">{{ page + 1 }}</a></li>
-                {% else %}
-                    <li class="page-item"><a class="page-link" href="?limit={{limit}}&skip={{skipper}}">{{ page + 1 }}</a></li>
-                {% endif%}
-            {% endfor %}
-
-            {% if not skip >= count - limit %}
-            <li class="page-item"><a class="page-link" href="?limit={{limit}}&skip={{skip + limit}}">Next</a></li>
-            {% endif %}
-            {% endif %}
-        </ul>
-        </nav>
-    </div>
+{% include 'pagination.html' %}
 
 {% endblock %}

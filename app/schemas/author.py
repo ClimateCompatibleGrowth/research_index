@@ -7,7 +7,7 @@ from . import AuthorBase
 from .workstream import WorkstreamBase
 from .affiliation import AffiliationModel
 from .output import OutputListModel
-from .meta import Meta
+from .meta import MetaAuthor
 
 
 class AuthorColabModel(AuthorBase):
@@ -24,7 +24,7 @@ class AuthorListModel(BaseModel):
     A list of authors
     """
     authors: List[AuthorColabModel]
-    meta: Meta
+    meta: MetaAuthor
 
 
 class AuthorOutputModel(AuthorColabModel):

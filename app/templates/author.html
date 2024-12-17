@@ -5,9 +5,9 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <h1>{{ author.first_name }} {{ author.last_name }}
-            {% if author.orcid %}
-            <a href="{{ author.orcid }}">
+            <h1>{{ first_name }} {{ last_name }}
+            {% if orcid %}
+            <a href="{{ orcid }}">
                 <img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="24" height="24" />
                 </a>
             {% endif %}
@@ -21,17 +21,17 @@
             <div class="card">
                 <div class="card-body">
                     <!-- Affiliation -->
-                    {% if author.affiliations %}
+                    {% if affiliations %}
                         <h5 class="card-title">Affiliations</h5>
-                        {% for affiliation in author.affiliations %}
+                        {% for affiliation in affiliations %}
                             <span class="badge bg-primary">{{ affiliation.name }}</span>
                         {% endfor %}
                     {% endif %}
                 </div>
                 <div class="card-body">
-                    {% if author.workstreams %}
+                    {% if workstreams %}
                         <h5 class="card-title">Workstreams</h5>
-                        {% for workstream in author.workstreams %}
+                        {% for workstream in workstreams %}
                             <span class="badge bg-secondary">{{ workstream.name }}</span>
                         {% endfor %}
                     {% endif %}
@@ -41,12 +41,12 @@
 
         <div class="col">
             <!-- Collaborators: -->
-            {% if author.collaborators %}
+            {% if collaborators %}
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Top Collaborators for {{ type|title }}</h5>
                     <ul class="list-group list-group-flush">
-                        {% for colab in author.collaborators %}
+                        {% for colab in collaborators %}
                         <li class="list-group-item"><a href="{{ url_for('author', id=colab.uuid) }}">{{ colab.first_name}} {{ colab.last_name }}</a>
                         {% if colab.orcid %}
                             <a href="{{ colab.orcid }}">
@@ -70,8 +70,8 @@
         </div>
 
         <div class="row">
-
-            {% set outputs = author.outputs.results %}
+            {% set results = outputs.results %}
+            {% set meta = outputs.meta %}
             {% include 'output_list.j2' %}
 
         </div>

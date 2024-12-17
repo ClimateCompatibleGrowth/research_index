@@ -1,18 +1,18 @@
 <div class="row">
     <h5>Filter by result type: </h5>
     <div class="btn-group" id="filter_button" role="group" aria-label="Filter research type">
-    {% for type in ['publication', 'dataset', 'software', 'other'] %}
-        <a href="?type={{ type }}&limit={{limit}}&skip=0" class="btn btn-primary">
-            {{type}}
-            <span class="badge text-bg-secondary">{{count[type]|default(0)}}</span>
+    {% for result_type in ['publication', 'dataset', 'software', 'other'] %}
+        <a href="?result_type={{ result_type }}&limit={{meta.limit|default(20)}}&skip=0" class="btn btn-primary">
+            {{result_type}}
+            <span class="badge text-bg-secondary">{{meta.count[result_type]|default(0)}}</span>
             </a>
     {% endfor %}
     </div>
 </div>
 
 <div class="row">
-    {% if outputs %}
-        {% for output in outputs %}
+    {% if results %}
+        {% for output in results %}
             <div class="card" id="{{output.uuid}}">
                 <div class="card-body">
                     <h5 class="card-title">{{ output.title }}
@@ -49,25 +49,30 @@
     {% endif %}
 </div>
 
+{% set result_type = meta.result_type|default(publication) %}
+{% set limit = meta.limit %}
+{% set skip = meta.skip %}
+{% set count = meta.count %}
+
 <div class="row">
     <nav aria-label="Page navigation">
     <ul class="pagination justify-content-center">
-        {% if not skip == 0%}
-        <li class="page-item"><a class="page-link" href="?type={{ type }}&limit={{limit}}&skip={{skip - limit}}">Previous</a></li>
+        {% if skip > 0 %}
+        <li class="page-item"><a class="page-link" href="?result_type={{ result_type }}&limit={{limit}}&skip={{skip - limit}}">Previous</a></li>
         {% endif %}
 
-        {% if count[type] %}
-        {% for page in range((count[type] // limit) + 1) %}
+        {% if count[result_type] > 0 %}
+        {% for page in range((count[result_type] // limit) + 1) %}
             {% set skipper = (page) * limit %}
             {% if skipper == skip %}
-                <li class="page-item"><a class="page-link active" href="?type={{ type }}&limit={{limit}}&skip={{skipper}}">{{ page + 1 }}</a></li>
+                <li class="page-item"><a class="page-link active" href="?result_type={{ result_type }}&limit={{limit}}&skip={{skipper}}">{{ page + 1 }}</a></li>
             {% else %}
-                <li class="page-item"><a class="page-link" href="?type={{ type }}&limit={{limit}}&skip={{skipper}}">{{ page + 1 }}</a></li>
+                <li class="page-item"><a class="page-link" href="?result_type={{ result_type }}&limit={{limit}}&skip={{skipper}}">{{ page + 1 }}</a></li>
             {% endif%}
         {% endfor %}
 
-        {% if not skip >= count[type] - limit %}
-        <li class="page-item"><a class="page-link" href="?type={{ type }}&limit={{limit}}&skip={{skip + limit}}">Next</a></li>
+        {% if not skip >= count[result_type] - limit %}
+        <li class="page-item"><a class="page-link" href="?result_type={{ result_type }}&limit={{limit}}&skip={{skip + limit}}">Next</a></li>
         {% endif %}
         {% endif %}
     </ul>
