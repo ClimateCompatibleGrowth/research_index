@@ -18,30 +18,30 @@ function draw_map(country) {
 
   var fill
 
-  if (partner_countries.indexOf(country.c.id) >= 0) {
+  if (partner_countries.indexOf(country.id) >= 0) {
     fill = PARTNER_COLOUR
-  } else if (affiliated_countries.indexOf(country.c.id) >= 0) {
+  } else if (affiliated_countries.indexOf(country.id) >= 0) {
     fill = AFFILIATE_COLOUR
-  } else if ((demonstrator_countries.indexOf(country.c.id) >= 0)) {
+  } else if ((demonstrator_countries.indexOf(country.id) >= 0)) {
     fill = DEMONSTRATOR_COLOUR
   } else {
     fill = HIGHLIGHT_COLOUR
   }
   // Above should be replaced with information drawn from the backend database
 
-  const id = "#" + country.c.id;
+  const id = "#" + country.id;
   const svg_map = d3.select(id),
         map_width = +svg_map.attr("width"),
         map_height = +svg_map.attr("height");
 
-  const lat = country.c.latitude;
-  const lon = country.c.longitude;
+  const lat = country.latitude;
+  const lon = country.longitude;
 
   // Load external data and boot
   d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson").then( function(data){
 
       // Filter data
-      country = data.features.filter(d => {console.log(d.properties.name); return d.properties.name==country.c.name})
+      country = data.features.filter(d => {console.log(d.properties.name); return d.properties.name==country.name})
 
     // Initial Map and projection
     const initial_projection = d3.geoMercator()
