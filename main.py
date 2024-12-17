@@ -85,16 +85,14 @@ def author(request: Request,
            skip: int = 0,
            limit: int = 20):
     author = Author()
-    entity = author.get_author(id, result_type=result_type, skip=skip, limit=limit)
+    entity = author.get_author(id,
+                               result_type=result_type,
+                               skip=skip,
+                               limit=limit)
     return templates.TemplateResponse(
         "author.html",
         {"request": request,
-         "title": "Author",
-         "author": entity,
-         "count":  entity['outputs']['meta']['count'],
-         "skip": skip,
-         "limit": limit,
-         'result_type': result_type},
+         "title": "Author"} | entity
     )
 
 
@@ -104,11 +102,7 @@ def author_list(request: Request, skip: int = 0, limit: int = 20):
     entity = authors.get_authors(skip=skip, limit=limit)
     return templates.TemplateResponse(
         "authors.html", {"request": request,
-                         "title": "Author List",
-                         "authors": entity['authors'],
-                         "skip": skip,
-                         "limit": limit,
-                         "count": entity['meta']['count']['total']}
+                         "title": "Author List"} | entity  # Merges dicts
     )
 
 
@@ -124,12 +118,7 @@ def output_list(request: Request,
     return templates.TemplateResponse(
         "outputs.html",
         {"request": request,
-         "title": "Output List",
-         "outputs": package['results'],
-         "count": package['meta']['count'],
-         "result_type": result_type,
-         "skip": skip,
-         "limit": limit}
+         "title": "Output List"} | package
     )
 
 
