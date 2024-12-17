@@ -2,17 +2,17 @@
     <h5>Filter by result type: </h5>
     <div class="btn-group" id="filter_button" role="group" aria-label="Filter research type">
     {% for result_type in ['publication', 'dataset', 'software', 'other'] %}
-        <a href="?result_type={{ result_type }}&limit={{limit}}&skip=0" class="btn btn-primary">
+        <a href="?result_type={{ result_type }}&limit={{outputs.meta.limit|default(20)}}&skip=0" class="btn btn-primary">
             {{result_type}}
-            <span class="badge text-bg-secondary">{{count[result_type]|default(0)}}</span>
+            <span class="badge text-bg-secondary">{{outputs.meta.count[result_type]|default(0)}}</span>
             </a>
     {% endfor %}
     </div>
 </div>
 
 <div class="row">
-    {% if outputs %}
-        {% for output in outputs %}
+    {% if outputs.results %}
+        {% for output in outputs.results %}
             <div class="card" id="{{output.uuid}}">
                 <div class="card-body">
                     <h5 class="card-title">{{ output.title }}
@@ -49,14 +49,19 @@
     {% endif %}
 </div>
 
+{% set result_type = outputs.meta.result_type|default(publication) %}
+{% set limit = outputs.meta.limit %}
+{% set skip = outputs.meta.skip %}
+{% set count = outputs.meta.count %}
+
 <div class="row">
     <nav aria-label="Page navigation">
     <ul class="pagination justify-content-center">
-        {% if not skip == 0%}
+        {% if skip > 0 %}
         <li class="page-item"><a class="page-link" href="?result_type={{ result_type }}&limit={{limit}}&skip={{skip - limit}}">Previous</a></li>
         {% endif %}
 
-        {% if count[result_type] %}
+        {% if count[result_type] > 0 %}
         {% for page in range((count[result_type] // limit) + 1) %}
             {% set skipper = (page) * limit %}
             {% if skipper == skip %}

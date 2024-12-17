@@ -92,7 +92,7 @@ def author(request: Request,
     return templates.TemplateResponse(
         "author.html",
         {"request": request,
-         "title": "Author"} | entity
+         "title": "Author"} | entity  # Merges dicts
     )
 
 

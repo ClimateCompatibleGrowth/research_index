@@ -7,6 +7,56 @@ from app.schemas.author import AuthorListModel, AuthorOutputModel
 
 
 class Author:
+
+    def get_authors(self, skip: int, limit: int) -> AuthorListModel:
+        """Get list of authors
+
+        Arguments
+        ---------
+        skip: int
+        limit: int
+
+        Returns
+        -------
+        AuthorListModel
+
+        """
+        records, _, _ = self.fetch_author_nodes(skip=skip, limit=limit)
+        authors = [record.data() for record in records]
+        count = self.count_authors()
+        return {"meta": {
+                        "count": {"total": count},
+                        "skip": skip,
+                        "limit": limit},
+                "authors": authors}
+
+    def get_author(self, id: str, result_type: str = 'publication', skip: int = 0, limit: int = 20) -> AuthorOutputModel:
+        """Get an author, collaborators and outputs
+
+        Arguments
+        ---------
+        id: str
+        result_type: str, default = 'publication',
+        skip: int, default = 0
+        limit: int, default = 20
+
+        Returns
+        -------
+        AuthorOutputModel
+        """
+        author = self.fetch_author_node(id)
+        collaborators = self.fetch_collaborator_nodes(id, result_type)[0]
+        collaborators = [collaborator.data() for collaborator in collaborators]
+        count = self.count_author_outputs(id)
+        publications = self.fetch_publications(id, result_type=result_type, skip=skip, limit=limit)
+        author['collaborators'] = collaborators
+        author['outputs'] = {'results': publications}
+        author['outputs']['meta'] = {"count": count,
+                                     "skip": skip,
+                                     "limit": limit,
+                                     "result_type": result_type}
+        return author
+
     @connect_to_db
     def fetch_author_nodes(
         self, db: Driver, skip: int, limit: int
@@ -32,15 +82,7 @@ class Author:
 
         return [record.data() for record in records][0]["count"]
 
-    def get_authors(self, skip: int, limit: int) -> AuthorListModel:
-        records, _, _ = self.fetch_author_nodes(skip=skip, limit=limit)
-        authors = [record.data() for record in records]
-        count = self.count_authors()
-        return {"meta": {
-                    "count": {"total": count},
-                    "skip": skip,
-                    "limit": limit},
-                "authors": authors}
+
 
     @connect_to_db
     def fetch_author_node(self, id: str, db: Driver) -> Dict[str, Any]:
@@ -166,15 +208,4 @@ class Author:
 
         return publications
 
-    def get_author(self, id: str, result_type: str = 'publication', skip: int = 0, limit: int = 20) -> AuthorOutputModel:
-        author = self.fetch_author_node(id)
-        collaborators = self.fetch_collaborator_nodes(id, result_type)[0]
-        collaborators = [collaborator.data() for collaborator in collaborators]
-        count = self.count_author_outputs(id)
-        publications = self.fetch_publications(id, result_type=result_type, skip=skip, limit=limit)
-        author['collaborators'] = collaborators
-        author['outputs'] = {'results': publications}
-        author['outputs']['meta'] = {"count": count,
-                                     "skip": skip,
-                                     "limit": limit}
-        return author
+
