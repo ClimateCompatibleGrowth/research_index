@@ -28,12 +28,12 @@ class Author:
         query = """MATCH (a:Author)
                 RETURN COUNT(a) as count
                 """
-        records, summary, keys = db.execute_query(query)
+        records, _, _ = db.execute_query(query)
 
         return [record.data() for record in records][0]["count"]
 
     def get_authors(self, skip: int, limit: int) -> AuthorListModel:
-        records, summary, keys = self.fetch_author_nodes(skip=skip, limit=limit)
+        records, _, _ = self.fetch_author_nodes(skip=skip, limit=limit)
         authors = [record.data() for record in records]
         count = self.count_authors()
         return {"meta": {"count": {"total": count}}, "authors": authors}
@@ -49,13 +49,13 @@ class Author:
                     a.first_name as first_name, a.last_name as last_name,
                     collect(DISTINCT p) as affiliations,
                     collect(DISTINCT u) as workstreams;"""
-        records, summary, keys = db.execute_query(author_query, uuid=id)
+        records, _, _ = db.execute_query(author_query, uuid=id)
         return records[0].data()
 
     @connect_to_db
     def count_author_outputs(self, id: str, db: Driver) -> int:
         query = """
-                MATCH (a:Author)-[b:author_of]->(o:Article)
+                MATCH (a:Author)-[b:author_of]->(o:Output)
                 WHERE (a.uuid) = $uuid
                 RETURN o.result_type as result_type, count(DISTINCT o) as count
                 """
@@ -112,7 +112,7 @@ class Author:
                     RETURN b
                     ORDER BY r.rank
                 }
-                OPTIONAL MATCH (p)-[:REFERS_TO]->(c:Country)
+                OPTIONAL MATCH (p)-[:refers_to]->(c:Country)
                 RETURN p as results,
                        collect(DISTINCT c) as countries,
                        collect(DISTINCT b) as authors
@@ -139,7 +139,7 @@ class Author:
                     RETURN b
                     ORDER BY r.rank
                 }
-                OPTIONAL MATCH (p)-[:REFERS_TO]->(c:Country)
+                OPTIONAL MATCH (p)-[:refers_to]->(c:Country)
                 RETURN p as results,
                     collect(DISTINCT c) as countries,
                     collect(DISTINCT b) as authors

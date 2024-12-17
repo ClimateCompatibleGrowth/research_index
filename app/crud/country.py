@@ -8,7 +8,6 @@ from .output import Output
 from app.schemas.country import CountryNodeModel
 
 
-
 class Country:
     @connect_to_db
     def fetch_country_node(self, id: str, db: Driver) -> Dict[str, Any]:
@@ -50,11 +49,11 @@ class Country:
             - values: count of articles for each result type
         """
         query = """
-                MATCH (o:Article)-[:REFERS_TO]->(c:Country)
+                MATCH (o:Output)-[:refers_to]->(c:Country)
                 WHERE c.id = $id
                 RETURN o.result_type as result_type, count(o) as count
                 """
-        records, summary, keys = db.execute_query(query, id=id)
+        records, _, _ = db.execute_query(query, id=id)
         return {x.data()["result_type"]: x.data()["count"] for x in records}
 
     @connect_to_db
@@ -72,11 +71,11 @@ class Country:
             List of dictionaries, each containing country properties
             from the Neo4j database
         """
-        query = """MATCH (c:Country)<-[:REFERS_TO]-(p:Article)
-                RETURN DISTINCT c
+        query = """MATCH (c:Country)<-[:refers_to]-(p:Output)
+                RETURN DISTINCT c as country
                 """
-        results, summary, keys = db.execute_query(query)
-        return [result.data()["c"] for result in results]
+        results, _, _ = db.execute_query(query)
+        return [result.data()['country'] for result in results]
 
     def get_country(self, id, skip, limit, type) -> Dict[str, Any]:
         entity = self.fetch_country_node(id)

@@ -3,7 +3,7 @@ from typing import List, Optional
 from uuid import UUID
 from .author import AuthorBase
 from .country import CountryBaseModel
-from .meta import Meta
+from .meta import MetaPublication
 from .topic import TopicBaseModel
 
 
@@ -81,5 +81,5 @@ class OutputListModel(BaseModel):
     """Represents a list of outputs including metadata
 
     """
-    meta: Meta
+    meta: MetaPublication
     results: List[OutputModel]

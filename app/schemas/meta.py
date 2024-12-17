@@ -1,15 +1,15 @@
 from typing import Dict, List, Optional
-
 from pydantic import BaseModel, Field
+
 
 class CountPublication(BaseModel):
     """Represents count of the outputs
     ```json
         {'total': 245684392,
-        'publication': 1234,
-        'software': 5678,
-        'dataset': 1234,
-        'other': 39494},
+         'publication': 1234,
+         'software': 5678,
+         'dataset': 1234,
+         'other': 39494},
      ```
     """
 
@@ -25,14 +25,31 @@ class CountAuthor(BaseModel):
     total: int = 0
 
 
-class Meta(BaseModel):
+class MetaPublication(BaseModel):
     """
     Base data model representing an academic author or contributor
     with their associated metadata.
 
     ```json
-    "count": {}
+    "count": {'total': 245684392,
+              'publication': 1234,
+              'software': 5678,
+              'dataset': 1234,
+              'other': 39494}
     ```
 
     """
-    count: CountPublication | CountAuthor | None
+    count: CountPublication | None
+
+
+class MetaAuthor(BaseModel):
+    """
+    Base data model representing an academic author or contributor
+    with their associated metadata.
+
+    ```json
+    "count": {'total': 42}
+    ```
+
+    """
+    count: CountAuthor | None

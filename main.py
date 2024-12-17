@@ -51,8 +51,8 @@ def country(request: Request,
                                            country=id,
                                            skip=skip,
                                            limit=limit)
-    country = country_model.get(id)
-    count = country_model.count(id)
+    country = country_model.fetch_country_node(id)
+    count = country_model.count_country_outputs(id)
     return templates.TemplateResponse(
         "country.html",
         {
@@ -71,7 +71,7 @@ def country(request: Request,
 @app.get("/countries", response_class=HTMLResponse)
 def country_list(request: Request):
     country_model = Country()
-    entity = country_model.get_all()
+    entity = country_model.get_countries()
     return templates.TemplateResponse(
         "country_list.html",
         {"request": request, "title": "Countries", "countries": entity},
@@ -91,7 +91,7 @@ def author(request: Request,
         {"request": request,
          "title": "Author",
          "author": entity,
-         "count":  entity['outputs']['meta']['count']['total'],
+         "count":  entity['outputs']['meta']['count'],
          "skip": skip,
          "limit": limit,
          'type': type},
@@ -101,7 +101,7 @@ def author(request: Request,
 @app.get("/authors", response_class=HTMLResponse)
 def author_list(request: Request, skip: int = 0, limit: int = 20):
     authors = Author()
-    entity= authors.get_authors(skip=skip, limit=limit)
+    entity = authors.get_authors(skip=skip, limit=limit)
     return templates.TemplateResponse(
         "authors.html", {"request": request,
                          "title": "Author List",
