@@ -55,7 +55,7 @@ d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/w
     }
 
     // Add interactions for CCG output available countries
-    let flat_countries = d3.map(countries, d => d.c.id);
+    let flat_countries = d3.map(countries, d => d.id);
     addCountryInteractions(flat_countries, HIGHLIGHT_COLOUR);
 
     // Add interactions for partner countries
