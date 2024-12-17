@@ -26,7 +26,7 @@ app.mount("/static", StaticFiles(directory="app/static"), name="static")
 def index(request: Request):
     nodes = Nodes().get()
     edges = Edges().get()
-    countries = Country().get_all()
+    countries = Country().get_countries()
     return templates.TemplateResponse(
         "index.html",
         {
@@ -42,12 +42,12 @@ def index(request: Request):
 @app.get("/countries/{id}", response_class=HTMLResponse)
 def country(request: Request,
             id: str,
-            type: str = 'publication',
+            result_type: str = 'publication',
             skip: int = 0,
             limit: int = 20):
     country_model = Country()
     outputs_model = Output()
-    outputs = outputs_model.filter_country(result_type=type,
+    outputs = outputs_model.filter_country(result_type=result_type,
                                            country=id,
                                            skip=skip,
                                            limit=limit)
@@ -63,7 +63,7 @@ def country(request: Request,
             "count": count,
             "skip": skip,
             "limit": limit,
-            "type": type
+            "result_type": result_type
         },
     )
 
@@ -81,11 +81,11 @@ def country_list(request: Request):
 @app.get("/authors/{id}", response_class=HTMLResponse)
 def author(request: Request,
            id: str,
-           type: str = 'publication',
+           result_type: str = 'publication',
            skip: int = 0,
            limit: int = 20):
     author = Author()
-    entity = author.get_author(id, type=type, skip=skip, limit=limit)
+    entity = author.get_author(id, result_type=result_type, skip=skip, limit=limit)
     return templates.TemplateResponse(
         "author.html",
         {"request": request,
@@ -94,7 +94,7 @@ def author(request: Request,
          "count":  entity['outputs']['meta']['count'],
          "skip": skip,
          "limit": limit,
-         'type': type},
+         'result_type': result_type},
     )
 
 
@@ -114,20 +114,20 @@ def author_list(request: Request, skip: int = 0, limit: int = 20):
 
 @app.get("/outputs", response_class=HTMLResponse)
 def output_list(request: Request,
-                type: str = 'publication',
+                result_type: str = 'publication',
                 skip: int = 0,
                 limit: int = 20,
                 country: str = None):
 
     model = Output()
-    package = model.get_outputs(skip=skip, limit=limit, type=type, country=country)
+    package = model.get_outputs(skip=skip, limit=limit, result_type=result_type, country=country)
     return templates.TemplateResponse(
         "outputs.html",
         {"request": request,
          "title": "Output List",
          "outputs": package['results'],
          "count": package['meta']['count'],
-         "type": type,
+         "result_type": result_type,
          "skip": skip,
          "limit": limit}
     )

@@ -8,7 +8,7 @@ router = APIRouter(prefix="/api/outputs", tags=["outputs"])
 
 @router.get("")
 def api_output_list(
-    skip: int = 0, limit: int = 20, type: str = "publication", country: str = None
+    skip: int = 0, limit: int = 20, result_type: str = "publication", country: str = None
 ) -> OutputListModel:
     """Return a list of outputs"""
     if skip < 0:
@@ -20,7 +20,7 @@ def api_output_list(
 
     outputs = Output()
     try:
-        return outputs.get_outputs(skip, limit, type, country)
+        return outputs.get_outputs(skip, limit, result_type, country)
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e)) from e
 

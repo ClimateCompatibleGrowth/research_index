@@ -218,24 +218,30 @@ class Output:
 
         return outputs
 
-    def get_outputs(self, skip:int , limit:int, type: str, country:str) -> OutputListModel:
+    def get_outputs(self,
+                    skip: int,
+                    limit: int,
+                    result_type: str,
+                    country: str) -> OutputListModel:
         """Return a list of outputs"""
         try:
             if country:
                 results = self.filter_country(
-                    result_type=type, skip=skip, limit=limit, country=country
+                    result_type=result_type, skip=skip, limit=limit, country=country
                 )
             else:
-                results = self.filter_type(result_type=type, skip=skip, limit=limit)
+                results = self.filter_type(result_type=result_type,
+                                           skip=skip,
+                                           limit=limit)
 
             count = self.count()
 
             return {
                 "meta": {
                     "count": count,
-                    "db_response_time_ms": 0,
-                    "page": 0,
-                    "per_page": 0,
+                    "skip": skip,
+                    "limit": limit,
+                    "result_type": result_type
                 },
                 "results": results,
             }

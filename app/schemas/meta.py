@@ -42,7 +42,7 @@ class MetaPublication(BaseModel):
     count: CountPublication | None
     skip: int
     limit: int
-    type: str | None
+    result_type: str | None
 
 
 class MetaAuthor(BaseModel):

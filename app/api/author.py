@@ -13,6 +13,6 @@ def api_author_list(skip: int = 0, limit: int = 20) -> AuthorListModel:
 
 
 @router.get("/{id}")
-def api_author(id: str, type: str = 'publication', skip: int = 0, limit: int = 20) -> AuthorOutputModel:
+def api_author(id: str, result_type: str = 'publication', skip: int = 0, limit: int = 20) -> AuthorOutputModel:
     author = Author()
-    return author.get_author(id=id, type=type, skip=skip, limit=limit)
+    return author.get_author(id=id, result_type=result_type, skip=skip, limit=limit)

@@ -36,7 +36,11 @@ class Author:
         records, _, _ = self.fetch_author_nodes(skip=skip, limit=limit)
         authors = [record.data() for record in records]
         count = self.count_authors()
-        return {"meta": {"count": {"total": count}}, "authors": authors}
+        return {"meta": {
+                    "count": {"total": count},
+                    "skip": skip,
+                    "limit": limit},
+                "authors": authors}
 
     @connect_to_db
     def fetch_author_node(self, id: str, db: Driver) -> Dict[str, Any]:
@@ -78,7 +82,7 @@ class Author:
     ) -> List[Dict[str, Any]]:
         collab_query = """
             MATCH (a:Author)-[:author_of]->(z:Output)<-[:author_of]-(b:Author)
-            WHERE a.uuid = $uuid AND b.uuid <> $uuid AND z.result_type = $type
+            WHERE a.uuid = $uuid AND b.uuid <> $uuid AND z.result_type = $result_type
             RETURN DISTINCT b.uuid as uuid,
                    b.first_name as first_name,
                    b.last_name as last_name,
@@ -86,7 +90,7 @@ class Author:
                    count(z) as num_colabs
             ORDER BY num_colabs DESCENDING
             LIMIT 5"""
-        return db.execute_query(collab_query, uuid=id, type=result_type)
+        return db.execute_query(collab_query, uuid=id, result_type=result_type)
 
     @connect_to_db
     def fetch_publications(
@@ -162,16 +166,15 @@ class Author:
 
         return publications
 
-    def get_author(self, id: str, type: str = 'publication', skip: int = 0, limit: int = 20) -> AuthorOutputModel:
+    def get_author(self, id: str, result_type: str = 'publication', skip: int = 0, limit: int = 20) -> AuthorOutputModel:
         author = self.fetch_author_node(id)
-        collaborators = self.fetch_collaborator_nodes(id, type)[0]
+        collaborators = self.fetch_collaborator_nodes(id, result_type)[0]
         collaborators = [collaborator.data() for collaborator in collaborators]
         count = self.count_author_outputs(id)
-        publications = self.fetch_publications(id, result_type=type, skip=skip, limit=limit)
+        publications = self.fetch_publications(id, result_type=result_type, skip=skip, limit=limit)
         author['collaborators'] = collaborators
         author['outputs'] = {'results': publications}
-        author['outputs']['meta'] = {"count":count,
-                                    "db_response_time_ms": 0,
-                                    "page": 0,
-                                    "per_page": 0}
+        author['outputs']['meta'] = {"count": count,
+                                     "skip": skip,
+                                     "limit": limit}
         return author
