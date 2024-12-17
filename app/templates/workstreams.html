@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% for workstream in workstreams %}
+    <div class="card">
+        <div class="card-body">
+            <a href="{{ url_for('workstream', id=workstream.id) }}">{{ workstream.name}}</a>
+        </div>
+    </div>
+    {% endfor %}
+
+{% endblock %}

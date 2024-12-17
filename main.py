@@ -22,6 +22,7 @@ formatter = logging.Formatter(
 )
 console_handler.setFormatter(formatter)
 
+# Obtain access loggers for uvicorn
 uvicorn_access_logger = logging.getLogger("uvicorn.access")
 logger.handlers = uvicorn_access_logger.handlers
 
@@ -45,6 +46,7 @@ def index(request: Request):
         {"request": request,
          "title": "Home"} | countries
     )
+
 
 @app.get("/countries/{id}", response_class=HTMLResponse)
 def country(request: Request,
@@ -130,7 +132,20 @@ def output(request: Request, id: str):
         {"request": request, "title": "Output"} | entity)
 
 
-if __name__ != "main":
-    logger.setLevel(uvicorn_access_logger.level)
-else:
-    logger.setLevel(logging.DEBUG)
+@app.get("/workstreams", response_class=HTMLResponse)
+def workstream_list(request: Request):
+    model = Workstream()
+    entity = model.get_all()
+    return templates.TemplateResponse(
+        "workstreams.html", {"request": request, "title": "Workstream", "workstreams": entity}
+    )
+
+
+@app.get("/workstreams/{id}", response_class=HTMLResponse)
+def workstream(request: Request, id: str, skip: int = 0, limit: int = 20):
+    model = Workstream()
+    entity = model.get(id, skip=skip, limit=limit)
+    return templates.TemplateResponse(
+        "workstream.html", {"request": request, "title": "Workstreams", "workstream": entity, "count": {}, "skip": skip, "limit": limit}
+    )
+
