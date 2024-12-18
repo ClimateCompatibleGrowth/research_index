@@ -8,6 +8,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 ADD . /research-index
 
-EXPOSE 8000
+EXPOSE 80
 
 CMD ["fastapi", "run", "main.py", "--port", "80", "--workers", "4"]
