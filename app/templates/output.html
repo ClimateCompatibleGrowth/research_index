@@ -58,7 +58,7 @@
                     {% for author in output.authors %}
                         <l><a href="{{ url_for('author', id=author.uuid) }}">{{ author.first_name}} {{ author.last_name }}</a>
                         {% if author.orcid %}
-                            <a href="{{ author.orcid }}"><img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="16" height="16" /></a>
+                        <img alt=" logo" src={{url_for('static', path='img/ORCID-iD_icon_vector.svg')}} width="16" height="16" /></a>
                         {% endif %}</l>
                     {% endfor %}
 
