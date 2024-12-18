@@ -28,7 +28,7 @@ class Author:
                         "count": {"total": count},
                         "skip": skip,
                         "limit": limit},
-                "authors": authors}
+                "results": authors}
 
     def get_author(self, id: str, result_type: str = 'publication', skip: int = 0, limit: int = 20) -> AuthorOutputModel:
         """Get an author, collaborators and outputs

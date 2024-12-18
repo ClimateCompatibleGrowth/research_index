@@ -1,9 +1,9 @@
 import os
 from dotenv import load_dotenv
 
-load_dotenv()
 
 class Settings:
+    load_dotenv()
     _instance = None
 
     def __new__(cls, *args, **kwargs):
@@ -15,5 +15,6 @@ class Settings:
     def _init_instance(self):
         self.MG_HOST = os.getenv("MG_HOST")
         self.MG_PORT = os.getenv("MG_PORT")
+
 
 settings = Settings()

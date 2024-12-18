@@ -1,3 +1,4 @@
+from fastapi.logger import logger
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
@@ -5,10 +6,14 @@ from fastapi.templating import Jinja2Templates
 
 from app.crud.author import Author
 from app.crud.country import Country
-from app.crud.graph import Edges, Nodes
 from app.crud.output import Output
 
 from app.api import author, output, country, workstream
+
+import logging
+
+uvicorn_access_logger = logging.getLogger("uvicorn.access")
+logger.handlers = uvicorn_access_logger.handlers
 
 app = FastAPI()
 
@@ -113,3 +118,9 @@ def output(request: Request, id: str):
     return templates.TemplateResponse(
         "output.html",
         {"request": request, "title": "Output"} | entity )
+
+
+if __name__ != "main":
+    logger.setLevel(uvicorn_access_logger.level)
+else:
+    logger.setLevel(logging.DEBUG)

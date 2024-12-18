@@ -23,8 +23,8 @@ class AuthorListModel(BaseModel):
     """
     A list of authors
     """
-    authors: List[AuthorColabModel]
     meta: MetaAuthor
+    results: List[AuthorColabModel]
 
 
 class AuthorOutputModel(AuthorColabModel):

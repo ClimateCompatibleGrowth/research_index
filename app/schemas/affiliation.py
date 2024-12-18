@@ -1,6 +1,6 @@
 from pydantic import BaseModel
-from typing import List, Optional
-from .author import AuthorBase
+from typing import Optional
+
 
 class AffiliationModel(BaseModel):
     id: Optional[str] = None
