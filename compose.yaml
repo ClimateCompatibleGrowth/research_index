@@ -1,17 +1,11 @@
-networks:
-  research-network:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: $NET_SUBNET
-
 services:
   research-index:
     build: .
     ports:
-      - "8000:8000"
-    networks:
-      - research-network
+      - 8000:8000
+    environment:
+      MG_HOST: memgraph
+      MG_PORT: '7687'
     depends_on:
       - memgraph
     restart: unless-stopped
@@ -19,16 +13,14 @@ services:
   memgraph:
     image: memgraph/memgraph:latest
     ports:
-      - $MG_PORT:$MG_PORT
-      - $MG_PORT_ALT:$MG_PORT_ALT
-    networks:
-      research-network:
-        ipv4_address: $MG_HOST
+      - 7687:7687
+      - 7444:7444
     volumes:
       - mg_lib:/var/lib/memgraph
       - mg_log:/var/log/memgraph
+    command: ["--log-level=TRACE"]
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://{$MG_HOST}:{$MG_PORT}"]
+      test: ["CMD-SHELL", "echo 'RETURN 0;' | mgconsole || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -38,31 +30,7 @@ services:
           memory: 4G
     restart: unless-stopped
 
-  nginx:
-    image: nginx:latest
-    ports:
-      - "80:80"
-    networks:
-      - research-network
-    depends_on:
-      - research-index
-    volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-    restart: unless-stopped
-
-  memgraph-lab:
-    image: memgraph/lab:latest
-    ports:
-      - "3000:3000"
-    networks:
-      - research-network
-    depends_on:
-      - memgraph
-    environment:
-      - MEMGRAPH_HOST=$MG_HOST
-      - MEMGRAPH_PORT=$MG_PORT
-    restart: unless-stopped
-
 volumes:
   mg_lib:
   mg_log:
+  mg_etc:

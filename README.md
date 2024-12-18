@@ -24,9 +24,11 @@ Once the VM is up and running, SSH into the VM, download and install memgraph
 
 ### 2. Build Docker container
 
-    docker build
+    docker build -t research_index_web_app:development .
 
 Run the docker container in development mode to test
+
+    docker run -dp 8000:8000 research_index_web_app:development
 
     docker run -dp 5001:80 -w /app -v "$(pwd):/app" research-index-gunicorn-311 sh -c "python app/app.py"
 
