@@ -10,4 +10,4 @@ ADD . /research-index
 
 EXPOSE 8000
 
-CMD ["fastapi", "run", "app/main.py", "--port", "80", "--workers", "4"]
+CMD ["fastapi", "run", "main.py", "--port", "80", "--workers", "4"]
