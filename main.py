@@ -7,6 +7,7 @@ from fastapi.templating import Jinja2Templates
 from app.crud.author import Author
 from app.crud.country import Country
 from app.crud.output import Output
+from app.crud.workstream import Workstream
 
 from app.api import author, output, country, workstream
 
@@ -137,7 +138,7 @@ def workstream_list(request: Request):
     model = Workstream()
     entity = model.get_all()
     return templates.TemplateResponse(
-        "workstreams.html", {"request": request, "title": "Workstream", "workstreams": entity}
+        "workstreams.html", {"request": request, "title": "Workstream"} | entity
     )
 
 
@@ -146,6 +147,11 @@ def workstream(request: Request, id: str, skip: int = 0, limit: int = 20):
     model = Workstream()
     entity = model.get(id, skip=skip, limit=limit)
     return templates.TemplateResponse(
-        "workstream.html", {"request": request, "title": "Workstreams", "workstream": entity, "count": {}, "skip": skip, "limit": limit}
+        "workstream.html", {"request": request, "title": "Workstreams"} | entity
     )
 
+
+if __name__ == "__main__":
+    logger.setLevel(logging.DEBUG)
+else:
+    logger.setLevel(uvicorn_access_logger.level)
