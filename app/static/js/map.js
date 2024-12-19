@@ -41,7 +41,7 @@ function draw_map(country) {
   d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson").then( function(data){
 
       // Filter data
-      country = data.features.filter(d => {console.log(d.properties.name); return d.properties.name==country.name})
+      country = data.features.filter(d => {return d.properties.name==country.name})
 
     // Initial Map and projection
     const initial_projection = d3.geoMercator()

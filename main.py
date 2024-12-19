@@ -12,6 +12,17 @@ from app.api import author, output, country, workstream
 
 import logging
 
+# Add console handler to the fastapi logger
+console_handler = logging.StreamHandler()
+logger.addHandler(console_handler)
+
+# Use a nice format for the log messages
+formatter = logging.Formatter(
+    "%(asctime)s [%(levelname)s] %(message)s"
+ )
+
+console_handler.setFormatter(formatter)
+
 uvicorn_access_logger = logging.getLogger("uvicorn.access")
 logger.handlers = uvicorn_access_logger.handlers
 
@@ -117,7 +128,7 @@ def output(request: Request, id: str):
     entity = output_model.get_output(id)
     return templates.TemplateResponse(
         "output.html",
-        {"request": request, "title": "Output"} | entity )
+        {"request": request, "title": "Output"} | entity)
 
 
 if __name__ != "main":

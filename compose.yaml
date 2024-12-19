@@ -3,6 +3,8 @@ services:
     build: .
     ports:
       - 8000:8000
+    volumes:
+      - ri_log:/var/log/research_index.log
     environment:
       MG_HOST: memgraph
       MG_PORT: '7687'
@@ -10,6 +12,11 @@ services:
     depends_on:
       - memgraph
     restart: unless-stopped
+    develop:
+      watch:
+        - action: sync
+          path: .
+          target: .
 
   memgraph:
     image: memgraph/memgraph:latest
@@ -35,3 +42,4 @@ volumes:
   mg_lib:
   mg_log:
   mg_etc:
+  ri_log:
