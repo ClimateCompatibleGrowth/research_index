@@ -19,8 +19,7 @@ logger.addHandler(console_handler)
 # Use a nice format for the log messages
 formatter = logging.Formatter(
     "%(asctime)s [%(levelname)s] %(message)s"
- )
-
+)
 console_handler.setFormatter(formatter)
 
 uvicorn_access_logger = logging.getLogger("uvicorn.access")
