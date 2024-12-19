@@ -13,5 +13,5 @@ EXPOSE 8000
 CMD ["fastapi", "run", "main.py", \
      "--port", "8000", \
      "--workers", "4", \
-     "--access-logfile -", \
-     "--proxy-headers"]
+     "--proxy-headers"
+    ]
