@@ -3,6 +3,7 @@ from typing import Dict, List, Optional
 from pydantic import BaseModel, Field, HttpUrl
 from uuid import UUID
 
+
 class AuthorBase(BaseModel):
     """
     Base data model representing an academic author or contributor
@@ -20,3 +21,8 @@ class AuthorBase(BaseModel):
 class CountryBaseModel(BaseModel):
     id: str
     name: str
+
+
+class WorkstreamBase(BaseModel):
+    id: Optional[str] = None
+    name: Optional[str] = None

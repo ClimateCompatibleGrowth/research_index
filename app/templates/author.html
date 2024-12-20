@@ -31,9 +31,7 @@
                 <div class="card-body">
                     {% if workstreams %}
                         <h5 class="card-title">Workstreams</h5>
-                        {% for workstream in workstreams %}
-                            <span class="badge bg-secondary">{{ workstream.name }}</span>
-                        {% endfor %}
+                        {% include 'workstream_list.html' %}
                     {% endif %}
                 </div>
             </div>

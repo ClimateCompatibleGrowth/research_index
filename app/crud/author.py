@@ -3,12 +3,18 @@ from typing import Any, Dict, List, Optional, Tuple
 from neo4j import Driver
 
 from app.db.session import connect_to_db
-from app.schemas.author import AuthorListModel, AuthorOutputModel
+from app.schemas.author import (AuthorListModel,
+                                AuthorOutputModel,
+                                AuthorColabModel)
+from app.schemas.meta import CountPublication
 
 
 class Author:
 
-    def get_authors(self, skip: int, limit: int) -> AuthorListModel:
+    def get_authors(self,
+                    skip: int,
+                    limit: int,
+                    workstream: list[str] = []) -> AuthorListModel:
         """Get list of authors
 
         Arguments
@@ -21,9 +27,11 @@ class Author:
         AuthorListModel
 
         """
-        records, _, _ = self.fetch_author_nodes(skip=skip, limit=limit)
-        authors = [record.data() for record in records]
-        count = self.count_authors()
+        authors = self.fetch_author_nodes(skip=skip, limit=limit, workstream=workstream)
+        if workstream:
+            count = len(authors)
+        else:
+            count = self.count_authors()
         return {"meta": {
                         "count": {"total": count},
                         "skip": skip,
@@ -47,7 +55,7 @@ class Author:
         author = self.fetch_author_node(id)
         collaborators = self.fetch_collaborator_nodes(id, result_type)[0]
         collaborators = [collaborator.data() for collaborator in collaborators]
-        count = self.count_author_outputs(id)
+        count = self.count_author_outputs(id)  # typing: CountPublications
         publications = self.fetch_publications(id, result_type=result_type, skip=skip, limit=limit)
         author['collaborators'] = collaborators
         author['outputs'] = {'results': publications}
@@ -59,18 +67,36 @@ class Author:
 
     @connect_to_db
     def fetch_author_nodes(
-        self, db: Driver, skip: int, limit: int
-    ) -> List[Dict[str, Any]]:
-        query = """
-            MATCH (a:Author)
-            OPTIONAL MATCH (a)-[:member_of]->(p:Partner)
-            OPTIONAL MATCH (a)-[:member_of]->(u:Workstream)
-            RETURN a.first_name as first_name, a.last_name as last_name, a.uuid as uuid, a.orcid as orcid,
-                collect(DISTINCT p) as affiliations, collect(DISTINCT u) as workstreams
-            ORDER BY last_name
-            SKIP $skip
-            LIMIT $limit;"""
-        return db.execute_query(query, skip=skip, limit=limit)
+        self, db: Driver, skip: int, limit: int, workstream: list[str] = []
+    ) -> List[AuthorColabModel]:
+        if workstream:
+            query = """
+                MATCH (a:Author)-[:member_of]->(u:Workstream)
+                WHERE u.id IN $workstream
+                OPTIONAL MATCH (a)-[:member_of]->(p:Partner)
+                RETURN a.first_name as first_name,
+                       a.last_name as last_name,
+                       a.uuid as uuid,
+                       a.orcid as orcid,
+                    collect(DISTINCT p) as affiliations, collect(DISTINCT u) as workstreams
+                ORDER BY last_name
+                SKIP $skip
+                LIMIT $limit;"""
+        else:
+            query = """
+                MATCH (a:Author)
+                OPTIONAL MATCH (a)-[:member_of]->(u:Workstream)
+                OPTIONAL MATCH (a)-[:member_of]->(p:Partner)
+                RETURN a.first_name as first_name,
+                       a.last_name as last_name,
+                       a.uuid as uuid,
+                       a.orcid as orcid,
+                    collect(DISTINCT p) as affiliations, collect(DISTINCT u) as workstreams
+                ORDER BY last_name
+                SKIP $skip
+                LIMIT $limit;"""
+        records, _, _ = db.execute_query(query, skip=skip, limit=limit, workstream=workstream)
+        return [record.data() for record in records]
 
     @connect_to_db
     def count_authors(self, db: Driver) -> int:
@@ -99,24 +125,24 @@ class Author:
         return records[0].data()
 
     @connect_to_db
-    def count_author_outputs(self, id: str, db: Driver) -> int:
+    def count_author_outputs(self, id: str, db: Driver) -> CountPublication:
         query = """
                 MATCH (a:Author)-[b:author_of]->(o:Output)
                 WHERE (a.uuid) = $uuid
                 RETURN o.result_type as result_type, count(DISTINCT o) as count
                 """
-        records, summary, keys = db.execute_query(query, uuid=id)
-        if len(records) <= 0:
+        records, _, _ = db.execute_query(query, uuid=id)
+        if len(records) < 1:
             return {
                 "total": 0,
-                "publications": 0,
-                "datasets": 0,
+                "publication": 0,
+                "dataset": 0,
                 "other": 0,
                 "software": 0,
             }
         counts = {x.data()["result_type"]: x.data()["count"] for x in records}
         counts["total"] = sum(counts.values())
-        return counts
+        return CountPublication(**counts)
 
     @connect_to_db
     def fetch_collaborator_nodes(

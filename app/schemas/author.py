@@ -4,10 +4,10 @@ from pydantic import BaseModel, Field, HttpUrl
 from uuid import UUID
 
 from . import AuthorBase
-from .workstream import WorkstreamBase
 from .affiliation import AffiliationModel
 from .output import OutputListModel
 from .meta import MetaAuthor
+from . import WorkstreamBase
 
 
 class AuthorColabModel(AuthorBase):

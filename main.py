@@ -7,6 +7,7 @@ from fastapi.templating import Jinja2Templates
 from app.crud.author import Author
 from app.crud.country import Country
 from app.crud.output import Output
+from app.crud.workstream import Workstream
 
 from app.api import author, output, country, workstream
 
@@ -22,6 +23,7 @@ formatter = logging.Formatter(
 )
 console_handler.setFormatter(formatter)
 
+# Obtain access loggers for uvicorn
 uvicorn_access_logger = logging.getLogger("uvicorn.access")
 logger.handlers = uvicorn_access_logger.handlers
 
@@ -45,6 +47,7 @@ def index(request: Request):
         {"request": request,
          "title": "Home"} | countries
     )
+
 
 @app.get("/countries/{id}", response_class=HTMLResponse)
 def country(request: Request,
@@ -130,7 +133,27 @@ def output(request: Request, id: str):
         {"request": request, "title": "Output"} | entity)
 
 
-if __name__ != "main":
-    logger.setLevel(uvicorn_access_logger.level)
-else:
+@app.get("/workstreams", response_class=HTMLResponse)
+def workstream_list(request: Request):
+    model = Workstream()
+    all = model.get_all()
+    entity = model.get(all['results'][0]['id'])
+    return templates.TemplateResponse(
+        "workstreams.html", {"request": request, "title": "Workstream"} | entity | all
+    )
+
+
+@app.get("/workstreams/{id}", response_class=HTMLResponse)
+def workstream(request: Request, id: str, skip: int = 0, limit: int = 20):
+    model = Workstream()
+    all = model.get_all()
+    entity = model.get(id, skip=skip, limit=limit)
+    return templates.TemplateResponse(
+        "workstreams.html", {"request": request, "title": "Workstreams"} | entity | all
+    )
+
+
+if __name__ == "__main__":
     logger.setLevel(logging.DEBUG)
+else:
+    logger.setLevel(uvicorn_access_logger.level)

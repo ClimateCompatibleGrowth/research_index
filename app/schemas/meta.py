@@ -47,10 +47,10 @@ class MetaPublication(BaseModel):
     ```
 
     """
-    count: CountPublication | None
+    count: CountPublication
     skip: int
     limit: int
-    result_type: str | None
+    result_type: str
 
 
 class MetaAuthor(BaseModel):

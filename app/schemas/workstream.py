@@ -1,12 +1,14 @@
 from pydantic import BaseModel
-from typing import List, Optional
-from . import AuthorBase
 from .output import OutputListModel
+from .meta import MetaAuthor
+from .author import AuthorListModel
+from . import WorkstreamBase
 
-class WorkstreamBase(BaseModel):
-    id: Optional[str] = None
-    name: Optional[str] = None
 
-class WorkstreamModel(WorkstreamBase):
-    members: List[AuthorBase]
-    outputs: OutputListModel
+class WorkstreamDetailModel(WorkstreamBase):
+    members: AuthorListModel
+
+
+class WorkstreamListModel(BaseModel):
+    meta: MetaAuthor
+    results: list[WorkstreamBase]
