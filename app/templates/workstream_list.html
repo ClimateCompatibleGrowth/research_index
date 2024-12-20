@@ -1,0 +1,3 @@
+{% for workstream in workstreams %}
+<a href="{{ url_for('workstream', id=workstream.id)}}" class="badge bg-secondary">{{ workstream.name }}</a>
+{% endfor %}
