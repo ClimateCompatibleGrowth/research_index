@@ -14,7 +14,11 @@ class Author:
         Arguments
         ---------
         skip: int
+            Number or records to skip
         limit: int
+            Number of records to return
+        workstream: list
+            A list of workstream ids
 
         Returns
         -------

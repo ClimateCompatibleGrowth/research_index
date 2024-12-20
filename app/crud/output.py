@@ -50,14 +50,16 @@ class Output:
                 }
                 RETURN o as outputs, collect(DISTINCT c) as countries, collect(DISTINCT a) as authors
                 """
-        records, _, _ = db.execute_query(query,
-                                                        uuid=id)
-        data = [x.data() for x in records][0]
-        package = data['outputs']
-        package['authors'] = data['authors']
-        package['countries'] = data['countries']
+        records, _, _ = db.execute_query(query, uuid=id)
+        if records:
+            data = [x.data() for x in records][0]
+            package = data['outputs']
+            package['authors'] = data['authors']
+            package['countries'] = data['countries']
 
-        return package
+            return package
+        else:
+            return {}
 
     @connect_to_db
     def count(self, db: Driver) -> Dict[str, int]:

@@ -10,7 +10,7 @@ ADD . /research-index
 
 EXPOSE 8000
 
-CMD ["fastapi", "run", "main.py", \
+CMD ["fastapi", "run", "app/main.py", \
      "--port", "8000", \
      "--workers", "4", \
      "--proxy-headers"]
