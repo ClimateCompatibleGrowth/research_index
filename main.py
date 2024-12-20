@@ -136,18 +136,20 @@ def output(request: Request, id: str):
 @app.get("/workstreams", response_class=HTMLResponse)
 def workstream_list(request: Request):
     model = Workstream()
-    entity = model.get_all()
+    all = model.get_all()
+    entity = model.get(all['results'][0]['id'])
     return templates.TemplateResponse(
-        "workstreams.html", {"request": request, "title": "Workstream"} | entity
+        "workstreams.html", {"request": request, "title": "Workstream"} | entity | all
     )
 
 
 @app.get("/workstreams/{id}", response_class=HTMLResponse)
 def workstream(request: Request, id: str, skip: int = 0, limit: int = 20):
     model = Workstream()
+    all = model.get_all()
     entity = model.get(id, skip=skip, limit=limit)
     return templates.TemplateResponse(
-        "workstream.html", {"request": request, "title": "Workstreams"} | entity
+        "workstreams.html", {"request": request, "title": "Workstreams"} | entity | all
     )
 
 

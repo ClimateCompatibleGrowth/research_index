@@ -2,7 +2,17 @@
 
 {% block content %}
 
-{% set workstreams = results %}
-{% include 'workstream_list.html' %}
+<div class="container text-left">
+    <div class="row">
+      <div class="col-3">
+        <h1>Apply Filter</h1>
+        {% set workstreams = results %}
+        {% include 'workstream_list.html' %}
+      </div>
+      <div class="col">
+        {% include 'workstream.html' %}
+      </div>
+    </div>
+  </div>
 
-{% endblock %}
+  {% endblock %}
