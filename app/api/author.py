@@ -7,9 +7,9 @@ router = APIRouter(prefix="/api/authors", tags=["authors"])
 
 
 @router.get("")
-def api_author_list(skip: int = 0, limit: int = 20) -> AuthorListModel:
+def api_author_list(skip: int = 0, limit: int = 20, workstream: str = None) -> AuthorListModel:
     authors = Author()
-    return authors.get_authors(skip=skip, limit=limit)
+    return authors.get_authors(skip=skip, limit=limit, workstream=workstream)
 
 
 @router.get("/{id}")
