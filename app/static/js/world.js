@@ -27,8 +27,6 @@ const projection = d3.geoNaturalEarth1()
     .scale(width / 1.1 / Math.PI)
     .translate([width / 2, height / 2])
 
-const countries = country_data;
-
 // Load external data and draw base map
 d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson").then( function(data) {
 
@@ -55,7 +53,7 @@ d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/w
     }
 
     // Add interactions for CCG output available countries
-    let flat_countries = d3.map(countries, d => d.c.id);
+    let flat_countries = d3.map(countries, d => d.id);
     addCountryInteractions(flat_countries, HIGHLIGHT_COLOUR);
 
     // Add interactions for partner countries

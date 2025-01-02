@@ -1,12 +1,12 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy container app to Azure Web App - research-index
+name: Build and deploy container app to Azure Web App - dev-research-index
 
 on:
   push:
     branches:
-      - main
+      - development
   workflow_dispatch:
 
 jobs:
@@ -14,7 +14,7 @@ jobs:
     runs-on: 'ubuntu-latest'
 
     steps:
-    - name: Checkout to the branch
+    - name: Checkout the development branch
       uses: actions/checkout@v2
 
     - name: Set up Docker Buildx
@@ -24,15 +24,15 @@ jobs:
       uses: docker/login-action@v2
       with:
         registry: https://index.docker.io/v1/
-        username: ${{ secrets.AzureAppService_ContainerUsername_dce678b65c414723a5c407473fe6c430 }}
-        password: ${{ secrets.AzureAppService_ContainerPassword_544e6645f7274c9b831a7039667967d5 }}
+        username: ${{ secrets.AzureAppService_ContainerUsername_9310ce663981441ab232b6b875b913e2 }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_a6a4cadc786e40478e1d15d558c66044 }}
 
     - name: Build and push container image to registry
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: index.docker.io/${{ secrets.AzureAppService_ContainerUsername_dce678b65c414723a5c407473fe6c430 }}/ccg-research-index:${{ github.sha }}
-        file: Dockerfile
+        tags: index.docker.io/${{ secrets.AzureAppService_ContainerUsername_9310ce663981441ab232b6b875b913e2 }}/ccg-research-index:${{ github.sha }}
+        file: ./Dockerfile
 
   deploy:
     runs-on: ubuntu-latest
@@ -46,7 +46,7 @@ jobs:
       id: deploy-to-webapp
       uses: azure/webapps-deploy@v2
       with:
-        app-name: 'research-index'
+        app-name: 'dev-research-index'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_4b15095a06cc4e57aa33f534f4e54311 }}
-        images: 'index.docker.io/${{ secrets.AzureAppService_ContainerUsername_dce678b65c414723a5c407473fe6c430 }}/ccg-research-index:${{ github.sha }}'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_a74f0a22a9c3465a91fa629137af0f81 }}
+        images: 'index.docker.io/${{ secrets.AzureAppService_ContainerUsername_9310ce663981441ab232b6b875b913e2 }}/ccg-research-index:${{ github.sha }}'

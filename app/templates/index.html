@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 
 {% block content %}
-
 <style>
 
 .links line {
@@ -29,14 +28,16 @@
 
   </style>
 
+<script src="https://d3js.org/d3.v6.js"></script>
+
  <div class="container">
     <div class="row">
           <h4>CCG works in the following countries</h4>
           <svg id="my_dataviz" class="figure-img img-fluid" width="800" height="600"></svg>
           <script>
-            let country_data = {{countries|tojson}};
+            let countries = {{ results|tojson }};
           </script>
-            <script src="{{url_for('static', filename='js/world.js')}}" type="module">
+          <script src="{{url_for('static', path='js/world.js')}}" type="module">
           </script>
     </div>
   </div>

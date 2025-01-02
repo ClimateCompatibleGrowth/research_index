@@ -1,26 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-{% for author in authors %}
-    <div class="card">
-        <div class="card-body">
-            <a href="{{ url_for('author', id=author.uuid) }}">{{ author.first_name}} {{ author.last_name }}</a>
-            {% if author.orcid %}
-                <a href="{{ author.orcid }}">
-                <img alt="ORCID logo" src={{url_for('static', filename='img/ORCID-iD_icon_vector.svg')}} width="16" height="16" /></a>
-            {% endif %}
-            {% if author.affiliation %}
-                    {% for id, value in author.affiliation|dictsort %}
-                        <span class="badge bg-primary">{{ value }}</span>
-                    {% endfor %}
-            {% endif %}
-            {% if author.workstreams %}
-                {% for id, value in author.workstreams|dictsort %}
-                    <span class="badge bg-secondary">{{ value }}</span>
-                {% endfor %}
-            {% endif %}
-        </div>
-    </div>
-    {% endfor %}
+
+{% include 'author_list.html' %}
+
+{% include 'pagination.html' %}
 
 {% endblock %}

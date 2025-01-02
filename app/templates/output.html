@@ -8,20 +8,20 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            {% if output.result_type %}
-                <span class="badge text-bg-secondary">{{ output.result_type }}</span>
+            {% if result_type %}
+                <span class="badge text-bg-secondary">{{ result_type }}</span>
             {% endif %}
-            <h1>{{ output.title }}</h1>
+            <h1>{{ title }}</h1>
         </div>
     </div>
     <div class="row">
         <div class="col">
-            {%if output.countries %}
+            {%if countries %}
             <div class="col">
                 <div class="card">
                     <div class="card-body">
                             <h5 class="card-title">Countries</h5>
-                            {% for country in output.countries %}
+                            {% for country in countries %}
                             <a href="{{ url_for('country', id=country.id) }}" class="badge text-bg-danger">{{ country.name }}</a>
                             {% endfor %}
                     </div>
@@ -32,9 +32,9 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Metadata</h5>
-                            {% if output.publication_year %}<b>Publication Year: </b>{{ output.publication_year }}{% endif %}
-                            {% if output.journal%}<p></p><b>Journal: </b>{{ output.journal }}</p>{% endif %}
-                        <a href="http://doi.org/{{ output.doi }}">http://doi.org/{{ output.doi }}</a>
+                            {% if publication_year %}<b>Publication Year: </b>{{ publication_year }}{% endif %}
+                            {% if journal%}<p></p><b>Journal: </b>{{ journal }}</p>{% endif %}
+                        <a href="http://doi.org/{{ doi }}">http://doi.org/{{ doi }}</a>
                     </div>
                 </div>
             </div>
@@ -44,8 +44,8 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Metrics</h5>
-                        <span class="__dimensions_badge_embed__" data-doi="{{ output.doi }}" data-style="small_circle" data-legend="always"></span>
-                        <span class='altmetric-embed' data-badge-type='donut' data-badge-details='right' data-doi="{{ output.doi }}"></span>
+                        <span class="__dimensions_badge_embed__" data-doi="{{ doi }}" data-style="small_circle" data-legend="always"></span>
+                        <span class='altmetric-embed' data-badge-type='donut' data-badge-details='right' data-doi="{{ doi }}"></span>
 
                 </div>
             </div>
@@ -55,10 +55,10 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Authors</h5>
-                    {% for author in output.authors %}
+                    {% for author in authors %}
                         <l><a href="{{ url_for('author', id=author.uuid) }}">{{ author.first_name}} {{ author.last_name }}</a>
                         {% if author.orcid %}
-                        <img alt=" logo" src={{url_for('static', filename='img/ORCID-iD_icon_vector.svg')}} width="16" height="16" /></a>
+                        <img alt=" logo" src={{url_for('static', path='img/ORCID-iD_icon_vector.svg')}} width="16" height="16" /></a>
                         {% endif %}</l>
                     {% endfor %}
 
@@ -72,7 +72,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Abstract</h5>
-                    {{ output.abstract }}
+                        {{ abstract }}
                 </div>
             </div>
         </div>

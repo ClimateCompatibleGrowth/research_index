@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
+
+<script src="https://d3js.org/d3.v6.js"></script>
+
 <div class="row">
     <div class="col">
       <h4>CCG works in the following countries</h4>
@@ -8,22 +11,25 @@
 </div>
 <div class="row">
     <div class="row">
-        {% for country in countries %}
+        {% for country in results %}
             <div class="col-sm">
-                <div id="card-{{country.c.id}}" class="card">
-                    <svg id="{{country.c.id}}" width="320" height="240"></svg>
+                <div id="card-{{country.id}}" class="card">
+                    <svg id="{{country.id}}" width="320" height="240"></svg>
                         <div class="card-body">
-                        <h5 class="card-title">{{country.c.name}}</h5>
+                        <h5 class="card-title">{{country.name}}</h5>
                         </div>
-                    <a href="{{ url_for('country', id=country.c.id) }}" role="button" class="btn btn-primary">View Outputs</a>
+                    <a href="{{ url_for('country', id=country.id) }}" role="button" class="btn btn-primary">View Outputs</a>
                 </div>
             </div>
         {% endfor %}
-        <script src="{{url_for('static', filename='js/map.js')}}"></script>
+        <script src="{{url_for('static', path='js/map.js')}}"></script>
         <script>
-          let countries = {{countries|tojson}};
+          let countries = {{results|tojson}};
           countries.forEach(draw_map);
         </script>
     </div>
 </div>
+
+{% include 'pagination.html' %}
+
 {% endblock %}
