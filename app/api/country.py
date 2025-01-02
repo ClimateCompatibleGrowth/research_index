@@ -1,33 +1,36 @@
-from fastapi import APIRouter, HTTPException
-
+from fastapi import APIRouter, HTTPException, Query, Path
+from typing import Annotated
 from app.crud.country import Country
 from app.schemas.country import CountryList, CountryOutputListModel
+from app.schemas.query import FilterBase, FilterParams
 
 router = APIRouter(prefix="/api/countries", tags=["countries"])
 
 
 @router.get("")
-def api_country_list(skip: int = 0,
-                     limit: int = 20
+def api_country_list(query: Annotated[FilterBase, Query()]
                      ) -> CountryList:
     try:
         country_model = Country()
-        return country_model.get_countries(skip, limit)
+        return country_model.get_countries(query.skip, query.limit)
     except Exception as e:
         raise HTTPException(status_code=500,
                             detail=f"Server error: {str(e)}") from e
 
 @router.get("/{id}")
-def api_country(id: str,
-                skip: int = 0,
-                limit: int = 20,
-                result_type: str = "publication"
+def api_country(id: Annotated[str, Path(examples=['KEN'], title="Country identifier", pattern="^([A-Z]{3})$")],
+                query: Annotated[FilterParams, Query()]
                 ) -> CountryOutputListModel:
     try:
         country_model = Country()
-        if result := country_model.get_country(id, skip, limit, result_type):
+        if result := country_model.get_country(id,
+                                               query.skip,
+                                               query.limit,
+                                               query.result_type):
             return result
-        else:
-            raise HTTPException(status_code=404, detail=f"Country with id {id} not found")
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}") from e
+    except KeyError:
+        raise HTTPException(status_code=404,
+                            detail=f"Country with id {id} not found")
+    except ValueError as e:
+        raise HTTPException(status_code=500,
+                            detail=f"Database error: {str(e)}") from e

@@ -1,29 +1,39 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Query, Path
+from typing import Annotated
+from uuid import UUID
 
 from app.crud.author import Author
 from app.schemas.author import AuthorListModel, AuthorOutputModel
+from app.schemas.query import FilterBase, FilterParams
 
 router = APIRouter(prefix="/api/authors", tags=["authors"])
 
 
 @router.get("")
-def api_author_list(skip: int = 0, limit: int = 20, workstream: str = None) -> AuthorListModel:
+def api_author_list(query: Annotated[FilterBase, Query()]
+                    ) -> AuthorListModel:
     try:
         authors = Author()
-        if result := authors.get_authors(skip=skip, limit=limit, workstream=workstream):
+        if result := authors.get_authors(skip=query.skip,
+                                         limit=query.limit):
             return result
-        else:
-            raise HTTPException(status_code=404, detail=f"Workstream {workstream} not found")
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Database error: {str(e)}") from e
 
 @router.get("/{id}")
-def api_author(id: str, result_type: str = 'publication', skip: int = 0, limit: int = 20) -> AuthorOutputModel:
+def api_author(id: Annotated[UUID, Path(title="Unique author identifier")],
+               query: Annotated[FilterParams, Query()]
+               ) -> AuthorOutputModel:
     try:
         author = Author()
-        if result := author.get_author(id=id, result_type=result_type, skip=skip, limit=limit):
+        if result := author.get_author(id=id,
+                                       result_type=query.result_type,
+                                       skip=query.skip,
+                                       limit=query.limit):
             return result
         else:
-            raise HTTPException(status_code=404, detail=f"Author {id} not found")
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}") from e
+            raise HTTPException(status_code=404,
+                                detail=f"Author '{id}' not found")
+    except ValueError as e:
+        raise HTTPException(status_code=500,
+                            detail=f"Database error: {str(e)}") from e

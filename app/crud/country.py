@@ -1,4 +1,5 @@
-from typing import Any, Dict, List
+from typing import Any, Dict
+from fastapi.logger import logger
 
 from neo4j import Driver
 
@@ -33,15 +34,22 @@ class Country:
         -------
         schemas.output.CountryOutputListModel
         """
-        entity = self.fetch_country_node(id)
-        outputs = Output()
-        package = outputs.get_outputs(skip=skip,
-                                      limit=limit,
-                                      result_type=result_type,
-                                      country=id)
-        counts = self.count_country_outputs(id)
-        package["meta"]["count"] = counts
-        return package | entity
+        try:
+            entity = self.fetch_country_node(id)
+        except KeyError as ex:
+            logger.error(
+                f"Country outputs not found {id}:{skip}:{limit}:{result_type}")
+            ex.add_note(f"Could not find {id} in the db")
+            raise KeyError(ex)
+        else:
+            outputs = Output()
+            package = outputs.get_outputs(skip=skip,
+                                          limit=limit,
+                                          result_type=result_type,
+                                          country=id)
+            counts = self.count_country_outputs(id)
+            package["meta"]["count"] = counts
+            return package | entity
 
     def get_countries(self, skip: int = 0, limit: int = 20) -> CountryList:
         """Get a list of countries
@@ -79,7 +87,13 @@ class Country:
         """
         query = """MATCH (c:Country) WHERE c.id = $id RETURN c as country;"""
         results, summary, keys = db.execute_query(query, id=id)
-        return results[0].data()["country"]
+        logger.debug(f"Received {results}")
+        if results:
+            return results[0].data()["country"]
+        else:
+            msg = f"No results returned from query for country '{id}'"
+            logger.error(msg)
+            raise KeyError(msg)
 
     @connect_to_db
     def count_country_outputs(self, id: str, db: Driver) -> CountPublication:

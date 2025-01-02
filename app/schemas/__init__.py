@@ -3,6 +3,7 @@ from typing import Dict, List, Optional
 from pydantic import BaseModel, Field, HttpUrl
 from uuid import UUID
 
+
 class AuthorBase(BaseModel):
     """
     Base data model representing an academic author or contributor

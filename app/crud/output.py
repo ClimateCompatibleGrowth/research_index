@@ -1,6 +1,7 @@
 from typing import Any, Dict, List
-
+from uuid import UUID
 from neo4j import Driver
+from fastapi.logger import logger
 
 from app.db.session import connect_to_db
 from app.schemas.output import OutputListModel, OutputModel
@@ -8,7 +9,7 @@ from app.schemas.output import OutputListModel, OutputModel
 
 class Output:
     @connect_to_db
-    def get_output(self, id: str, db: Driver) -> OutputModel:
+    def get_output(self, id: UUID, db: Driver) -> OutputModel:
         """Retrieve article output information from the database.
 
         Parameters
@@ -50,7 +51,7 @@ class Output:
                 }
                 RETURN o as outputs, collect(DISTINCT c) as countries, collect(DISTINCT a) as authors
                 """
-        records, _, _ = db.execute_query(query, uuid=id)
+        records, _, _ = db.execute_query(query, uuid=str(id))
         if records:
             data = [x.data() for x in records][0]
             package = data['outputs']
@@ -59,7 +60,8 @@ class Output:
 
             return package
         else:
-            return {}
+            logger.error(f"Output {str(id)} does not exist in database")
+            raise KeyError(f"Output {str(id)} does not exist")
 
     @connect_to_db
     def count(self, db: Driver) -> Dict[str, int]:

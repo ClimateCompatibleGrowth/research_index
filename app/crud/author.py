@@ -17,8 +17,6 @@ class Author:
             Number or records to skip
         limit: int
             Number of records to return
-        workstream: list
-            A list of workstream ids
 
         Returns
         -------
@@ -48,18 +46,20 @@ class Author:
         -------
         AuthorOutputModel
         """
-        author = self.fetch_author_node(id)
-        collaborators = self.fetch_collaborator_nodes(id, result_type)[0]
-        collaborators = [collaborator.data() for collaborator in collaborators]
-        count = self.count_author_outputs(id)
-        publications = self.fetch_publications(id, result_type=result_type, skip=skip, limit=limit)
-        author['collaborators'] = collaborators
-        author['outputs'] = {'results': publications}
-        author['outputs']['meta'] = {"count": count,
-                                     "skip": skip,
-                                     "limit": limit,
-                                     "result_type": result_type}
-        return author
+        if author := self.fetch_author_node(id):
+            collaborators = self.fetch_collaborator_nodes(id, result_type)[0]
+            collaborators = [collaborator.data() for collaborator in collaborators]
+            count = self.count_author_outputs(id)
+            publications = self.fetch_publications(id, result_type=result_type, skip=skip, limit=limit)
+            author['collaborators'] = collaborators
+            author['outputs'] = {'results': publications}
+            author['outputs']['meta'] = {"count": count,
+                                        "skip": skip,
+                                        "limit": limit,
+                                        "result_type": result_type}
+            return author
+        else:
+            return None
 
     @connect_to_db
     def fetch_author_nodes(
@@ -100,7 +100,10 @@ class Author:
                     collect(DISTINCT p) as affiliations,
                     collect(DISTINCT u) as workstreams;"""
         records, _, _ = db.execute_query(author_query, uuid=id)
-        return records[0].data()
+        if len(records) == 0:
+            return None
+        else:
+            return records[0].data()
 
     @connect_to_db
     def count_author_outputs(self, id: str, db: Driver) -> int:
