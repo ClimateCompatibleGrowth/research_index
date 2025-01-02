@@ -58,8 +58,12 @@ class TestAuthor:
         response = client.get("/api/authors?limit=0")
         assert response.status_code == 422
 
-    def test_author_error_on_author_not_exist(self):
+    def test_author_error_on_author_id_wrong_format(self):
         response = client.get("/api/authors/blabla")
+        assert response.status_code == 422
+
+    def test_author_error_on_author_id_not_exist(self):
+        response = client.get("/api/authors/8119878e-1875-4cdf-a6a8-a9025057ddz5")
         assert response.status_code == 422
 
 
