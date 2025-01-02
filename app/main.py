@@ -1,13 +1,17 @@
 from fastapi.logger import logger
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Query, Path, HTTPException
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+
+from typing import Annotated
+from uuid import UUID
 
 from app.crud.author import Author
 from app.crud.country import Country
 from app.crud.output import Output
 from app.crud.workstream import Workstream
+from app.schemas.query import (FilterWorkstream, FilterParams, FilterBase, FilterOutputList)
 
 from app.api import author, output, country, workstream
 
@@ -43,114 +47,178 @@ app.mount("/static", StaticFiles(directory="app/static"), name="static")
 def index(request: Request):
     countries = Country().get_countries(skip=0, limit=200)
     return templates.TemplateResponse(
+        request,
         "index.html",
-        {"request": request,
-         "title": "Home"} | countries
+        {"title": "Home"} | countries
     )
 
 
 @app.get("/countries/{id}", response_class=HTMLResponse)
 def country(request: Request,
-            id: str,
-            result_type: str = 'publication',
-            skip: int = 0,
-            limit: int = 20):
+            id: Annotated[str, Path(examples=['KEN'], title="Country identifier", pattern="^([A-Z]{3})$")],
+            query: Annotated[FilterParams, Query()]
+            ):
     country_model = Country()
-    country = country_model.get_country(id, skip, limit, result_type)
-    return templates.TemplateResponse(
-        "country.html",
-        {
-            "request": request,
-            "title": "Country"} | country
-    )
+    try:
+        country = country_model.get_country(id, query.skip, query.limit, query.result_type)
+    except KeyError:
+        raise HTTPException(status_code=404,
+                            detail=f"Country with id '{id}' not found")
+    except Exception as e:
+        raise HTTPException(status_code=500,
+                            detail=f"Database error: {str(e)}") from e
+    else:
+        return templates.TemplateResponse(
+            request,
+            "country.html",
+            {"title": "Country"} | country
+        )
 
 
 @app.get("/countries", response_class=HTMLResponse)
 def country_list(request: Request,
-                 skip: int = 0,
-                 limit: int = 20):
+                 query: Annotated[FilterBase, Query()]
+
+                 ):
     country_model = Country()
-    entity = country_model.get_countries(skip, limit)
-    return templates.TemplateResponse(
-        "country_list.html",
-        {"request": request, "title": "Countries"} | entity
-    )
+    try:
+        entity = country_model.get_countries(query.skip, query.limit)
+    except Exception as e:
+        raise HTTPException(status_code=500,
+                            detail=f"Server error: {str(e)}") from e
+    else:
+        return templates.TemplateResponse(
+            request,
+            "country_list.html",
+            {"title": "Countries"} | entity
+        )
 
 
 @app.get("/authors/{id}", response_class=HTMLResponse)
 def author(request: Request,
-           id: str,
-           result_type: str = 'publication',
-           skip: int = 0,
-           limit: int = 20):
+           id: Annotated[UUID, Path(title="Unique author identifier")],
+           query: Annotated[FilterParams, Query()]):
     author = Author()
-    entity = author.get_author(id,
-                               result_type=result_type,
-                               skip=skip,
-                               limit=limit)
-    return templates.TemplateResponse(
-        "author.html",
-        {"request": request,
-         "title": "Author"} | entity  # Merges dicts
-    )
+    try:
+        entity = author.get_author(
+            id,
+            result_type=query.result_type,
+            skip=query.skip,
+            limit=query.limit)
+    except KeyError:
+        raise HTTPException(status_code=404,
+                            detail=f"Author '{id}' not found")
+    else:
+        return templates.TemplateResponse(
+            request,
+            "author.html",
+            {"title": "Author"} | entity  # Merges dicts
+        )
 
 
 @app.get("/authors", response_class=HTMLResponse)
-def author_list(request: Request, skip: int = 0, limit: int = 20):
+def author_list(request: Request,
+                query: Annotated[FilterWorkstream, Query()]):
     authors = Author()
-    entity = authors.get_authors(skip=skip, limit=limit)
-    return templates.TemplateResponse(
-        "authors.html", {"request": request,
-                         "title": "Author List"} | entity  # Merges dicts
-    )
+    try:
+        entity = authors.get_authors(skip=query.skip,
+                                     limit=query.limit,
+                                     workstream=query.workstream)
+    except KeyError as ex:
+        raise HTTPException(status_code=404,
+                            detail=f"Authors not found")
+    else:
+        return templates.TemplateResponse(
+            request,
+            "authors.html",
+            {"title": "Author List"} | entity  # Merges dicts
+        )
 
 
 @app.get("/outputs", response_class=HTMLResponse)
 def output_list(request: Request,
-                result_type: str = 'publication',
-                skip: int = 0,
-                limit: int = 20,
-                country: str = None):
+                query: Annotated[FilterOutputList, Query()]
+                ):
 
     model = Output()
-    package = model.get_outputs(skip=skip,
-                                limit=limit,
-                                result_type=result_type,
-                                country=country)
-    return templates.TemplateResponse(
-        "outputs.html",
-        {"request": request,
-         "title": "Output List"} | package
-    )
+    try:
+        package = model.get_outputs(skip=query.skip,
+                                    limit=query.limit,
+                                    result_type=query.result_type,
+                                    country=query.country)
+    except ValueError as e:
+        raise HTTPException(status_code=500, detail=str(e)) from e
+    else:
+        return templates.TemplateResponse(
+            request,
+            "outputs.html",
+            {"title": "Output List"} | package
+        )
 
 
 @app.get("/outputs/{id}", response_class=HTMLResponse)
-def output(request: Request, id: str):
+def output(request: Request,
+           id: Annotated[UUID, Path(title="Unique output identifier")]
+           ):
     output_model = Output()
-    entity = output_model.get_output(id)
-    return templates.TemplateResponse(
-        "output.html",
-        {"request": request, "title": "Output"} | entity)
+    try:
+        entity = output_model.get_output(id)
+    except KeyError as e:
+        raise HTTPException(
+                status_code=404, detail=f"Output with id {id} not found"
+            ) from e
+    except Exception as e:
+        logger.error(f"Error in api_output: {str(e)}")
+        raise HTTPException(status_code=400, detail=str(e)) from e
+    else:
+        return templates.TemplateResponse(
+            request,
+            "output.html",
+            {"title": "Output"} | entity)
 
 
 @app.get("/workstreams", response_class=HTMLResponse)
 def workstream_list(request: Request):
     model = Workstream()
-    all = model.get_all()
-    entity = model.get(all['results'][0]['id'])
-    return templates.TemplateResponse(
-        "workstreams.html", {"request": request, "title": "Workstream"} | entity | all
+    try:
+        all = model.get_all()
+    except KeyError as e:
+        raise HTTPException(status_code=500,
+                            detail=f"Database error: {str(e)}") from e
+    else:
+        try:
+            entity = model.get(all['results'][0]['id'])
+        except KeyError as e:
+            raise HTTPException(status_code=500,
+                                detail=f"Database error: {str(e)}") from e
+
+        else:
+            return templates.TemplateResponse(
+                request,
+                "workstreams.html",
+                {"title": "Workstream"} | entity | all
     )
 
 
 @app.get("/workstreams/{id}", response_class=HTMLResponse)
-def workstream(request: Request, id: str, skip: int = 0, limit: int = 20):
+def workstream(request: Request,
+               id: str,
+               query: Annotated[FilterBase, Query()]
+               ):
     model = Workstream()
     all = model.get_all()
-    entity = model.get(id, skip=skip, limit=limit)
-    return templates.TemplateResponse(
-        "workstreams.html", {"request": request, "title": "Workstreams"} | entity | all
-    )
+    try:
+        entity = model.get(id, skip=query.skip, limit=query.limit)
+    except KeyError as e:
+        raise HTTPException(status_code=404,
+                            detail=f"Workstream '{id}' not found")
+
+    else:
+        return templates.TemplateResponse(
+            request,
+            "workstreams.html",
+            {"title": "Workstreams"} | entity | all
+        )
 
 
 if __name__ == "__main__":

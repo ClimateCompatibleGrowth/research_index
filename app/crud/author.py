@@ -1,6 +1,8 @@
 from typing import Any, Dict, List, Optional, Tuple
 from uuid import UUID
 
+from fastapi.logger import logger
+
 from neo4j import Driver
 
 from app.db.session import connect_to_db
@@ -72,11 +74,13 @@ class Author:
                                          "result_type": result_type}
             return author
         else:
-            return None
+            msg = f"Could not find author with id: {id}"
+            logger.error(msg)
+            raise KeyError(msg)
 
     @connect_to_db
     def fetch_author_nodes(
-        self, db: Driver, skip: int, limit: int, workstream: list[str] = []
+        self, db: Driver, skip: int, limit: int, workstream: List[str] = []
     ) -> List[AuthorColabModel]:
         if workstream:
             query = """

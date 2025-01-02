@@ -25,16 +25,19 @@ def api_author_list(query: Annotated[FilterWorkstream, Query()]
 def api_author(id: Annotated[UUID, Path(title="Unique author identifier")],
                query: Annotated[FilterParams, Query()]
                ) -> AuthorOutputModel:
+    author = Author()
     try:
-        author = Author()
-        if result := author.get_author(id=id,
-                                       result_type=query.result_type,
-                                       skip=query.skip,
-                                       limit=query.limit):
-            return result
-        else:
-            raise HTTPException(status_code=404,
-                                detail=f"Author '{id}' not found")
+        result = author.get_author(id=id,
+                                   result_type=query.result_type,
+                                   skip=query.skip,
+                                   limit=query.limit)
+
+    except KeyError:
+        raise HTTPException(status_code=404,
+                            detail=f"Author '{id}' not found")
     except ValueError as e:
         raise HTTPException(status_code=500,
                             detail=f"Database error: {str(e)}") from e
+    else:
+        return result
+

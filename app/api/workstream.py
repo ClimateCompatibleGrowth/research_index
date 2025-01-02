@@ -22,8 +22,9 @@ def list_workstreams(
     model = Workstream()
     try:
         results = model.get_all(skip=query.skip, limit=query.limit)
-    except KeyError:
-        raise
+    except KeyError as e:
+        raise HTTPException(status_code=500,
+                            detail=f"Database error: {str(e)}") from e
     else:
         return results
 
