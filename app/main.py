@@ -130,7 +130,8 @@ def output(request: Request, id: str):
         {"request": request, "title": "Output"} | entity)
 
 
-if __name__ != "main":
-    logger.setLevel(uvicorn_access_logger.level)
+if __name__ == "__main__":
+    logger.setLevel(logging.DEBUG)
 else:
+    # logger.setLevel(uvicorn_access_logger.level)
     logger.setLevel(logging.DEBUG)
