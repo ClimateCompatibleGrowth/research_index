@@ -63,8 +63,8 @@ class TestAuthor:
         assert response.status_code == 422
 
     def test_author_error_on_author_id_not_exist(self):
-        response = client.get("/api/authors/8119878e-1875-4cdf-a6a8-a9025057ddz5")
-        assert response.status_code == 422
+        response = client.get("/api/authors/97c945d6-e172-4e7f-8a3a-02a7a51ae62b")
+        assert response.status_code == 404
 
 
 class TestCountry:
