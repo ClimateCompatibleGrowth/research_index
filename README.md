@@ -11,7 +11,7 @@ MG_PORT_ALT=      # Alternative port
 
 To enter development mode of the website, with the memgraph database running in the background, run
 
-    fastapi dev main.py
+    fastapi dev app/main.py
 
 ## Deployment
 

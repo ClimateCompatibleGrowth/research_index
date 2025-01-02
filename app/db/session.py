@@ -18,8 +18,8 @@ def connect_to_db(f):
             with GraphDatabase.driver(URI, auth=AUTH) as db:
                 db.verify_connectivity()
                 return f(*args, db, **kwargs)
-        except Exception as e:
-            raise ValueError(e)
+        except Exception:
+            raise
         finally:
             db.close()
 

@@ -1,4 +1,5 @@
 from typing import Any, Dict, List, Optional, Tuple
+from uuid import UUID
 
 from neo4j import Driver
 
@@ -20,7 +21,9 @@ class Author:
         Arguments
         ---------
         skip: int
+            Number or records to skip
         limit: int
+            Number of records to return
 
         Returns
         -------
@@ -38,12 +41,13 @@ class Author:
                         "limit": limit},
                 "results": authors}
 
-    def get_author(self, id: str, result_type: str = 'publication', skip: int = 0, limit: int = 20) -> AuthorOutputModel:
+    def get_author(self, id: UUID, result_type: str = 'publication', skip: int = 0, limit: int = 20) -> AuthorOutputModel:
         """Get an author, collaborators and outputs
 
         Arguments
         ---------
-        id: str
+        id: UUID
+            Unique author identifier
         result_type: str, default = 'publication',
         skip: int, default = 0
         limit: int, default = 20
@@ -52,18 +56,23 @@ class Author:
         -------
         AuthorOutputModel
         """
-        author = self.fetch_author_node(id)
-        collaborators = self.fetch_collaborator_nodes(id, result_type)[0]
-        collaborators = [collaborator.data() for collaborator in collaborators]
-        count = self.count_author_outputs(id)  # typing: CountPublications
-        publications = self.fetch_publications(id, result_type=result_type, skip=skip, limit=limit)
-        author['collaborators'] = collaborators
-        author['outputs'] = {'results': publications}
-        author['outputs']['meta'] = {"count": count,
-                                     "skip": skip,
-                                     "limit": limit,
-                                     "result_type": result_type}
-        return author
+        if author := self.fetch_author_node(str(id)):
+            collaborators = self.fetch_collaborator_nodes(str(id), result_type)[0]
+            collaborators = [collaborator.data() for collaborator in collaborators]
+            count = self.count_author_outputs(str(id))
+            publications = self.fetch_publications(str(id),
+                                                   result_type=result_type,
+                                                   skip=skip,
+                                                   limit=limit)
+            author['collaborators'] = collaborators
+            author['outputs'] = {'results': publications}
+            author['outputs']['meta'] = {"count": count,
+                                         "skip": skip,
+                                         "limit": limit,
+                                         "result_type": result_type}
+            return author
+        else:
+            return None
 
     @connect_to_db
     def fetch_author_nodes(
@@ -122,7 +131,10 @@ class Author:
                     collect(DISTINCT p) as affiliations,
                     collect(DISTINCT u) as workstreams;"""
         records, _, _ = db.execute_query(author_query, uuid=id)
-        return records[0].data()
+        if len(records) == 0:
+            return None
+        else:
+            return records[0].data()
 
     @connect_to_db
     def count_author_outputs(self, id: str, db: Driver) -> CountPublication:
