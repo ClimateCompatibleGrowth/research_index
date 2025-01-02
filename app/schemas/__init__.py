@@ -21,3 +21,8 @@ class AuthorBase(BaseModel):
 class CountryBaseModel(BaseModel):
     id: str
     name: str
+
+
+class WorkstreamBase(BaseModel):
+    id: Optional[str] = None
+    name: Optional[str] = None

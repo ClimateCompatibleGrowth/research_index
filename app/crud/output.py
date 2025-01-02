@@ -85,8 +85,8 @@ class Output:
         records, _, _ = db.execute_query(query)
         if len(records) <= 0:
             return {'total': 0,
-                    'publications': 0,
-                    'datasets': 0,
+                    'publication': 0,
+                    'dataset': 0,
                     'other': 0,
                     'software': 0}
         counts = {x.data()["result_type"]: x.data()["count"] for x in records}
@@ -223,10 +223,10 @@ class Output:
         return outputs
 
     def get_outputs(self,
-                    skip: int,
-                    limit: int,
-                    result_type: str,
-                    country: str) -> OutputListModel:
+                    skip: int = 0,
+                    limit: int = 20,
+                    result_type: str = 'publication',
+                    country: str = None) -> OutputListModel:
         """Return a list of outputs"""
         try:
             if country:

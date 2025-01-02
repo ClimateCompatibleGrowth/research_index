@@ -22,7 +22,7 @@ def api_output_list(
                                    query.result_type,
                                    query.country)
     except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e)) from e
+        raise HTTPException(status_code=500, detail=str(e)) from e
 
 
 @router.get("/{id}")
@@ -30,10 +30,10 @@ def api_output(id: Annotated[UUID, Path(title="Unique output identifier")]) -> O
     output = Output()
     try:
         result = output.get_output(id)
-    except KeyError:
+    except KeyError as e:
         raise HTTPException(
                 status_code=404, detail=f"Output with id {id} not found"
-            )
+            ) from e
     except Exception as e:
         logger.error(f"Error in api_output: {str(e)}")
         raise HTTPException(status_code=400, detail=str(e)) from e

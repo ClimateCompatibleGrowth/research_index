@@ -1,4 +1,4 @@
-from typing import Literal
+from typing import Literal, List
 
 from pydantic import BaseModel, Field, field_validator
 from fastapi import HTTPException
@@ -20,8 +20,8 @@ class FilterCountry(FilterParams):
 class FilterOutputList(FilterCountry):
     pass
 
-class FilterWorkstream(BaseModel):
-    workstream: str | None = Field(default=None)
+class FilterWorkstream(FilterBase):
+    workstream: List[str] | None = Field(default=None)
 
 
 class FilterAuthorDetail(FilterCountry):
