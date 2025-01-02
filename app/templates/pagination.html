@@ -1,7 +1,8 @@
 <div class="row">
+
     <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-center">
-        {% if not skip == 0%}
+        {% if not meta.skip == 0 %}
         <li class="page-item"><a class="page-link" href="?limit={{meta.limit}}&skip={{meta.skip - meta.limit}}">Previous</a></li>
         {% endif %}
 
