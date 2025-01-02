@@ -4,13 +4,13 @@ from uuid import UUID
 
 from app.crud.author import Author
 from app.schemas.author import AuthorListModel, AuthorOutputModel
-from app.schemas.query import FilterBase, FilterParams
+from app.schemas.query import FilterWorkstream, FilterParams
 
 router = APIRouter(prefix="/api/authors", tags=["authors"])
 
 
 @router.get("")
-def api_author_list(query: Annotated[FilterBase, Query()]
+def api_author_list(query: Annotated[FilterWorkstream, Query()]
                     ) -> AuthorListModel:
     try:
         authors = Author()

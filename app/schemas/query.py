@@ -20,7 +20,7 @@ class FilterCountry(FilterParams):
 class FilterOutputList(FilterCountry):
     pass
 
-class FilterWorkstream(BaseModel):
+class FilterWorkstream(FilterBase):
     workstream: str | None = Field(default=None)
 
 

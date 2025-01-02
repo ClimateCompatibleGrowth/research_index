@@ -70,7 +70,7 @@ class Workstream:
         if records:
             return records[0].data()
         else:
-            return None
+            raise KeyError("No records returned for {id}")
 
     def get_outputs(self, id: str, skip, limit) -> OutputListModel:
         output = Output()
@@ -89,7 +89,10 @@ class Workstream:
                 SKIP $skip
                 LIMIT $limit"""
         records, _, _ = db.execute_query(query, skip=skip, limit=limit)
-        return [x.data() for x in records]
+        if len(records) == 0:
+            raise KeyError("No records returned")
+        else:
+            return [x.data() for x in records]
 
     def get_members(self,
                     id: list[str],

@@ -82,3 +82,32 @@ class TestCountry:
         """
         response = client.get("/api/countries/XXX")
         assert response.status_code == 404
+
+
+class TestWorkstream:
+
+    def test_workstream_list(self):
+        response = client.get("/api/workstreams")
+        assert response.status_code == 200
+
+    def test_workstream_list_limit(self):
+        response = client.get("/api/workstreams?limit=1")
+        assert response.status_code == 200
+
+    def test_workstream_list_limit_illegal(self):
+        response = client.get("/api/workstreams?limit=0")
+        assert response.status_code == 422
+
+    def test_workstream_list_skip(self):
+        response = client.get("/api/workstreams?skip=1")
+        assert response.status_code == 200
+
+    def test_workstream_list_skip_illegal(self):
+        response = client.get("/api/workstreams?skip=-1")
+        assert response.status_code == 422
+
+    def test_workstream_error_on_not_exist(self):
+        """Meets
+        """
+        response = client.get("/api/workstreams/XXX")
+        assert response.status_code == 404
