@@ -3,6 +3,7 @@ from fastapi import FastAPI, Request, Query, Path, HTTPException
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from fastapi.middleware.cors import CORSMiddleware
 
 from typing import Annotated
 from uuid import UUID
@@ -32,6 +33,14 @@ uvicorn_access_logger = logging.getLogger("uvicorn.access")
 logger.handlers = uvicorn_access_logger.handlers
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT", "DELETE"],
+    allow_headers=["*"],
+)
 
 app.include_router(author.router)
 app.include_router(output.router)
