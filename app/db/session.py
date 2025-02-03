@@ -6,6 +6,8 @@ from neo4j import GraphDatabase
 
 MG_HOST = settings.MG_HOST
 MG_PORT = settings.MG_PORT
+MG_USER = settings.MG_USER
+MG_PASS = settings.MG_PASS
 
 
 def connect_to_db(f):
@@ -14,7 +16,7 @@ def connect_to_db(f):
 
         try:
             URI = f"bolt://{MG_HOST}:{MG_PORT}"
-            AUTH = ("", "")
+            AUTH = (MG_USER, MG_PASS)
             with GraphDatabase.driver(URI, auth=AUTH) as db:
                 db.verify_connectivity()
                 return f(*args, db, **kwargs)
