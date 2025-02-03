@@ -10,7 +10,7 @@ router = APIRouter(prefix="/api/ingest", tags=["ingest"])
 
 @router.post("/ingest_dois")
 async def ingest_dois(
-    file: UploadFile, limit=50, update_metadata=False
+    file: UploadFile, limit: int=50, update_metadata: bool=False
 ) -> Tuple[IngestionMetrics, IngestionStates]:
     try:
         content = await file.read()
