@@ -14,7 +14,7 @@ from app.crud.output import Output
 from app.crud.workstream import Workstream
 from app.schemas.query import (FilterWorkstream, FilterParams, FilterBase, FilterOutputList)
 
-from app.api import author, output, country, workstream
+from app.api import author, country, ingest, output, workstream
 
 import logging
 
@@ -43,8 +43,9 @@ app.add_middleware(
     )
 
 app.include_router(author.router)
-app.include_router(output.router)
 app.include_router(country.router)
+app.include_router(ingest.router)
+app.include_router(output.router)
 app.include_router(workstream.router)
 
 templates = Jinja2Templates(directory="app/templates")
