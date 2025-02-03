@@ -30,3 +30,5 @@ build/
 .DS_Store
 
 research_index_backend/
+data/
+*.bash
