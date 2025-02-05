@@ -8,6 +8,7 @@ class IngestionMetrics(BaseModel):
     processed_dois: int
     new_dois: int
     existing_dois: int
+    updated_existing_dois: int
     ingested_dois: int
     metadata_pass: int
     metadata_failure: int
@@ -23,6 +24,7 @@ class IngestionStates(BaseModel):
     processed_dois: List[str]
     new_dois: List[str]
     existing_dois: List[str]
+    updated_existing_dois: List[str]
     ingested_dois: List[str]
     metadata_pass: List[str]
     metadata_failure: List[str]
