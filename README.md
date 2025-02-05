@@ -7,6 +7,8 @@ Create a `.env` file in the project root with the following environment variable
 MG_HOST=          # Memgraph host address
 MG_PORT=          # Default Memgraph port
 MG_PORT_ALT=      # Alternative port
+MG_USER=          # Memgraph user
+MG_PASS=          # Memgraph user password
 ```
 
 To enter development mode of the website, with the memgraph database running in the background, run
@@ -21,6 +23,7 @@ Once the VM is up and running, SSH into the VM, download and install memgraph
 
     curl -O https://download.memgraph.com/memgraph/v2.14.1/ubuntu-20.04/memgraph_2.14.1-1_amd64.deb
     sudo dpkg -i /memgraph_2.14.1-1_amd64.deb
+Set up the Memgraph user to match the credentials specified in the `.env` file.
 
 ### 2. Build Docker container
 
