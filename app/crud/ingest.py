@@ -6,16 +6,24 @@ from research_index_backend.create_graph_from_doi import add_country_relations, 
 
 class Ingest:
     def __init__(
-        self, dois: list, limit: int, update_metadata: bool
+        self,
+        dois: list,
+        limit: int,
+        update_metadata: bool,
+        write_metadata: bool,
     ) -> Tuple[IngestionMetrics, IngestionStates]:
         self.dois = dois
         self.limit = limit
         self.update_metadata = update_metadata
+        self.write_metadata = write_metadata
 
     def ingest_dois(self):
         try:
             doi_manager = main(
-                self.dois, limit=self.limit, update_metadata=self.update_metadata
+                self.dois,
+                limit=self.limit,
+                update_metadata=self.update_metadata,
+                write_metadata=self.write_metadata,
             )
         except Exception as e:
             print(f"Error ingesting dois: {e}")
