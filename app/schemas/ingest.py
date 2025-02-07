@@ -5,6 +5,7 @@ from pydantic import BaseModel
 
 class IngestionMetrics(BaseModel):
     submitted_dois: int
+    duplicated_submissions: int
     processed_dois: int
     new_dois: int
     existing_dois: int
@@ -21,6 +22,7 @@ class IngestionMetrics(BaseModel):
 
 class IngestionStates(BaseModel):
     submitted_dois: List[str]
+    duplicated_submissions: List[str]
     processed_dois: List[str]
     new_dois: List[str]
     existing_dois: List[str]
