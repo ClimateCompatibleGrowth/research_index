@@ -1,1 +1,1 @@
-fastapi run app/main.py --port 8000 --workers 4 --proxy-headers
+fastapi run app/main.py --host 0.0.0.0 --port 8000 --workers $NUM_CORES
