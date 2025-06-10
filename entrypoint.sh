@@ -1,0 +1,1 @@
+fastapi run app/main.py --port 8000 --workers 4 --proxy-headers
