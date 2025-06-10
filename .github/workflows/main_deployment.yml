@@ -76,5 +76,5 @@ jobs:
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
         with:
-          app-name: 'research-index-production(main)'
+          app-name: 'research-index-production'
           slot-name: 'main'
