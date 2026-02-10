@@ -2,22 +2,18 @@ from typing import Any, Dict, List, Optional, Tuple
 from uuid import UUID
 
 from fastapi.logger import logger
-
 from neo4j import Driver
 
 from app.db.session import connect_to_db
-from app.schemas.author import (AuthorListModel,
-                                AuthorOutputModel,
-                                AuthorColabModel)
+from app.schemas.author import AuthorColabModel, AuthorListModel, AuthorOutputModel
 from app.schemas.meta import CountPublication
 
 
 class Author:
 
-    def get_authors(self,
-                    skip: int,
-                    limit: int,
-                    workstream: list[str] = []) -> AuthorListModel:
+    def get_authors(
+        self, skip: int, limit: int, workstream: list[str] = []
+    ) -> AuthorListModel:
         """Get list of authors
 
         Arguments
@@ -37,13 +33,14 @@ class Author:
             count = len(authors)
         else:
             count = self.count_authors()
-        return {"meta": {
-                        "count": {"total": count},
-                        "skip": skip,
-                        "limit": limit},
-                "results": authors}
+        return {
+            "meta": {"count": {"total": count}, "skip": skip, "limit": limit},
+            "results": authors,
+        }
 
-    def get_author(self, id: UUID, result_type: str = 'publication', skip: int = 0, limit: int = 20) -> AuthorOutputModel:
+    def get_author(
+        self, id: UUID, result_type: str = "publication", skip: int = 0, limit: int = 20
+    ) -> AuthorOutputModel:
         """Get an author, collaborators and outputs
 
         Arguments
@@ -62,16 +59,17 @@ class Author:
             collaborators = self.fetch_collaborator_nodes(str(id), result_type)[0]
             collaborators = [collaborator.data() for collaborator in collaborators]
             count = self.count_author_outputs(str(id))
-            publications = self.fetch_publications(str(id),
-                                                   result_type=result_type,
-                                                   skip=skip,
-                                                   limit=limit)
-            author['collaborators'] = collaborators
-            author['outputs'] = {'results': publications}
-            author['outputs']['meta'] = {"count": count,
-                                         "skip": skip,
-                                         "limit": limit,
-                                         "result_type": result_type}
+            publications = self.fetch_publications(
+                str(id), result_type=result_type, skip=skip, limit=limit
+            )
+            author["collaborators"] = collaborators
+            author["outputs"] = {"results": publications}
+            author["outputs"]["meta"] = {
+                "count": count,
+                "skip": skip,
+                "limit": limit,
+                "result_type": result_type,
+            }
             return author
         else:
             msg = f"Could not find author with id: {id}"
@@ -108,7 +106,9 @@ class Author:
                 ORDER BY last_name
                 SKIP $skip
                 LIMIT $limit;"""
-        records, _, _ = db.execute_query(query, skip=skip, limit=limit, workstream=workstream)
+        records, _, _ = db.execute_query(
+            query, skip=skip, limit=limit, workstream=workstream
+        )
         return [record.data() for record in records]
 
     @connect_to_db
@@ -120,8 +120,6 @@ class Author:
         records, _, _ = db.execute_query(query)
 
         return [record.data() for record in records][0]["count"]
-
-
 
     @connect_to_db
     def fetch_author_node(self, id: str, db: Driver) -> Dict[str, Any]:
@@ -249,5 +247,3 @@ class Author:
             publications.append(package)
 
         return publications
-
-

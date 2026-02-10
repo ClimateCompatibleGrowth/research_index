@@ -1,7 +1,8 @@
 from typing import Tuple
 
-from app.schemas.ingest import IngestionMetrics, IngestionStates
 from research_index_backend.create_graph_from_doi import add_country_relations, main
+
+from app.schemas.ingest import IngestionMetrics, IngestionStates
 
 
 class Ingest:

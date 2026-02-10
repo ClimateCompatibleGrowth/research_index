@@ -1,7 +1,8 @@
 from typing import Any, Dict, List
 from uuid import UUID
-from neo4j import Driver
+
 from fastapi.logger import logger
+from neo4j import Driver
 
 from app.db.session import connect_to_db
 from app.schemas.output import OutputListModel, OutputModel
@@ -54,9 +55,9 @@ class Output:
         records, _, _ = db.execute_query(query, uuid=str(id))
         if records:
             data = [x.data() for x in records][0]
-            package = data['outputs']
-            package['authors'] = data['authors']
-            package['countries'] = data['countries']
+            package = data["outputs"]
+            package["authors"] = data["authors"]
+            package["countries"] = data["countries"]
 
             return package
         else:
@@ -84,17 +85,21 @@ class Output:
                 """
         records, _, _ = db.execute_query(query)
         if len(records) <= 0:
-            return {'total': 0,
-                    'publication': 0,
-                    'dataset': 0,
-                    'other': 0,
-                    'software': 0}
+            return {
+                "total": 0,
+                "publication": 0,
+                "dataset": 0,
+                "other": 0,
+                "software": 0,
+            }
         counts = {x.data()["result_type"]: x.data()["count"] for x in records}
-        counts['total'] = sum(counts.values())
+        counts["total"] = sum(counts.values())
         return counts
 
     @connect_to_db
-    def filter_type(self, db: Driver, result_type: str, skip: int, limit: int) -> List[Dict[str, Any]]:
+    def filter_type(
+        self, db: Driver, result_type: str, skip: int, limit: int
+    ) -> List[Dict[str, Any]]:
         """Filter articles by result type and return with ordered authors.
 
         Parameters
@@ -138,27 +143,23 @@ class Output:
                 SKIP $skip
                 LIMIT $limit;
         """
-        records, _, _ = db.execute_query(query,
-                                         result_type=result_type,
-                                         skip=skip,
-                                         limit=limit)
+        records, _, _ = db.execute_query(
+            query, result_type=result_type, skip=skip, limit=limit
+        )
         outputs = []
         for x in records:
             data = x.data()
-            package = data['outputs']
-            package['authors'] = data['authors']
-            package['countries'] = data['countries']
+            package = data["outputs"]
+            package["authors"] = data["authors"]
+            package["countries"] = data["countries"]
             outputs.append(package)
 
         return outputs
 
     @connect_to_db
-    def filter_country(self,
-                       db: Driver,
-                       result_type: str,
-                       skip: int,
-                       limit: int,
-                       country: str) -> List[Dict[str, Any]]:
+    def filter_country(
+        self, db: Driver, result_type: str, skip: int, limit: int, country: str
+    ) -> List[Dict[str, Any]]:
         """Filter articles by country and result type and return with ordered authors.
 
         Parameters
@@ -207,26 +208,26 @@ class Output:
                 SKIP $skip
                 LIMIT $limit;
         """
-        records, summary, keys = db.execute_query(query,
-                                         result_type=result_type,
-                                         country_id=country,
-                                         skip=skip,
-                                         limit=limit)
+        records, summary, keys = db.execute_query(
+            query, result_type=result_type, country_id=country, skip=skip, limit=limit
+        )
         outputs = []
         for x in records:
             data = x.data()
-            package = data['outputs']
-            package['authors'] = data['authors']
-            package['countries'] = data['countries']
+            package = data["outputs"]
+            package["authors"] = data["authors"]
+            package["countries"] = data["countries"]
             outputs.append(package)
 
         return outputs
 
-    def get_outputs(self,
-                    skip: int = 0,
-                    limit: int = 20,
-                    result_type: str = 'publication',
-                    country: str = None) -> OutputListModel:
+    def get_outputs(
+        self,
+        skip: int = 0,
+        limit: int = 20,
+        result_type: str = "publication",
+        country: str = None,
+    ) -> OutputListModel:
         """Return a list of outputs"""
         try:
             if country:
@@ -234,9 +235,9 @@ class Output:
                     result_type=result_type, skip=skip, limit=limit, country=country
                 )
             else:
-                results = self.filter_type(result_type=result_type,
-                                           skip=skip,
-                                           limit=limit)
+                results = self.filter_type(
+                    result_type=result_type, skip=skip, limit=limit
+                )
 
             count = self.count()
 
@@ -245,7 +246,7 @@ class Output:
                     "count": count,
                     "skip": skip,
                     "limit": limit,
-                    "result_type": result_type
+                    "result_type": result_type,
                 },
                 "results": results,
             }

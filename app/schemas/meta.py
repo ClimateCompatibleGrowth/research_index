@@ -1,4 +1,5 @@
 from typing import Dict, List, Optional
+
 from pydantic import BaseModel, Field
 
 
@@ -22,6 +23,7 @@ class CountPublication(BaseModel):
 
 class CountAuthor(BaseModel):
     """Represents a count of the authors or countries"""
+
     total: int = 0
 
 
@@ -47,6 +49,7 @@ class MetaPublication(BaseModel):
     ```
 
     """
+
     count: CountPublication
     skip: int
     limit: int
@@ -63,6 +66,7 @@ class MetaAuthor(BaseModel):
     ```
 
     """
+
     count: CountAuthor | None
     skip: int
     limit: int

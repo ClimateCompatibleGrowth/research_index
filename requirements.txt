@@ -9,6 +9,7 @@ exceptiongroup
 fastapi
 fastapi-cli
 Flask
+gunicorn
 h11
 httpcore
 httptools
@@ -28,6 +29,7 @@ python-dotenv
 python-multipart
 pytz
 PyYAML
+git+https://github.com/ClimateCompatibleGrowth/research_index_backend.git#egg=research_index_backend
 rich
 shellingham
 sniffio
@@ -35,9 +37,7 @@ starlette
 typer
 typing_extensions
 uvicorn
-gunicorn
 uvloop
 watchfiles
 websockets
 Werkzeug
-git+https://github.com/ClimateCompatibleGrowth/research_index_backend.git#egg=research_index_backend

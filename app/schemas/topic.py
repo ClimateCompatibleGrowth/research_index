@@ -3,9 +3,11 @@
 See the OpenAlex documentation: https://docs.openalex.org/api-entities/topics/topic-object
 
 """
+
 from typing import Dict, List
-from pydantic import BaseModel, HttpUrl
 from uuid import UUID
+
+from pydantic import BaseModel, HttpUrl
 
 
 class DomainModel(BaseModel):
@@ -25,6 +27,7 @@ class TopicBaseModel(BaseModel):
     https://docs.openalex.org/api-entities/topics/topic-object
 
     """
+
     id: UUID
     openalex_id: HttpUrl
     description: str
