@@ -23,6 +23,7 @@ Once the VM is up and running, SSH into the VM, download and install memgraph
 
     curl -O https://download.memgraph.com/memgraph/v2.14.1/ubuntu-20.04/memgraph_2.14.1-1_amd64.deb
     sudo dpkg -i /memgraph_2.14.1-1_amd64.deb
+
 Set up the Memgraph user to match the credentials specified in the `.env` file.
 
 ### 2. Build Docker container
