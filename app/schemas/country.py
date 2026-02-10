@@ -1,13 +1,14 @@
 from typing import Dict, List, Optional
+
 from pydantic import BaseModel, Field
-from . meta import Pagination
-from . output import OutputListModel
+
 from . import CountryBaseModel
+from .meta import Pagination
+from .output import OutputListModel
 
 
 class CountryOutputListModel(OutputListModel, CountryBaseModel):
     """Data model representing country outputs"""
-
 
 
 class CountryNodeModel(CountryBaseModel):

@@ -1,8 +1,9 @@
-from pydantic import BaseModel, Field, HttpUrl
 from typing import List, Optional
 from uuid import UUID
-from . import AuthorBase
-from . import CountryBaseModel
+
+from pydantic import BaseModel, Field, HttpUrl
+
+from . import AuthorBase, CountryBaseModel
 from .meta import MetaPublication
 from .topic import TopicBaseModel
 
@@ -60,6 +61,7 @@ class OutputModel(BaseModel):
         }
     ```
     """
+
     uuid: UUID
     doi: str = Field(pattern=r"^10\.\d{4,9}/[-._;()/:a-zA-Z0-9]+$")
     title: str
@@ -78,8 +80,7 @@ class OutputModel(BaseModel):
 
 
 class OutputListModel(BaseModel):
-    """Represents a list of outputs including metadata
+    """Represents a list of outputs including metadata"""
 
-    """
     meta: MetaPublication
     results: List[OutputModel]

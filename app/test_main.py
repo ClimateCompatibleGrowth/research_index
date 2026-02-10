@@ -110,8 +110,7 @@ class TestCountry:
         assert response.status_code == 422
 
     def test_country_error_on_not_exist(self):
-        """Meets
-        """
+        """Meets"""
         response = client.get("/api/countries/XXX")
         assert response.status_code == 404
 
@@ -139,34 +138,42 @@ class TestWorkstream:
         assert response.status_code == 422
 
     def test_workstream_error_on_not_exist(self):
-        """Meets
-        """
+        """Meets"""
         response = client.get("/api/workstreams/XXX")
         assert response.status_code == 404
 
+
 class TestCORS:
     def test_cors_preflight(self):
-        response = client.options("/api/authors", headers={
-            "Origin": "http://localhost:3000",
-            "Access-Control-Request-Method": "GET",
-            "Access-Control-Request-Headers": "Content-Type"
-        })
+        response = client.options(
+            "/api/authors",
+            headers={
+                "Origin": "http://localhost:3000",
+                "Access-Control-Request-Method": "GET",
+                "Access-Control-Request-Headers": "Content-Type",
+            },
+        )
         assert response.status_code == 200
         assert response.headers["access-control-allow-origin"] == "*"
         assert "GET" in response.headers["access-control-allow-methods"]
 
     def test_cors_headers_on_response(self):
-        response = client.get("/api/authors", headers={
-            "Origin": "http://localhost:3000"
-        })
+        response = client.get(
+            "/api/authors", headers={"Origin": "http://localhost:3000"}
+        )
         assert response.status_code == 200
         assert response.headers["access-control-allow-origin"] == "*"
 
     def test_cors_credentials(self):
-        response = client.options("/api/authors", headers={
-            "Origin": "http://localhost:3000",
-            "Access-Control-Request-Method": "GET",
-            "Access-Control-Request-Headers": "Content-Type, Authorization"
-        })
+        response = client.options(
+            "/api/authors",
+            headers={
+                "Origin": "http://localhost:3000",
+                "Access-Control-Request-Method": "GET",
+                "Access-Control-Request-Headers": "Content-Type, Authorization",
+            },
+        )
         assert response.status_code == 200
-        assert "authorization" in response.headers["access-control-allow-headers"].lower()
+        assert (
+            "authorization" in response.headers["access-control-allow-headers"].lower()
+        )

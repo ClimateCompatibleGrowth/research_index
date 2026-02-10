@@ -1,8 +1,9 @@
 from pydantic import BaseModel
-from .output import OutputListModel
-from .meta import MetaAuthor
-from .author import AuthorListModel
+
 from . import WorkstreamBase
+from .author import AuthorListModel
+from .meta import MetaAuthor
+from .output import OutputListModel
 
 
 class WorkstreamDetailModel(WorkstreamBase):

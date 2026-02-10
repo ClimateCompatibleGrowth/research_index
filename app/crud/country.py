@@ -1,25 +1,20 @@
 from typing import Any, Dict
-from fastapi.logger import logger
 
+from fastapi.logger import logger
 from neo4j import Driver
 
 from app.db.session import connect_to_db
-from .output import Output
-
-from app.schemas.country import (CountryList,
-                                 CountryNodeModel,
-                                 CountryOutputListModel)
+from app.schemas.country import CountryList, CountryNodeModel, CountryOutputListModel
 from app.schemas.meta import CountPublication
+
+from .output import Output
 
 
 class Country:
 
-    def get_country(self,
-                    id: str,
-                    skip: int = 0,
-                    limit: int = 20,
-                    result_type: str = 'publication'
-                    ) -> CountryOutputListModel:
+    def get_country(
+        self, id: str, skip: int = 0, limit: int = 20, result_type: str = "publication"
+    ) -> CountryOutputListModel:
         """Return a country
 
         Arguments
@@ -37,16 +32,14 @@ class Country:
         try:
             entity = self.fetch_country_node(id)
         except KeyError as ex:
-            logger.error(
-                f"Country outputs not found {id}:{skip}:{limit}:{result_type}")
+            logger.error(f"Country outputs not found {id}:{skip}:{limit}:{result_type}")
             ex.add_note(f"Could not find {id} in the db")
             raise KeyError(ex)
         else:
             outputs = Output()
-            package = outputs.get_outputs(skip=skip,
-                                          limit=limit,
-                                          result_type=result_type,
-                                          country=id)
+            package = outputs.get_outputs(
+                skip=skip, limit=limit, result_type=result_type, country=id
+            )
             counts = self.count_country_outputs(id)
             package["meta"]["count"] = counts
             return package | entity
@@ -65,8 +58,10 @@ class Country:
         """
         results = self.get_country_list(skip=skip, limit=limit)
         count = self.count_countries()
-        return {"meta": {"count": {'total': count}, "skip": skip, "limit": limit},
-                "results": results}
+        return {
+            "meta": {"count": {"total": count}, "skip": skip, "limit": limit},
+            "results": results,
+        }
 
     @connect_to_db
     def fetch_country_node(self, id: str, db: Driver) -> Dict[str, Any]:
@@ -120,13 +115,15 @@ class Country:
                 """
         records, _, _ = db.execute_query(query, id=id)
         if len(records) <= 0:
-            return {'total': 0,
-                    'publication': 0,
-                    'dataset': 0,
-                    'other': 0,
-                    'software': 0}
+            return {
+                "total": 0,
+                "publication": 0,
+                "dataset": 0,
+                "other": 0,
+                "software": 0,
+            }
         counts = {x.data()["result_type"]: x.data()["count"] for x in records}
-        counts['total'] = sum(counts.values())
+        counts["total"] = sum(counts.values())
 
         return CountPublication(**counts)
 
@@ -136,13 +133,12 @@ class Country:
         query = """MATCH (c:Country)<-[:refers_to]-(p:Output)
                    RETURN count(DISTINCT c.id) as count"""
         results, _, _ = db.execute_query(query)
-        return results[0].data()['count']
+        return results[0].data()["count"]
 
     @connect_to_db
-    def get_country_list(self,
-                         db: Driver,
-                         skip: int = 0,
-                         limit: int = 20) -> list[CountryNodeModel]:
+    def get_country_list(
+        self, db: Driver, skip: int = 0, limit: int = 20
+    ) -> list[CountryNodeModel]:
         """Retrieve all countries that have associated articles.
 
         Parameters
@@ -160,4 +156,4 @@ class Country:
                 LIMIT $limit
                 """
         records, _, _ = db.execute_query(query, skip=skip, limit=limit)
-        return [result.data()['country'] for result in records]
+        return [result.data()["country"] for result in records]

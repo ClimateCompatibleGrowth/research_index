@@ -1,8 +1,8 @@
 from functools import wraps
-from  app.core.config import settings
-
 
 from neo4j import GraphDatabase
+
+from app.core.config import settings
 
 MG_HOST = settings.MG_HOST
 MG_PORT = settings.MG_PORT

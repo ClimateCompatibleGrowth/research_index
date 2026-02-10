@@ -37,7 +37,6 @@ class TestOutput:
         assert response.status_code == 404
 
 
-
 class TestAuthor:
 
     def test_author_list(self):
@@ -120,8 +119,7 @@ class TestCountry:
         assert response.status_code == 422
 
     def test_country_error_on_not_exist(self):
-        """Meets
-        """
+        """Meets"""
         response = client.get("/countries/XXX")
         assert response.status_code == 404
 
@@ -133,7 +131,6 @@ class TestWorkstream:
         assert response.status_code == 200
 
     def test_workstream_error_on_not_exist(self):
-        """Meets
-        """
+        """Meets"""
         response = client.get("/workstreams/XXX")
         assert response.status_code == 404

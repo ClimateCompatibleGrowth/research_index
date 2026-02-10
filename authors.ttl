@@ -1615,4 +1615,3 @@
         <http://127.0.0.1/id/ws2_ipa13>,
         <http://127.0.0.1/id/ws2_ipa14> ;
     org:unitOf <http://127.0.0.1/ccg> .
-
