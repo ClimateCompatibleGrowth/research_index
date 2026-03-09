@@ -67,7 +67,7 @@ class OutputModel(BaseModel):
     authors: List[AuthorBase]
     abstract: Optional[str] = None
     journal: Optional[str] = None  # Only academic publications have a journal
-    cited_by_count_date: Optional[CitedByDateTime] = None
+    cited_by_count_date: Optional[CitedByDateTime | int] = None
     cited_by_count: Optional[int] = None
     publication_day: Optional[int] = None
     publication_month: Optional[int] = None
