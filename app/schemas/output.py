@@ -40,7 +40,7 @@ class OutputModel(BaseModel):
         "title": 'An example title', # required
         "abstract": 'A long abstract', # optional
         "journal": "Applied JSON", # optional
-        "cited_by_count_date": '2024-03-01', # optional
+        "cited_by_count_date": 2026, # optional (year as integer)
         "cited_by_count": 34, # optional
         "openalex": "https://openalex.org/W4393416420", # optional
         "publication_day": 03, # optional
