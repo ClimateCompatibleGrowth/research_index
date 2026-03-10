@@ -6,28 +6,6 @@ from . import CountryBaseModel
 from .meta import MetaPublication
 from .topic import TopicBaseModel
 
-
-class DateTimeComponents(BaseModel):
-    _Date__ordinal: Optional[int] = None
-    _Date__year: Optional[int] = None
-    _Date__month: Optional[int] = None
-    _Date__day: Optional[int] = None
-
-
-class TimeComponents(BaseModel):
-    _Time__ticks: Optional[int] = None
-    _Time__hour: Optional[int] = None
-    _Time__minute: Optional[int] = None
-    _Time__second: Optional[int] = None
-    _Time__nanosecond: Optional[int] = None
-    _Time__tzinfo: Optional[str] = None
-
-
-class CitedByDateTime(BaseModel):
-    _DateTime__date: Optional[DateTimeComponents] = None
-    _DateTime__time: Optional[TimeComponents] = None
-
-
 class OutputModel(BaseModel):
     """Schema for an Output
 
@@ -67,7 +45,7 @@ class OutputModel(BaseModel):
     authors: List[AuthorBase]
     abstract: Optional[str] = None
     journal: Optional[str] = None  # Only academic publications have a journal
-    cited_by_count_date: Optional[CitedByDateTime | int] = None
+    cited_by_count_date: Optional[int] = Field(default=None, ge=1900, le=2100, description="Year in YYYY format")
     cited_by_count: Optional[int] = None
     publication_day: Optional[int] = None
     publication_month: Optional[int] = None
