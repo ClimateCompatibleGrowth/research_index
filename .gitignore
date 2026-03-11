@@ -32,3 +32,6 @@ build/
 research_index_backend/
 data/
 *.bash
+
+# quick deployment zip file
+app.zip
